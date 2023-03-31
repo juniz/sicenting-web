@@ -3,16 +3,10 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Balita</h1>
+    <h1>Daftar Units</h1>
 @stop
 
 @section('content')
-    <livewire:standart.input-bbu-laki />
-@stop
-
-@section('css')
-    
-@stop
-
-@section('js')
+    <livewire:units.tambah />
+    <livewire:units.table />
 @stop

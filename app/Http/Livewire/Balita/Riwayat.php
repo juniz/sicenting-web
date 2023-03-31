@@ -116,10 +116,9 @@ class Riwayat extends Component
                 $this->bbu->prepend(null);
             }
         }
-        if(count($this->bbPemeriksaan) > 0){
-            for($i=45;$i>$this->tbPemeriksaan[0];$i+0.5){
-                $this->bbPemeriksaan->prepend(null);
-            }
+        $jml = ($this->tbPemeriksaan[0] - 45) * 2;
+        for($i=0;$i<$jml;$i++){
+            $this->bbPemeriksaan->prepend(null);
         }
     }
 

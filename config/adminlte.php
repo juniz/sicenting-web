@@ -355,6 +355,16 @@ return [
                 ],
             ],
         ],
+        [
+            'text'        => 'Units',
+            'url'         => 'units',
+            'icon'        => 'far fa-fw fa-building',
+        ],
+        [
+            'text'        => 'Users',
+            'url'         => 'users',
+            'icon'        => 'far fa-fw fa-users',
+        ],
         // ['header' => 'labels'],
         // [
         //     'text'       => 'important',
