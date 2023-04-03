@@ -43,6 +43,11 @@ Route::middleware('auth')->group(function(){
     Route::get('/balita/{id}', [App\Http\Controllers\BalitaController::class, 'detail']);
 
     Route::get('/users', [App\Http\Controllers\UsersController::class, 'index']);
+    Route::get('/users/tambah', [App\Http\Controllers\UsersController::class, 'tambah']);
+    Route::delete('/users/{id}', [App\Http\Controllers\UsersController::class, 'hapus']);
+    Route::get('/users/{id}', [App\Http\Controllers\UsersController::class, 'detail']);
+    Route::post('/users/edit/{id}', [App\Http\Controllers\UsersController::class, 'edit']);
+    Route::post('/users', [App\Http\Controllers\UsersController::class, 'simpan']);
 
     Route::get('/units', [App\Http\Controllers\UnitsController::class, 'index']);
 });

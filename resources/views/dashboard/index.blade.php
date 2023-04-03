@@ -3,31 +3,31 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <h1>Selamat datang,</h1><h2>{{ Auth::user()->name }}</h2>
 @stop
 
 @section('content')
 <div class="row">
     <div class="col-md-6">
-        <x-adminlte-card title="Grafik" >
+        <x-adminlte-card >
             <div class="chart">
                 <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
             </div>
         </x-adminlte-card>
     </div>
     <div class="col-md-6">
-        <x-adminlte-card title="Pie Chart" >
+        <x-adminlte-card >
             <div class="chart">
                 <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
             </div>
         </x-adminlte-card>
     </div>
 </div>
-<x-adminlte-card title="Map" >
+{{-- <x-adminlte-card title="Map" >
     <div class="containerMap">
         <div class="map" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;">Alternative content</div>
     </div>
-</x-adminlte-card>
+</x-adminlte-card> --}}
 @stop
 
 @push('js')
@@ -37,7 +37,7 @@
             labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             datasets: [
                 {
-                label               : 'Digital Goods',
+                label               : 'Pendek',
                 backgroundColor     : 'rgba(60,141,188,0.9)',
                 borderColor         : 'rgba(60,141,188,0.8)',
                 pointRadius          : false,
@@ -48,7 +48,7 @@
                 data                : [28, 48, 40, 19, 86, 27, 90]
                 },
                 {
-                label               : 'Electronics',
+                label               : 'Sangat Pendek',
                 backgroundColor     : 'rgba(210, 214, 222, 1)',
                 borderColor         : 'rgba(210, 214, 222, 1)',
                 pointRadius         : false,
@@ -63,16 +63,16 @@
 
         var donutData        = {
             labels: [
-                'Chrome',
-                'IE',
-                'FireFox',
-                'Safari',
-                'Opera',
-                'Navigator',
+                'Bagor',
+                'Baron',
+                'Berbek',
+                'Gondang',
+                'Jatikalen',
+                'Kertosono',
             ],
             datasets: [
                 {
-                data: [700,500,400,600,300,100],
+                data: [58,83,14,92,33,93],
                 backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
                 }
             ]

@@ -47,7 +47,7 @@
                     <select class="form-control @error('selectProv') is-invalid @enderror" wire:model='selectProv' name="provinsi">
                         <option value="">Pilih Provinsi</option>
                         @foreach($provinsi as $prov)
-                            <option wire:click='updatedSelectProv("{{$prov["name"]}}")' value="{{$prov['id']}}">{{$prov['name']}}</option>
+                            <option wire:click="updatedSelectProv({{$prov["id"]}})" value="{{$prov['id']}}">{{$prov['name']}}</option>
                         @endforeach
                     </select>
                     @error('selectProv') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -60,7 +60,7 @@
                         <select class="form-control @error('selectKab') is-invalid @enderror"" wire:model='selectKab'>
                             <option value="">Pilih Kabupaten / Kota</option>
                             @foreach($kabupaten as $kab)
-                                <option wire:click='updatedSelectKab' value="{{$kab['id']}}">{{$kab['name']}}</option>
+                                <option wire:click="updatedSelectKab('{{$kab["id"]}}')" value="{{$kab['id']}}">{{$kab['name']}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -73,7 +73,7 @@
                         <select class="form-control @error('selectKec') is-invalid @enderror" wire:model='selectKec'>
                             <option value="">Pilih Kecamatan</option>
                             @foreach($kecamatan as $kec)
-                                <option value="{{$kec['id']}}">{{$kec['name']}}</option>
+                                <option wire:click="updatedSelectKec('{{$kec["id"]}}')" value="{{$kec['id']}}">{{$kec['name']}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -86,7 +86,7 @@
                         <select class="form-control @error('selectKel') is-invalid @enderror" wire:model='selectKel'>
                             <option value="">Pilih Kelurahan</option>
                             @foreach($kelurahan as $kel)
-                                <option value="{{$kel['id']}}">{{$kel['name']}}</option>
+                                <option wire:click="updatedSelectKel('{{$kel["id"]}}')" value="{{$kel['id']}}">{{$kel['name']}}</option>
                             @endforeach
                         </select>
                     </div>

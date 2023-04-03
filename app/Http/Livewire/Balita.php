@@ -6,6 +6,7 @@ use Livewire\Component;
 use Illuminate\Support\Facades\Http;
 use App\Models\Balita as BalitaModel;
 use App\Traits\SwalResponse;
+use Illuminate\Support\Arr;
 
 class Balita extends Component
 {
@@ -27,19 +28,43 @@ class Balita extends Component
 
     public function updatedSelectProv($prov)
     {
-        $this->kabupaten = Http::get('http://www.emsifa.com/api-wilayah-indonesia/api/regencies/' . $this->selectProv . '.json')->json();
-        $this->valProv = $prov;
+        $this->kabupaten = Http::get('http://www.emsifa.com/api-wilayah-indonesia/api/regencies/' . $prov . '.json')->json();
+        Arr::where($this->provinsi, function($value, $key){
+            if($value['id'] == $this->selectProv){
+                $this->valProv = $value['name'];
+            }
+        });
     }
 
-    public function updatedSelectKab()
+    public function updatedSelectKab($kab)
     {
-        $this->kecamatan = Http::get('http://www.emsifa.com/api-wilayah-indonesia/api/districts/' . $this->selectKab . '.json')->json();
+        $this->kecamatan = Http::get('http://www.emsifa.com/api-wilayah-indonesia/api/districts/' . $kab . '.json')->json();
+        Arr::where($this->kabupaten, function($value, $key){
+            if($value['id'] == $this->selectKab){
+                $this->valKab = $value['name'];
+            }
+        });
     }
 
-    public function updatedSelectKec()
+    public function updatedSelectKec($kec)
     {
-        $this->kelurahan = Http::get('http://www.emsifa.com/api-wilayah-indonesia/api/villages/' . $this->selectKec . '.json')->json();
+        $this->kelurahan = Http::get('http://www.emsifa.com/api-wilayah-indonesia/api/villages/' . $kec . '.json')->json();
+        Arr::where($this->kecamatan, function($value, $key){
+            if($value['id'] == $this->selectKec){
+                $this->valKec = $value['name'];
+            }
+        });
     }
+
+    public function updatedSelectKel($kel)
+    {
+        Arr::where($this->kelurahan, function($value, $key){
+            if($value['id'] == $this->selectKel){
+                $this->valKel = $value['name'];
+            }
+        });
+    }
+
 
     public function clickProv($prov)
     {
@@ -78,10 +103,10 @@ class Balita extends Component
         ]);
 
         $data = [
-            'provinsi' => $this->selectProv,
-            'kabupaten' => $this->selectKab,
-            'kecamatan' => $this->selectKec,
-            'kelurahan' => $this->selectKel,
+            'provinsi' => $this->valProv,
+            'kabupaten' => $this->valKab,
+            'kecamatan' => $this->valKec,
+            'kelurahan' => $this->valKel,
             'nama' => strtoupper($this->nama),
             'jns_kelamin' => $this->jnsKelamin,
             'tgl_lahir' => $this->tglLahir,

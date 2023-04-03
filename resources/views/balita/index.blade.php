@@ -15,7 +15,7 @@
         @php
             $heads = ['Nama', 'Jns Kelamin', 'Tgl Lahir', 'Nama Orang Tua', 'Aksi'];
         @endphp
-        <x-adminlte-datatable id="table1" :heads="$heads">
+        <x-adminlte-datatable id="table1" :heads="$heads" head-theme="dark">
             @foreach ($balita as $item)
                 <tr>
                     <td>{{ $item->nama }}</td>

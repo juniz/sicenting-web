@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 class Riwayat extends Component
 {
     use SwalResponse;
-    public $balita, $pemeriksaan, $usiaList, $usia, $tb, $tbuMedian, $tbuPlus2Sd, $tbuPlus3Sd, $tbuMin2Sd, $tbuMin3Sd, $tbu, $bbu, $bbtb, $bbuMedian, $bbuPlus2Sd, $bbuPlus3Sd, $bbuMin2Sd, $bbuMin3Sd, $bbtbMedian, $bbtbPlus2Sd, $bbtbPlus3Sd, $bbtbMin2Sd, $bbtbMin3Sd, $bbPemeriksaan, $tbPemeriksaan, $hasil = [];
+    public $balita, $pemeriksaan, $usiaList, $usia, $tb, $tbuMedian, $tbuPlus2Sd, $tbuPlus3Sd, $tbuMin2Sd, $tbuMin3Sd, $tbu, $bbu, $bbtb, $bbuMedian, $bbuPlus2Sd, $bbuPlus3Sd, $bbuMin2Sd, $bbuMin3Sd, $bbtbMedian, $bbtbPlus2Sd, $bbtbPlus3Sd, $bbtbMin2Sd, $bbtbMin3Sd, $bbPemeriksaan, $tbPemeriksaan = [], $hasil = [];
 
     protected $listeners = ['refresh' => 'refresh', 'hapusPemeriksaan' => 'hapusPemeriksaan'];
     public function render()
@@ -116,9 +116,12 @@ class Riwayat extends Component
                 $this->bbu->prepend(null);
             }
         }
-        $jml = ($this->tbPemeriksaan[0] - 45) * 2;
-        for($i=0;$i<$jml;$i++){
-            $this->bbPemeriksaan->prepend(null);
+        
+        if(!empty($this->tbPemeriksaan[0])){
+            $jml = ($this->tbPemeriksaan[0] - 45) * 2;
+            for($i=0;$i<$jml;$i++){
+                $this->bbPemeriksaan->prepend(null);
+            }
         }
     }
 
