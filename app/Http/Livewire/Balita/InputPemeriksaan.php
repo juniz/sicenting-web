@@ -161,8 +161,9 @@ class InputPemeriksaan extends Component
                     'zs_tbu' => $this->zsTBU,
                     'zs_bbtb'=> $this->zsBBTB,
                 ]);
-                $this->emit('refresh');
-                $this->dispatchBrowserEvent('swal:balita', $this->toastResponse('Data berhasil diubah', 'success'));
+                // $this->emit('refresh');
+                // $this->dispatchBrowserEvent('swal:balita', $this->toastResponse('Data berhasil diubah', 'success'));
+                return redirect()->to('/balita/'.$this->balita->id);
             }else{
                 Pemeriksaan::create([
                     'tgl_pengukuran' => $this->tanggal,
@@ -177,8 +178,9 @@ class InputPemeriksaan extends Component
                     'zs_tbu' => $this->zsTBU,
                     'zs_bbtb'=> $this->zsBBTB,
                 ]);
-                $this->emit('refresh');
-                $this->dispatchBrowserEvent('swal:balita', $this->toastResponse('Data berhasil disimpan', 'success'));
+                // $this->emit('refresh');
+                // $this->dispatchBrowserEvent('swal:balita', $this->toastResponse('Data berhasil disimpan', 'success'));
+                return redirect()->to('/balita/'.$this->balita->id);
             }
 
         }catch(\Exception $e){

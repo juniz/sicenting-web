@@ -10,9 +10,11 @@ class BalitaController extends Controller
 {
     public function index()
     {
-        $balita = Balita::all();
+        $balita = Balita::orderBy('updated_at', 'DESC')->get();
+        $config = ['ordering'   =>  false];
         return view('balita.index',[
-            'balita' => $balita
+            'balita' => $balita,
+            'config' => $config
         ]);
     }
 

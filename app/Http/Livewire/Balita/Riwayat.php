@@ -65,9 +65,10 @@ class Riwayat extends Component
             if(Str::contains($data->tb_u, 'pendek', true)){
                 $hasilTBU = 'Konsul dokter spesialis anak';
             }
-            if(Str::contains($data->bb_tb, 'buruk', true)){
+            if(Str::contains($data->bb_tb, 'kurang', true) || Str::contains($data->bb_tb, 'buruk', true)){
                 $hasilBBTB = 'Pemberian PMT';
             }
+            
 
             $this->hasil =  [
                 'hasil_bbu' =>  $hasilBBU,
@@ -98,7 +99,7 @@ class Riwayat extends Component
         $this->grafikTBU();
         $this->grafikBBU();
         $this->grafikBBTB();
-        $data = Pemeriksaan::where('balita_id', $this->balita->id);
+        $data = Pemeriksaan::where('balita_id', $this->balita->id)->orderBy('updated_at', 'ASC');
         $this->pemeriksaan = $data->get()->toArray();
         $this->bbPemeriksaan = $data->get()->pluck('berat');
         $this->tbPemeriksaan = $data->get()->pluck('tinggi');

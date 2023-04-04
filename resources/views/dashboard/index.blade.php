@@ -8,17 +8,24 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-6">
-        <x-adminlte-card >
+    <div class="col-md-12">
+        <x-adminlte-card title="Grafik Stunting per Kecamatan">
             <div class="chart">
                 <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
             </div>
         </x-adminlte-card>
     </div>
     <div class="col-md-6">
-        <x-adminlte-card >
+        <x-adminlte-card title="Grafik Stunting">
             <div class="chart">
                 <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+            </div>
+        </x-adminlte-card>
+    </div>
+    <div class="col-md-6">
+        <x-adminlte-card title="Grafik Gizi Buruk">
+            <div class="chart">
+                <canvas id="pieChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
             </div>
         </x-adminlte-card>
     </div>
@@ -34,7 +41,7 @@
 <script>
     $(function(){
         var areaChartData = {
-            labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            labels  : ['Bagor', 'Baron', 'Berbek', 'Gondang', 'Jatikalen', 'Kertosono', 'Lengkong', 'Loceret', 'Nganjuk', 'Ngetos', 'Ngluyu', 'Ngronggot', 'Pace', 'Patianrowo', 'Prambon'],
             datasets: [
                 {
                 label               : 'Pendek',
@@ -45,7 +52,7 @@
                 pointStrokeColor    : 'rgba(60,141,188,1)',
                 pointHighlightFill  : '#fff',
                 pointHighlightStroke: 'rgba(60,141,188,1)',
-                data                : [28, 48, 40, 19, 86, 27, 90]
+                data                : [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86, 27, 90, 28]
                 },
                 {
                 label               : 'Sangat Pendek',
@@ -56,24 +63,34 @@
                 pointStrokeColor    : '#c1c7d1',
                 pointHighlightFill  : '#fff',
                 pointHighlightStroke: 'rgba(220,220,220,1)',
-                data                : [65, 59, 80, 81, 56, 55, 40]
+                data                : [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40, 32]
                 },
             ]
         }
 
         var donutData        = {
             labels: [
-                'Bagor',
-                'Baron',
-                'Berbek',
-                'Gondang',
-                'Jatikalen',
-                'Kertosono',
+                'Pendek',
+                'Sangat Pendek',
             ],
             datasets: [
                 {
-                data: [58,83,14,92,33,93],
+                data: [58,83],
                 backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                }
+            ]
+        }
+
+        var donutData1        = {
+            labels: [
+                'Gizi lebih',
+                'Gizi normal',
+                'Gizi kurang',
+            ],
+            datasets: [
+                {
+                data: [58,83, 35],
+                backgroundColor : ['#00c0ef', '#3c8dbc', '#d2d6de'],
                 }
             ]
         }
@@ -116,6 +133,24 @@
         type: 'pie',
         data: pieData,
         options: pieOptions
+        })
+
+        //-------------
+        //- PIE CHART -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas1 = $('#pieChart1').get(0).getContext('2d')
+        var pieData1        = donutData1;
+        var pieOptions1     = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        new Chart(pieChartCanvas1, {
+        type: 'pie',
+        data: pieData1,
+        options: pieOptions1
         })
 
         $(".containerMap").mapael({

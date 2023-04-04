@@ -35,11 +35,11 @@
                             <td>{{ $p['berat'] }}</td>
                             <td>{{ $p['tinggi'] }}</td>
                             <td>{{ $p['usia'] }} bulan</td>
-                            <td>{{ $p['bb_u'] }}</td>
+                            <td class="@if(str_contains($p['bb_u'], 'kurang')) text-danger @else text-dark @endif ">{{ $p['bb_u'] }}</td>
                             <td>{{ $p['zs_bbu'] }}</td>
-                            <td>{{ $p['tb_u'] }}</td>
+                            <td class="@if(str_contains($p['tb_u'], 'pendek') || str_contains($p['tb_u'], 'Pendek')) text-danger @else text-dark @endif ">{{ $p['tb_u'] }}</td>
                             <td>{{ $p['zs_tbu'] }}</td>
-                            <td>{{ $p['bb_tb'] }}</td>
+                            <td class="@if(str_contains($p['bb_tb'], 'kurang')) text-danger @else text-dark @endif ">{{ $p['bb_tb'] }}</td>
                             <td>{{ $p['zs_bbtb'] }}</td>
                             <td>
                                 <div class="btn-group">
@@ -102,7 +102,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <a class="@if(str_contains($hasil['tbu'], 'pendek')) text-danger @else text-dark @endif ">{{ $hasil['tbu'] }}</a>
+                            <a class="@if(str_contains($hasil['tbu'], 'pendek') || str_contains($hasil['tbu'], 'Pendek')) text-danger @else text-dark @endif ">{{ $hasil['tbu'] }}</a>
                         </div>
                         <div class="col-md-6">
                             {{ $hasil['hasil_tbu'] }}
@@ -110,7 +110,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <a class="@if(str_contains($hasil['bbtb'], 'buruk')) text-danger @else text-dark @endif ">{{ $hasil['bbtb'] }}</a>
+                            <a class="@if(str_contains($hasil['bbtb'], 'buruk') || str_contains($hasil['bbtb'], 'kurang')) text-danger @else text-dark @endif ">{{ $hasil['bbtb'] }}</a>
                         </div>
                         <div class="col-md-6">
                             {{ $hasil['hasil_bbtb'] }}
@@ -139,7 +139,11 @@
         })
         Livewire.hook('element.updated', (el, component) => {
             if (el.id == 'tablePemeriksaan') {
-                $('#tablePemeriksaan').DataTable();
+                $('#tablePemeriksaan').DataTable({
+                    'order' : [
+                        [0, 'desc']
+                    ]
+                });
             }
             var ctx = document.getElementById("chartTBU").getContext('2d');
             var myChart = new Chart(ctx, {
@@ -368,12 +372,21 @@
             labels: JSON.parse("{{ $usia }}"),
             datasets: [
                 {
+                    label: 'Tinggi Badan',
+                    data: JSON.parse("{{ $tbu }}"),
+                    fill: false,
+                    borderColor: 'rgb(0, 0, 0)',
+                    pointBackgroundColor: 'rgb(0, 0, 0)',
+                    pointRadius: 5,
+                    tension: 0.1,
+                    pointHoverRadius: 8,
+                },
+                {
                     label: 'Median',
                     data: JSON.parse("{{ $tbuMedian }}"),
                     pointRadius: 0,
                     fill: false,
                     borderColor: 'rgb(0, 255, 0)',
-                    tension: 0.1
                 },
                 {
                     label: '+2 sd',
@@ -381,7 +394,6 @@
                     pointRadius: 0,
                     fill: false,
                     borderColor: 'rgb(255, 255, 0)',
-                    tension: 0.1
                 },
                 {
                     label: '+3 sd',
@@ -389,7 +401,6 @@
                     pointRadius: 0,
                     fill: false,
                     borderColor: 'rgb(255, 0, 0)',
-                    tension: 0.1
                 },
                 {
                     label: '-2 sd',
@@ -397,7 +408,6 @@
                     pointRadius: 0,
                     fill: false,
                     borderColor: 'rgb(255, 255, 0)',
-                    tension: 0.1
                 },
                 {
                     label: '-3 sd',
@@ -405,15 +415,7 @@
                     pointRadius: 0,
                     fill: false,
                     borderColor: 'rgb(255, 0, 0)',
-                    tension: 0.1
                 },
-                {
-                    label: 'Tinggi Badan',
-                    data: JSON.parse("{{ $tbu }}"),
-                    fill: false,
-                    borderColor: 'rgb(0, 0, 0)',
-                    tension: 0.1
-                }
             ],
         },
         options:{
@@ -428,6 +430,16 @@
         data: {
             labels: JSON.parse("{{ $usia }}"),
             datasets: [
+                {
+                    label: 'Berat Badan',
+                    data: JSON.parse("{{ $bbu }}"),
+                    fill: false,
+                    borderColor: 'rgb(0, 0, 0)',
+                    pointBackgroundColor: 'rgb(0, 0, 0)',
+                    pointRadius: 5,
+                    tension: 0.1,
+                    pointHoverRadius: 8,
+                },
                 {
                     label: 'Median',
                     data: JSON.parse("{{ $bbuMedian }}"),
@@ -468,13 +480,6 @@
                     borderColor: 'rgb(255, 0, 0)',
                     tension: 0.1
                 },
-                {
-                    label: 'Berat Badan',
-                    data: JSON.parse("{{ $bbu }}"),
-                    fill: false,
-                    borderColor: 'rgb(0, 0, 0)',
-                    tension: 0.1
-                }
             ]
         },
         options:{
@@ -489,6 +494,16 @@
         data: {
             labels: JSON.parse("{{ $tb }}"),
             datasets: [
+                {
+                    label: 'Berat Badan',
+                    data: JSON.parse("{{ $bbPemeriksaan }}"),
+                    fill: false,
+                    borderColor: 'rgb(0, 0, 0)',
+                    pointBackgroundColor: 'rgb(0, 0, 0)',
+                    pointRadius: 5,
+                    tension: 0.1,
+                    pointHoverRadius: 8,
+                },
                 {
                     label: 'Median',
                     data: JSON.parse("{{ $bbtbMedian }}"),
@@ -529,13 +544,6 @@
                     borderColor: 'rgb(255, 0, 0)',
                     tension: 0.1
                 },
-                {
-                    label: 'Berat Badan',
-                    data: JSON.parse("{{ $bbPemeriksaan }}"),
-                    fill: false,
-                    borderColor: 'rgb(0, 0, 0)',
-                    tension: 0.1
-                }
             ]
         },
         options:{
