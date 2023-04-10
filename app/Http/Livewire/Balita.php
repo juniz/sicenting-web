@@ -5,8 +5,12 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Illuminate\Support\Facades\Http;
 use App\Models\Balita as BalitaModel;
+use App\Models\District;
 use App\Traits\SwalResponse;
 use Illuminate\Support\Arr;
+use App\Models\Province;
+use App\Models\Regency;
+use App\Models\Village;
 
 class Balita extends Component
 {
@@ -15,10 +19,12 @@ class Balita extends Component
     public BalitaModel $balita;
     public $provinsi = [], $selectProv = '', $kabupaten = [], $selectKab = '', $kecamatan = [], $selectKec = '', $kelurahan = [], $selectKel = '', $nama, $jnsKelamin, $tglLahir, $namaOrtu, $rt, $rw, $alamat, $valProv, $valKab, $valKec, $valKel;
 
+    protected $listeners = ['updatedSelectKab'];
+
     public function mount()
     {
         $this->balita = new BalitaModel();
-        $this->provinsi = Http::get('http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json')->json();
+        $this->provinsi = Province::all();
     }
 
     public function render()
@@ -26,43 +32,31 @@ class Balita extends Component
         return view('livewire.balita');
     }
 
-    public function updatedSelectProv($prov)
+    public function updatedSelectProv()
     {
-        $this->kabupaten = Http::get('http://www.emsifa.com/api-wilayah-indonesia/api/regencies/' . $prov . '.json')->json();
-        Arr::where($this->provinsi, function($value, $key){
-            if($value['id'] == $this->selectProv){
-                $this->valProv = $value['name'];
-            }
-        });
+        $this->kabupaten = Regency::where('province_id', $this->selectProv)->get();
+        // $this->dispatchBrowserEvent('selectProv');
     }
 
-    public function updatedSelectKab($kab)
+    public function updatedSelectKab()
     {
-        $this->kecamatan = Http::get('http://www.emsifa.com/api-wilayah-indonesia/api/districts/' . $kab . '.json')->json();
-        Arr::where($this->kabupaten, function($value, $key){
-            if($value['id'] == $this->selectKab){
-                $this->valKab = $value['name'];
-            }
-        });
+        $this->kecamatan = District::where('regency_id', $this->selectKab)->get();
+        $this->dispatchBrowserEvent('selectKab');
     }
 
-    public function updatedSelectKec($kec)
+    public function updatedSelectKec()
     {
-        $this->kelurahan = Http::get('http://www.emsifa.com/api-wilayah-indonesia/api/villages/' . $kec . '.json')->json();
-        Arr::where($this->kecamatan, function($value, $key){
-            if($value['id'] == $this->selectKec){
-                $this->valKec = $value['name'];
-            }
-        });
+        $this->kelurahan = Village::where('district_id', $this->selectKec)->get();
+        $this->dispatchBrowserEvent('selectKec');
     }
 
     public function updatedSelectKel($kel)
     {
-        Arr::where($this->kelurahan, function($value, $key){
-            if($value['id'] == $this->selectKel){
-                $this->valKel = $value['name'];
-            }
-        });
+        // Arr::where($this->kelurahan, function($value, $key){
+        //     if($value['id'] == $this->selectKel){
+        //         $this->valKel = $value['name'];
+        //     }
+        // });
     }
 
 
@@ -103,10 +97,10 @@ class Balita extends Component
         ]);
 
         $data = [
-            'provinsi' => $this->valProv,
-            'kabupaten' => $this->valKab,
-            'kecamatan' => $this->valKec,
-            'kelurahan' => $this->valKel,
+            'provinsi' => $this->selectProv,
+            'kabupaten' => $this->selectKab,
+            'kecamatan' => $this->selectKec,
+            'kelurahan' => $this->selectKel,
             'nama' => strtoupper($this->nama),
             'jns_kelamin' => $this->jnsKelamin,
             'tgl_lahir' => $this->tglLahir,

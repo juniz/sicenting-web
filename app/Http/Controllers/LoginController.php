@@ -16,17 +16,17 @@ class LoginController extends Controller
     public function __invoke(Request $request)
     {
         $this->validate($request, [
-            $this->username() => 'required|string',
+            'email' => 'required|string',
             'password' => 'required|string',
         ],[
-            'username.required' => 'Username tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
             'password.required' => 'Password tidak boleh kosong',
         ]);
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             // dd('sukses');
             return redirect('/dashboard');
         }else{
-            return back()->with('error', 'Username atau password salah');
+            return back()->with('error', 'Email atau password salah');
         }
         
     }

@@ -36,7 +36,7 @@
                         @foreach($users as $user)
                         <tr>
                             <td>{{ $user->name }}</td>
-                            <td>{{ $user->username }}</td>
+                            <td>{{ $user->email }}</td>
                             <td>{{ $user->password }}</td>
                             <td>
                                 <a name="edit" id="edit" class="btn btn-success" href="{{ url('/users', $user->id) }}" role="button">

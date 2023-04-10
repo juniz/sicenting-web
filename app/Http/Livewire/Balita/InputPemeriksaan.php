@@ -17,7 +17,7 @@ use Illuminate\Support\Carbon;
 class InputPemeriksaan extends Component
 {
     use SwalResponse;
-    public $tinggi, $berat, $tanggal, $idBalita, $balita, $umur, $bbu, $tbu, $bbtb, $umurLengkap, $zsBBU, $zsTBU, $zsBBTB;
+    public $tinggi, $berat, $lila, $tanggal, $idBalita, $balita, $umur, $bbu, $tbu, $bbtb, $umurLengkap, $zsBBU, $zsTBU, $zsBBTB;
 
     public function mount($balita)
     {
@@ -136,9 +136,11 @@ class InputPemeriksaan extends Component
         $this->validate([
             'tinggi' => 'required',
             'berat' => 'required',
+            'lila'  =>  'required',
         ],[
             'tinggi.required' => 'Tinggi badan tidak boleh kosong',
             'berat.required' => 'Berat badan tidak boleh kosong',
+            'lila.required' => 'Lingkar lengan tidak boleh kosong',
         ]);
 
         try{
@@ -153,6 +155,7 @@ class InputPemeriksaan extends Component
                     'tgl_pengukuran' => $this->tanggal,
                     'tinggi' => $this->tinggi,
                     'berat' => $this->berat,
+                    'lila'  =>  $this->lila,
                     'bb_u' => $this->bbu,
                     'tb_u' => $this->tbu,
                     'bb_tb' => $this->bbtb,
@@ -169,6 +172,7 @@ class InputPemeriksaan extends Component
                     'tgl_pengukuran' => $this->tanggal,
                     'tinggi' => $this->tinggi,
                     'berat' => $this->berat,
+                    'lila'  =>  $this->lila,
                     'balita_id' => $this->balita->id,
                     'bb_u' => $this->bbu,
                     'tb_u' => $this->tbu,

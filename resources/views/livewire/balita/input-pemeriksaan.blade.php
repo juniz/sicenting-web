@@ -1,12 +1,8 @@
 <div>
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Input Pemeriksaan</h3>
-            <div class="card-tools">
-            </div>
-        </div>
+    <div class="callout callout-info">
+        <h5>Input Pemeriksaan</h5>
         <form wire:submit.prevent='simpan'>
-            <div class="card-body">
+            <div class="container">
                 <div class="form-group row">
                     <label class="col-sm-6 col-form-label">Tanggal</label>
                     <div class="col-sm-6">
@@ -28,8 +24,13 @@
                         @error('berat') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                 </div>
-            </div>
-            <div class="card-footer">
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label">Lila</label>
+                    <div class="col-sm-6">
+                        <input wire:model.defer='lila' type="text" class="form-control @error('lila') is-invalid @enderror" >
+                        @error('lila') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
+                </div>
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">Simpan</button>
                     <div wire:loading.delay>

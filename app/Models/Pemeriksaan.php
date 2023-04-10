@@ -21,6 +21,7 @@ class Pemeriksaan extends Model
         'tgl_pengukuran',
         'berat',
         'tinggi',
+        'lila',
         'usia',
         'bb_u',
         'tb_u',

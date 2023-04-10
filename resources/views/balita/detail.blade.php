@@ -8,11 +8,11 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <livewire:balita.detail :balita='$balita'>
         </div>
         <div class="col-md-6">
-            <livewire:balita.input-pemeriksaan :balita='$balita'>
+            
         </div>
     </div>
     <livewire:balita.riwayat :balita='$balita'>

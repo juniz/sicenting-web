@@ -26,8 +26,8 @@
 
         {{-- Email field --}}
         <div class="input-group mb-3">
-            <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
-                   value="{{ old('username') }}" placeholder="{{ __('username') }}" autofocus>
+            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                   value="{{ old('email') }}" placeholder="{{ __('email') }}" autofocus>
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -84,6 +84,11 @@
 @stop
 
 @section('auth_footer')
+    <div class="social-auth-links text-center mt-2 mb-3">
+        <a href="/auth/google"  class="btn btn-block btn-danger">
+            <i class="fab fa-google-plus mr-2"></i> Login dengan Google
+        </a>
+    </div>
     {{-- Password reset link --}}
     {{-- @if($password_reset_url)
         <p class="my-0">

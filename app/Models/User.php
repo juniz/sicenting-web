@@ -22,7 +22,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'username',
+        'email',
         'password',
     ];
 
@@ -53,5 +53,10 @@ class User extends Authenticatable
     public function adminlte_desc()
     {
         return 'That\'s a nice guy';
+    }
+
+    public function socialAccounts()
+    {
+        return $this->hasMany(SocialAccount::class);
     }
 }

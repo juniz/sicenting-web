@@ -12,49 +12,51 @@
         <div class="card-body">
         <div class="tab-content">
         <div class="tab-pane active" id="tab_1">
-            <table id="tablePemeriksaan" class="table table-striped table-responsive" style="width: 100%">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Tanggal</th>
-                        <th>Berat</th>
-                        <th>Tinggi</th>
-                        <th>Usia</th>
-                        <th>BB/U</th>
-                        <th>Z-Score BB/U</th>
-                        <th>TB/U</th>
-                        <th>Z-Score TB/U</th>
-                        <th>BB/TB</th>
-                        <th>Z-Score BB/TB</th>
-                        <th>Aksi</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($pemeriksaan as $p)
+            <div class="table-responsive">
+                <table id="tablePemeriksaan" class="table table-striped" style="width: 100%">
+                    <thead class="thead-dark">
                         <tr>
-                            <td>{{ \Carbon\Carbon::parse($p['tgl_pengukuran'])->format('d-m-Y') }}</td>
-                            <td>{{ $p['berat'] }}</td>
-                            <td>{{ $p['tinggi'] }}</td>
-                            <td>{{ $p['usia'] }} bulan</td>
-                            <td class="@if(str_contains($p['bb_u'], 'kurang')) text-danger @else text-dark @endif ">{{ $p['bb_u'] }}</td>
-                            <td>{{ $p['zs_bbu'] }}</td>
-                            <td class="@if(str_contains($p['tb_u'], 'pendek') || str_contains($p['tb_u'], 'Pendek')) text-danger @else text-dark @endif ">{{ $p['tb_u'] }}</td>
-                            <td>{{ $p['zs_tbu'] }}</td>
-                            <td class="@if(str_contains($p['bb_tb'], 'kurang')) text-danger @else text-dark @endif ">{{ $p['bb_tb'] }}</td>
-                            <td>{{ $p['zs_bbtb'] }}</td>
-                            <td>
-                                <div class="btn-group">
-                                    <button wire:click="hasilPemeriksaan('{{ $p['id'] }}')" type="button" class="btn btn-sm btn-outline-info">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button wire:click="konfirmasiHapus('{{ $p['id'] }}')" type="button" class="btn btn-sm btn-outline-danger">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
+                            <th>Tanggal</th>
+                            <th>Berat</th>
+                            <th>Tinggi</th>
+                            <th>Usia</th>
+                            <th>BB/U</th>
+                            <th>Z-Score BB/U</th>
+                            <th>TB/U</th>
+                            <th>Z-Score TB/U</th>
+                            <th>BB/TB</th>
+                            <th>Z-Score BB/TB</th>
+                            <th>Aksi</th>
                         </tr>
-                        @endforeach
-                    </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                            @foreach($pemeriksaan as $p)
+                            <tr>
+                                <td>{{ \Carbon\Carbon::parse($p['tgl_pengukuran'])->format('d-m-Y') }}</td>
+                                <td>{{ $p['berat'] }}</td>
+                                <td>{{ $p['tinggi'] }}</td>
+                                <td>{{ $p['usia'] }} bulan</td>
+                                <td class="@if(str_contains($p['bb_u'], 'kurang')) text-danger @else text-dark @endif ">{{ $p['bb_u'] }}</td>
+                                <td>{{ $p['zs_bbu'] }}</td>
+                                <td class="@if(str_contains($p['tb_u'], 'pendek') || str_contains($p['tb_u'], 'Pendek')) text-danger @else text-dark @endif ">{{ $p['tb_u'] }}</td>
+                                <td>{{ $p['zs_tbu'] }}</td>
+                                <td class="@if(str_contains($p['bb_tb'], 'kurang')) text-danger @else text-dark @endif ">{{ $p['bb_tb'] }}</td>
+                                <td>{{ $p['zs_bbtb'] }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button wire:click="hasilPemeriksaan('{{ $p['id'] }}')" type="button" class="btn btn-sm btn-outline-info">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button wire:click="konfirmasiHapus('{{ $p['id'] }}')" type="button" class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                </table>
+            </div>
         </div>
         
         <div class="tab-pane" id="tab_2">

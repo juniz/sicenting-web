@@ -40,32 +40,62 @@
 @push('js')
 <script>
     $(function(){
+        var label = "{{$kecamatan}}";
+        var pendek = "{{$jmlPendekKec}}";
+        var sangatPendek = "{{$jmlSangatPendekKec}}";
+        var kecamatan = label.replace(/&quot;/g, '"');
+        var jmlPendekKec = pendek.replace(/&quot;/g, '"');
+        var jmlSangatPendekKec = sangatPendek.replace(/&quot;/g, '"');
         var areaChartData = {
-            labels  : ['Bagor', 'Baron', 'Berbek', 'Gondang', 'Jatikalen', 'Kertosono', 'Lengkong', 'Loceret', 'Nganjuk', 'Ngetos', 'Ngluyu', 'Ngronggot', 'Pace', 'Patianrowo', 'Prambon'],
+            labels  : JSON.parse(kecamatan),
             datasets: [
                 {
-                label               : 'Pendek',
-                backgroundColor     : 'rgba(60,141,188,0.9)',
-                borderColor         : 'rgba(60,141,188,0.8)',
-                pointRadius          : false,
-                pointColor          : '#3b8bba',
-                pointStrokeColor    : 'rgba(60,141,188,1)',
-                pointHighlightFill  : '#fff',
-                pointHighlightStroke: 'rgba(60,141,188,1)',
-                data                : [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86, 27, 90, 28]
+                    label               : 'Pendek',
+                    backgroundColor     : 'rgba(60,141,188,0.9)',
+                    borderColor         : 'rgba(60,141,188,0.8)',
+                    pointRadius          : false,
+                    pointColor          : '#3b8bba',
+                    pointStrokeColor    : 'rgba(60,141,188,1)',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                    data                : JSON.parse(jmlPendekKec)
                 },
                 {
-                label               : 'Sangat Pendek',
-                backgroundColor     : 'rgba(210, 214, 222, 1)',
-                borderColor         : 'rgba(210, 214, 222, 1)',
-                pointRadius         : false,
-                pointColor          : 'rgba(210, 214, 222, 1)',
-                pointStrokeColor    : '#c1c7d1',
-                pointHighlightFill  : '#fff',
-                pointHighlightStroke: 'rgba(220,220,220,1)',
-                data                : [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40, 32]
+                    label               : 'Sangat Pendek',
+                    backgroundColor     : 'rgba(210, 214, 222, 1)',
+                    borderColor         : 'rgba(210, 214, 222, 1)',
+                    pointRadius         : false,
+                    pointColor          : 'rgba(210, 214, 222, 1)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(220,220,220,1)',
+                    data                : JSON.parse(jmlSangatPendekKec)
                 },
-            ]
+            ],
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    enabled: true,
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                onClick: graphClickEvent
+            }
+        }
+
+        function graphClickEvent(event, array){
+            if(array[0]){
+            alert('test')
+            }
         }
 
         var donutData        = {
@@ -75,7 +105,7 @@
             ],
             datasets: [
                 {
-                data: [58,83],
+                data: ["{{$jmlPendek}}", "{{$jmlSangatPendek}}"],
                 backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
                 }
             ]
@@ -89,7 +119,7 @@
             ],
             datasets: [
                 {
-                data: [58,83, 35],
+                data: ["{{$jmlGiziLebih}}", "{{$jmlGiziBaik}}", "{{$jmlGiziKurang}}"],
                 backgroundColor : ['#00c0ef', '#3c8dbc', '#d2d6de'],
                 }
             ]
