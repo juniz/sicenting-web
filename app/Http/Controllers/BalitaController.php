@@ -8,6 +8,11 @@ use App\Models\Balita;
 
 class BalitaController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('role:Super Admin', ['only' => ['index']]);
+    }
+
     public function index()
     {
         $balita = Balita::orderBy('updated_at', 'DESC')->get();

@@ -8,9 +8,11 @@
 
 @section('content')
     <x-adminlte-card title="Data balita">
+        @can('edit pemeriksaan')
         <x-slot name="toolsSlot">
             <a name="tambah" id="tambah" class="btn btn-sm btn-primary" href="{{ url('/balita/tambah') }}" role="button">Tambah</a>
         </x-slot>
+        @endcan
     
         @php
             $heads = ['Nama', 'Jns Kelamin', 'Tgl Lahir', 'Nama Orang Tua', 'Aksi'];

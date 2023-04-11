@@ -315,13 +315,19 @@ return [
             'text'        => 'Dashboard',
             'url'         => 'dashboard',
             'icon'        => 'far fa-fw fa-chart-line',
-            'can'         =>  'Admin'
+            
         ],
         [
             'text'        => 'Balita',
             'url'         => 'balita',
             'icon'        => 'far fa-fw fa-baby',
-            'can'         =>  'balita'
+            'can'         => '',
+            
+        ],
+        [
+            'text'        => 'Report',
+            'url'         => 'report',
+            'icon'        => 'far fa-fw fa-baby',
         ],
         // [
         //     'text'    => 'Standart',
@@ -365,12 +371,12 @@ return [
         [
             'text'        => 'Roles',
             'url'         => 'roles',
-            'icon'        => 'far fa-fw fa-building',
+            'icon'        => 'far fa-fw fa-code-branch',
         ],
         [
             'text'        => 'Permission',
             'url'         => 'permissions',
-            'icon'        => 'far fa-fw fa-building',
+            'icon'        => 'far fa-fw fa-sitemap',
         ],
         [
             'text'        => 'Users',
@@ -532,6 +538,71 @@ return [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'vendor/jquery-mapael/maps/world_countries.min.js',
+                ],
+            ],
+        ],
+        'DateRange' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/moment/moment.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/daterangepicker/daterangepicker.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/daterangepicker/daterangepicker.css',
+                ],
+            ],
+        ],
+        'DatatablesPlugins' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/dataTables.buttons.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.bootstrap4.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.html5.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.print.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/jszip/jszip.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/pdfmake/pdfmake.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/pdfmake/vfs_fonts.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/css/buttons.bootstrap4.min.css',
                 ],
             ],
         ],

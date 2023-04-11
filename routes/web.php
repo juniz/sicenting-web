@@ -68,5 +68,7 @@ Route::middleware('auth')->group(function(){
     Route::put('/permissions/{id}', [App\Http\Controllers\PermissionsController::class, 'update'])->name('permissions.update');
     Route::delete('/permissions/{id}', [App\Http\Controllers\PermissionsController::class, 'destroy'])->name('permissions.destroy');
     Route::post('/permissions', [App\Http\Controllers\PermissionsController::class, 'store'])->name('permissions.store');
+
+    Route::get('/report', [App\Http\Controllers\ReportController::class, 'index'])->name('report');
 });
 
