@@ -54,5 +54,19 @@ Route::middleware('auth')->group(function(){
     Route::post('/users', [App\Http\Controllers\UsersController::class, 'simpan']);
 
     Route::get('/units', [App\Http\Controllers\UnitsController::class, 'index']);
+
+    Route::get('/roles', [App\Http\Controllers\RoleController::class, 'index']);
+    Route::get('/roles/add', [App\Http\Controllers\RoleController::class, 'create']);
+    Route::get('/roles/{id}', [App\Http\Controllers\RoleController::class, 'edit'])->name('roles.edit');
+    Route::put('/roles/{id}', [App\Http\Controllers\RoleController::class, 'update'])->name('roles.update');
+    Route::delete('/roles/{id}', [App\Http\Controllers\RoleController::class, 'destroy'])->name('roles.destroy');
+    Route::post('/roles', [App\Http\Controllers\RoleController::class, 'store'])->name('roles.store');
+
+    Route::get('/permissions', [App\Http\Controllers\PermissionsController::class, 'index']);
+    Route::get('/permissions/add', [App\Http\Controllers\PermissionsController::class, 'create']);
+    Route::get('/permissions/{id}', [App\Http\Controllers\PermissionsController::class, 'edit']);
+    Route::put('/permissions/{id}', [App\Http\Controllers\PermissionsController::class, 'update'])->name('permissions.update');
+    Route::delete('/permissions/{id}', [App\Http\Controllers\PermissionsController::class, 'destroy'])->name('permissions.destroy');
+    Route::post('/permissions', [App\Http\Controllers\PermissionsController::class, 'store'])->name('permissions.store');
 });
 

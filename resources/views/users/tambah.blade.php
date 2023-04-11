@@ -7,24 +7,19 @@
 @stop
 
 @section('content')
+@include('flash-message')
     <div class="card">
         <div class="card-body">
-            @if ($message = Session::get('error'))
-            <div class="alert alert-danger alert-block">
-                <button type="button" class="close" data-dismiss="alert">×</button>	
-                <strong>{{ $message }}</strong>
-            </div>
-            @endif
             <form action="{{ url('/users') }}" method="POST">
                 @csrf
                 <x-adminlte-input name="name" label="Nama" value="{{ old('name') }}"/>
-                <x-adminlte-input name="username" label="Username" value="{{ old('username') }}"/>
+                <x-adminlte-input name="email" label="Email" value="{{ old('email') }}"/>
                 <x-adminlte-select2 name="unit" label="Pilih Unit">
                     @foreach($units as $unit)
                         <option value="{{ $unit->id }}">{{ $unit->nama }}</option>
                     @endforeach
                 </x-adminlte-select2>
-                <x-adminlte-select2 name="role" label="Pilih Role">
+                <x-adminlte-select2 id="role" name="role[]" label="Pilih Role" data-placeholder="Pilih role......" multiple>
                     @foreach($roles as $role)
                         <option value="{{ $role->id }}">{{ $role->name }}</option>
                     @endforeach

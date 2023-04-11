@@ -24,7 +24,9 @@ class UsersController extends Controller
     public function detail($id)
     {
         $user = User::find($id);
-        return view('users.edit', compact('user'));
+        $roles = Role::all();
+        $units = Unit::all();
+        return view('users.edit', compact('user', 'roles', 'units'));
     }
 
     public function edit(Request $request, $id)
@@ -33,9 +35,14 @@ class UsersController extends Controller
 
             $user = User::find($id);
             $user->name = $request->name;
-            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->unit_id = $request->unit;
             $user->password = bcrypt($request->password) ?? $user->password;
             $user->save();
+            $user->roles()->detach();
+            foreach($request->role as $role){
+                $user->assignRole($role);
+            }
             return redirect('/users')->with(['success' => 'Data berhasil diubah']);
 
         }catch(\Exception $ex){
@@ -55,21 +62,30 @@ class UsersController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:255',
-            'username' => 'required',
+            'email' => 'required|email',
             'password' => 'required|confirmed|min:6',
             'role' => 'required',
             'unit'  =>  'required'
+        ],[
+            'name.required' => 'Nama harus diisi',
+            'email.required' => 'Email harus diisi',
+            'password.required' => 'Password harus diisi',
+            'role.required' => 'Role harus diisi',
+            'unit.required' => 'Unit harus diisi'
         ]);
 
         try{
 
             $user = User::create([
                 'name' => $request->name,
-                'username' => $request->username,
+                'email' => $request->email,
+                'unit_id' => $request->unit,
                 'password' => bcrypt($request->password),
             ]);
 
-            $user->assignRole($request->role);
+            foreach($request->role as $role){
+                $user->assignRole($role);
+            }
 
             return redirect('/users')->with(['success' => 'Data berhasil ditambahkan']);
 

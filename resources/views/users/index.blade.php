@@ -7,6 +7,7 @@
 @stop
 
 @section('content')
+@include('flash-message')
     <div class="card">
         <div class="card-header">
             <div class="card-tools">
@@ -16,19 +17,15 @@
             </div>
         </div>
         <div class="card-body">
-            @if ($message = Session::get('success'))
-            <div class="alert alert-success alert-block">
-                <button type="button" class="close" data-dismiss="alert">×</button>	
-                <strong>{{ $message }}</strong>
-            </div>
-            @endif
             <div class="table-responsive">
                 <table id="tableUsers" class="table table-striped table-inverse" style="width: 100%">
                     <thead class="thead-dark">
                         <tr>
                             <th>Nama</th>
-                            <th>Username</th>
-                            <th>Password</th>
+                            <th>Email</th>
+                            <th>Unit</th>
+                            <th>Email</th>
+                            <th>Role</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -37,7 +34,13 @@
                         <tr>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>{{ $user->unit->nama ?? '' }}</td>
                             <td>{{ $user->password }}</td>
+                            <td>
+                                @foreach($user->roles as $role)
+                                    <span class="badge badge-primary">{{ $role->name }}</span>
+                                @endforeach
+                            </td>
                             <td>
                                 <a name="edit" id="edit" class="btn btn-success" href="{{ url('/users', $user->id) }}" role="button">
                                     <i class="fas fa-edit"></i>

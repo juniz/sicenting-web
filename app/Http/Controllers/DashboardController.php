@@ -33,7 +33,8 @@ class DashboardController extends Controller
     public function stuntingPerKec()
     {
         return DB::table('balita')
-                    ->selectRaw("balita.kecamatan,
+                    ->join('districts', 'balita.kecamatan', '=', 'districts.id')
+                    ->selectRaw("districts.name as kecamatan,
                     SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND tb_u = 'Pendek'ORDER BY updated_at DESC LIMIT 1),0)) as jmlPendek,
                     SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND tb_u = 'Sangat pendek' ORDER BY updated_at DESC LIMIT 1),0)) as jmlSangatPendek")
                     ->groupBy('balita.kecamatan')

@@ -315,49 +315,61 @@ return [
             'text'        => 'Dashboard',
             'url'         => 'dashboard',
             'icon'        => 'far fa-fw fa-chart-line',
+            'can'         =>  'Admin'
         ],
         [
             'text'        => 'Balita',
             'url'         => 'balita',
             'icon'        => 'far fa-fw fa-baby',
+            'can'         =>  'balita'
         ],
-        [
-            'text'    => 'Standart',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text'    => 'BB Menurut Umur',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'BB Laki',
-                            'url'  => 'standart/bbu-laki',
-                        ],
-                        [
-                            'text' => 'BB Perempuan',
-                            'url'  => 'standart/bbu-perempuan',
-                        ],
-                    ],
-                ],
-                [
-                    'text'    => 'PB Menurut Umur',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'PB Laki',
-                            'url'  => 'standart/pbu-laki',
-                        ],
-                        [
-                            'text' => 'PB Perempuan',
-                            'url'  => 'standart/pbu-perempuan',
-                        ],
-                    ],
-                ],
-            ],
-        ],
+        // [
+        //     'text'    => 'Standart',
+        //     'icon'    => 'fas fa-fw fa-share',
+        //     'submenu' => [
+        //         [
+        //             'text'    => 'BB Menurut Umur',
+        //             'url'     => '#',
+        //             'submenu' => [
+        //                 [
+        //                     'text' => 'BB Laki',
+        //                     'url'  => 'standart/bbu-laki',
+        //                 ],
+        //                 [
+        //                     'text' => 'BB Perempuan',
+        //                     'url'  => 'standart/bbu-perempuan',
+        //                 ],
+        //             ],
+        //         ],
+        //         [
+        //             'text'    => 'PB Menurut Umur',
+        //             'url'     => '#',
+        //             'submenu' => [
+        //                 [
+        //                     'text' => 'PB Laki',
+        //                     'url'  => 'standart/pbu-laki',
+        //                 ],
+        //                 [
+        //                     'text' => 'PB Perempuan',
+        //                     'url'  => 'standart/pbu-perempuan',
+        //                 ],
+        //             ],
+        //         ],
+        //     ],
+        // ],
         [
             'text'        => 'Units',
             'url'         => 'units',
+            'icon'        => 'far fa-fw fa-building',
+        ],
+        [
+            'text'        => 'Roles',
+            'url'         => 'roles',
+            'icon'        => 'far fa-fw fa-building',
+        ],
+        [
+            'text'        => 'Permission',
+            'url'         => 'permissions',
             'icon'        => 'far fa-fw fa-building',
         ],
         [
