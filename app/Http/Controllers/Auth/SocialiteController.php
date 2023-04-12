@@ -20,11 +20,15 @@ class SocialiteController extends Controller
         try {
 
             $user = Socialite::driver($provider)->stateless()->user();
-        } catch (Exception $e) {
-            return redirect()->back();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage() ?? 'Terjadi kesalahan');
         }
         // find or create user and send params user get from socialite and provider
         $authUser = $this->findOrCreateUser($user, $provider);
+
+        if(empty($authUser)){
+            return redirect()->back()->with('error', 'Email belum terdaftar');
+        }
 
         // login user
         Auth()->login($authUser, true);
@@ -47,17 +51,11 @@ class SocialiteController extends Controller
 
             // Jika belum ada
         } else {
-
+            
             // User berdasarkan email 
             $user = User::where('email', $socialUser->getEmail())->first();
-
-            // Jika Tidak ada user
-            if (!$user) {
-                // Create user baru
-                $user = User::create([
-                    'name'  => $socialUser->getName(),
-                    'email' => $socialUser->getEmail()
-                ]);
+            if(!$user){
+                return null;
             }
 
             // Buat Social Account baru
@@ -66,8 +64,19 @@ class SocialiteController extends Controller
                 'provider_name' => $provider
             ]);
 
-            // return user
             return $user;
+
+            // // Jika Tidak ada user
+            // if (!$user) {
+            //     // Create user baru
+            //     $user = User::create([
+            //         'name'  => $socialUser->getName(),
+            //         'email' => $socialUser->getEmail()
+            //     ]);
+            // }
+
+            // // return user
+            // return $user;
         }
     }
 }

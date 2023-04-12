@@ -8,10 +8,10 @@
 
 @section('content')
     <x-adminlte-card title="Data balita">
-        @can('edit pemeriksaan')
-        <x-slot name="toolsSlot">
-            <a name="tambah" id="tambah" class="btn btn-sm btn-primary" href="{{ url('/balita/tambah') }}" role="button">Tambah</a>
-        </x-slot>
+        @can('add balita')
+            <x-slot name="toolsSlot">
+                <a name="tambah" id="tambah" class="btn btn-sm btn-primary" href="{{ url('/balita/tambah') }}" role="button">Tambah</a>
+            </x-slot>
         @endcan
     
         @php
@@ -30,16 +30,20 @@
                             {{-- <button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
                                 <i class="fa fa-lg fa-fw fa-pen"></i>
                             </button> --}}
-                            <a class="btn btn-xs btn-default text-success mx-1 shadow" title="Details" href="{{ url('/balita', $item->id) }}">
-                                <i class="fa fa-lg fa-fw fa-eye"></i> Pengukuran
-                            </a>
-                            <form id="formDelete" action="{{ url('/balita', $item->id) }}" method="POST">
-                                @csrf
-                                @method("DELETE")
-                                <button id="deleteButton" class="btn btn-xs btn-default text-danger mx-1 shadow" title="Delete">
-                                    <i class="fa fa-lg fa-fw fa-trash"></i> Hapus
-                                </button>
-                            </form>
+                            @can('view pemeriksaan')
+                                <a class="btn btn-xs btn-default text-success mx-1 shadow" title="Details" href="{{ url('/balita', $item->id) }}">
+                                    <i class="fa fa-lg fa-fw fa-eye"></i> Pengukuran
+                                </a>
+                            @endcan
+                            @can('delete balita')
+                                <form id="formDelete" action="{{ url('/balita', $item->id) }}" method="POST">
+                                    @csrf
+                                    @method("DELETE")
+                                    <button id="deleteButton" class="btn btn-xs btn-default text-danger mx-1 shadow" title="Delete">
+                                        <i class="fa fa-lg fa-fw fa-trash"></i> Hapus
+                                    </button>
+                                </form>
+                            @endcan
                         </div>
                     </td>
                 </tr>

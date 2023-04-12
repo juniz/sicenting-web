@@ -24,7 +24,7 @@
                             <th>Nama</th>
                             <th>Email</th>
                             <th>Unit</th>
-                            <th>Email</th>
+                            <th>Password</th>
                             <th>Role</th>
                             <th>Aksi</th>
                         </tr>

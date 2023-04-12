@@ -315,19 +315,21 @@ return [
             'text'        => 'Dashboard',
             'url'         => 'dashboard',
             'icon'        => 'far fa-fw fa-chart-line',
+            'can'         => 'view dashboard',
             
         ],
         [
             'text'        => 'Balita',
             'url'         => 'balita',
             'icon'        => 'far fa-fw fa-baby',
-            'can'         => '',
+            'can'         => 'view balita',
             
         ],
         [
             'text'        => 'Report',
             'url'         => 'report',
             'icon'        => 'far fa-fw fa-baby',
+            'can'         => 'view report',
         ],
         // [
         //     'text'    => 'Standart',
@@ -367,21 +369,25 @@ return [
             'text'        => 'Units',
             'url'         => 'units',
             'icon'        => 'far fa-fw fa-building',
+            'can'         => 'view units',
         ],
         [
             'text'        => 'Roles',
             'url'         => 'roles',
             'icon'        => 'far fa-fw fa-code-branch',
+            'can'         => 'view role',
         ],
         [
             'text'        => 'Permission',
             'url'         => 'permissions',
             'icon'        => 'far fa-fw fa-sitemap',
+            'can'         => 'view permission',
         ],
         [
             'text'        => 'Users',
             'url'         => 'users',
             'icon'        => 'far fa-fw fa-users',
+            'can'         => 'view user',
         ],
         // ['header' => 'labels'],
         // [

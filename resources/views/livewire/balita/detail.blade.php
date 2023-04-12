@@ -3,7 +3,9 @@
         <div class="card-header">
             <h3 class="card-title">Data Balita</h3>
             <div class="card-tools">
-                <a name="tambahBalita" id="tambahBalita" class="btn btn-sm btn-primary" href="{{ url('/balita/tambah') }}" role="button">Tambah</a>
+                @can('add balita')
+                    <a name="tambahBalita" id="tambahBalita" class="btn btn-sm btn-primary" href="{{ url('/balita/tambah') }}" role="button">Tambah</a>
+                @endcan
             </div>
         </div>
         <div class="card-body">

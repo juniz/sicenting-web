@@ -100,9 +100,7 @@ class RoleController extends Controller
             $role = Role::find($id);
             $role->name = $request->name;
             $role->save();
-            if(!empty($role->permission)){
-                $role->syncPermissions($request->permissions);
-            }
+            $role->syncPermissions($request->permissions);
             return redirect()->to('roles')->with('success', 'Berhasil mengubah data');
         } catch (Exception $ex) {
             return redirect()->back()->with('error', $ex->getMessage() ?? 'Terjadi kesalahan');

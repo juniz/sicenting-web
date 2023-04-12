@@ -47,9 +47,11 @@
                                         <button wire:click="hasilPemeriksaan('{{ $p['id'] }}')" type="button" class="btn btn-sm btn-outline-info">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button wire:click="konfirmasiHapus('{{ $p['id'] }}')" type="button" class="btn btn-sm btn-outline-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                        @can('delete pemeriksaan')
+                                            <button wire:click="konfirmasiHapus('{{ $p['id'] }}')" type="button" class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

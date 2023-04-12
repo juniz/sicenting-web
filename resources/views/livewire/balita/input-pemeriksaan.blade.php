@@ -32,18 +32,20 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                    <div wire:loading.delay>
-                        <div class="spinner-grow text-success" role="status">
+                    @can('add pemeriksaan')
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <div wire:loading.delay>
+                            <div class="spinner-grow text-success" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-danger" role="status">
                             <span class="sr-only">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-warning" role="status">
+                            <span class="sr-only">Loading...</span>
+                            </div>
                         </div>
-                        <div class="spinner-grow text-danger" role="status">
-                        <span class="sr-only">Loading...</span>
-                        </div>
-                        <div class="spinner-grow text-warning" role="status">
-                        <span class="sr-only">Loading...</span>
-                        </div>
-                    </div>
+                    @endcan
                 </div>
             </div>
         </form>
