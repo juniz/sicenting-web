@@ -15,30 +15,31 @@
         @endcan
     
         @php
-            $heads = ['Nama', 'Jns Kelamin', 'Tgl Lahir', 'Nama Orang Tua', 'Aksi'];
+            $heads = ['Nama', 'Jns Kelamin', 'Tgl Lahir', 'Nama Orang Tua', 'Alamat', 'Aksi'];
         @endphp
-        <x-adminlte-datatable id="table1" :heads="$heads" :config="$config" head-theme="dark">
+        <x-adminlte-datatable id="table1" :heads="$heads" :config="$config" head-theme="dark" striped hoverable bordered>
             @foreach ($balita as $item)
                 <tr>
                     <td>{{ $item->nama }}</td>
                     <td>{{ $item->jns_kelamin == 'L' ? 'Laki-Laki' : 'Perempuan' }}</td>
                     <td>{{ $item->tgl_lahir }}</td>
                     <td>{{ $item->nama_ortu }}</td>
+                    <td>{{ $item->alamat }}</td>
                     <td>
                         <div class="d-flex">
                             {{-- <button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
                                 <i class="fa fa-lg fa-fw fa-pen"></i>
                             </button> --}}
+                            <a class="btn btn-xs btn-default text-success mx-1 shadow" title="Details" href="{{ url('/balita', $item->id) }}">
+                                <i class="fa fa-lg fa-fw fa-eye"></i> Pengukuran
+                            </a>
                             <form id="formDelete" action="{{ url('/balita', $item->id) }}" method="POST">
                                 @csrf
                                 @method("DELETE")
                                 <button id="deleteButton" class="btn btn-xs btn-default text-danger mx-1 shadow" title="Delete">
-                                    <i class="fa fa-lg fa-fw fa-trash"></i>
+                                    <i class="fa fa-lg fa-fw fa-trash"></i> Hapus
                                 </button>
                             </form>
-                            <a class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details" href="{{ url('/balita', $item->id) }}">
-                                <i class="fa fa-lg fa-fw fa-eye"></i>
-                            </a>
                         </div>
                     </td>
                 </tr>

@@ -25,7 +25,7 @@ class ReportController extends Controller
         }
         $datas = DB::table('pemeriksaan')
                     ->join('balita', 'pemeriksaan.balita_id', '=', 'balita.id')
-                    ->whereBetween('pemeriksaan.created_at', [$start, $end])
+                    ->whereBetween('pemeriksaan.tgl_pengukuran', [$start, $end])
                     ->select('balita.nama', 'balita.jns_kelamin', 'balita.tgl_lahir', 'pemeriksaan.usia', 'pemeriksaan.created_at', 'pemeriksaan.berat', 'pemeriksaan.tinggi', 'pemeriksaan.lila', 'pemeriksaan.bb_u', 'pemeriksaan.zs_bbu','pemeriksaan.tb_u', 'zs_tbu', 'pemeriksaan.bb_tb', 'zs_bbtb')
                     ->get();
         return view('report.index', compact('heads', 'datas'));
