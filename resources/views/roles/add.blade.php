@@ -14,7 +14,7 @@
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Nama</label>
                 <div class="col-sm-9">
-                    <input name="name" type="text" class="form-control @error('name') is-invalid @enderror" >
+                    <input name="name" value="{{old('name')}}" type="text" class="form-control @error('name') is-invalid @enderror" >
                     @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
             </div>

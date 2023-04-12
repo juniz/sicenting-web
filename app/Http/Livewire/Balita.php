@@ -113,10 +113,18 @@ class Balita extends Component
 
         try{
 
-            BalitaModel::create($data);
+            $cek = BalitaModel::where('nama', $this->nama)->where('tgl_lahir', $this->tglLahir)->where('nama_ortu', strtoupper($this->namaOrtu))->first();
 
-            // $this->dispatchBrowserEvent('swal:balita', $this->toastResponse('Data berhasil ditambahkan'));
-            return redirect()->to('/balita');
+            if($cek){
+                $this->dispatchBrowserEvent('swal:balita', $this->toastResponse('Data sudah ada', 'error'));
+                return;
+            }else{
+                BalitaModel::create($data);
+
+                // $this->dispatchBrowserEvent('swal:balita', $this->toastResponse('Data berhasil ditambahkan'));
+                return redirect()->to('/balita');
+            }
+            
 
         }catch(\Exception $e){
                 

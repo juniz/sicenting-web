@@ -42,16 +42,16 @@ class RoleController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'permissions' => 'required'
         ], [
             'name.required' => 'Nama harus diisi',
-            'permissions.required' => 'Permissions harus diisi'
         ]);
         try {
             $role = new Role();
             $role->name = $request->name;
             $role->save();
-            $role->syncPermissions($request->permissions);
+            if(!empty($role->permission)){
+                $role->syncPermissions($request->permissions);
+            }
             return redirect()->to('roles')->with('success', 'Berhasil menambah data');
         } catch (Exception $ex) {
             return redirect()->back()->with('error', $ex->getMessage() ?? 'Terjadi kesalahan');
@@ -93,16 +93,16 @@ class RoleController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'permissions' => 'required'
         ], [
             'name.required' => 'Nama harus diisi',
-            'permissions.required' => 'Permissions harus diisi'
         ]);
         try {
             $role = Role::find($id);
             $role->name = $request->name;
-            $role->syncPermissions($request->permissions);
             $role->save();
+            if(!empty($role->permission)){
+                $role->syncPermissions($request->permissions);
+            }
             return redirect()->to('roles')->with('success', 'Berhasil mengubah data');
         } catch (Exception $ex) {
             return redirect()->back()->with('error', $ex->getMessage() ?? 'Terjadi kesalahan');

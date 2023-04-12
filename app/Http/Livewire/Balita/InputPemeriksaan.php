@@ -136,11 +136,9 @@ class InputPemeriksaan extends Component
         $this->validate([
             'tinggi' => 'required',
             'berat' => 'required',
-            'lila'  =>  'required',
         ],[
             'tinggi.required' => 'Tinggi badan tidak boleh kosong',
             'berat.required' => 'Berat badan tidak boleh kosong',
-            'lila.required' => 'Lingkar lengan tidak boleh kosong',
         ]);
 
         try{
@@ -155,7 +153,7 @@ class InputPemeriksaan extends Component
                     'tgl_pengukuran' => $this->tanggal,
                     'tinggi' => $this->tinggi,
                     'berat' => $this->berat,
-                    'lila'  =>  $this->lila,
+                    'lila'  =>  $this->lila ?? 0,
                     'bb_u' => $this->bbu,
                     'tb_u' => $this->tbu,
                     'bb_tb' => $this->bbtb,
@@ -172,7 +170,7 @@ class InputPemeriksaan extends Component
                     'tgl_pengukuran' => $this->tanggal,
                     'tinggi' => $this->tinggi,
                     'berat' => $this->berat,
-                    'lila'  =>  $this->lila,
+                    'lila'  =>  $this->lila ?? 0,
                     'balita_id' => $this->balita->id,
                     'bb_u' => $this->bbu,
                     'tb_u' => $this->tbu,
