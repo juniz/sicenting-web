@@ -83,17 +83,17 @@ class Balita extends Component
     public function simpan()
     {
         $this->validate([
-            'selectProv' => 'required',
-            'selectKab' => 'required',
-            'selectKec' => 'required',
-            'selectKel' => 'required',
+            // 'selectProv' => 'required',
+            // 'selectKab' => 'required',
+            // 'selectKec' => 'required',
+            // 'selectKel' => 'required',
             'nama' => 'required',
             'jnsKelamin' => 'required',
             'tglLahir' => 'required',
             'namaOrtu' => 'required',
-            'rt' => 'required',
-            'rw' => 'required',
-            'alamat' => 'required',
+            // 'rt' => 'required',
+            // 'rw' => 'required',
+            // 'alamat' => 'required',
         ]);
 
         $data = [
