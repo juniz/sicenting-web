@@ -31,5 +31,10 @@ class Pemeriksaan extends Model
         'zs_bbtb',
      ];
 
+     public function balita()
+     {
+         return $this->belongsTo(Balita::class);
+     }
+
      protected $table = 'pemeriksaan';
 }

@@ -2,33 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ReportController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $heads = ['No', 'Nama', 'JK', 'Tgl Lahir', 'Usia', 'Tgl Pengukuran', 'Berat', 'Tinggi', 'Lila', 'BB/U', 'ZS BB/U','TB/U', 'ZS TB/U', 'BB/TB', 'ZS BB/TB', 'Saran'];
-        if(!empty($request->tanggal)){
-            $tanggal = explode("-", $request->tanggal);
-            $start = date('Y-m-d', strtotime($tanggal[0]));
-            $end = date('Y-m-d', strtotime($tanggal[1]));
-        }else{
-            $start = date('Y-m-d');
-            $end = date('Y-m-d');
-        }
-        $datas = DB::table('pemeriksaan')
+        $user = User::find(auth()->user()->id);
+        $bb = DB::table('pemeriksaan')
                     ->join('balita', 'pemeriksaan.balita_id', '=', 'balita.id')
-                    ->whereBetween('pemeriksaan.tgl_pengukuran', [$start, $end])
-                    ->select('balita.nama', 'balita.jns_kelamin', 'balita.tgl_lahir', 'pemeriksaan.usia', 'pemeriksaan.created_at', 'pemeriksaan.berat', 'pemeriksaan.tinggi', 'pemeriksaan.lila', 'pemeriksaan.bb_u', 'pemeriksaan.zs_bbu','pemeriksaan.tb_u', 'zs_tbu', 'pemeriksaan.bb_tb', 'zs_bbtb')
-                    ->get();
-        return view('report.index', compact('heads', 'datas'));
+                    ->where('balita.user_id', '=', $user->id)
+                    ->where('bb_u', 'like', '%kurang%')
+                    ->where('tgl_pengukuran', 'like', '%'.date('Y-m-').'%')
+                    ->count();
+
+        $tb = DB::table('pemeriksaan')
+                    ->join('balita', 'pemeriksaan.balita_id', '=', 'balita.id')
+                    ->where('balita.user_id', '=', $user->id)
+                    ->where('tb_u', 'like', '%pendek%')
+                    ->where('tgl_pengukuran', 'like', '%'.date('Y-m-').'%')
+                    ->count();
+
+        $bbtb = DB::table('pemeriksaan')
+                    ->join('balita', 'pemeriksaan.balita_id', '=', 'balita.id')
+                    ->where('balita.user_id', '=', $user->id)
+                    ->where('bb_tb', 'like', '%kurang%')
+                    ->where('tgl_pengukuran', 'like', '%'.date('Y-m-').'%')
+                    ->count();
+        return view('profile.index', compact('user', 'bb', 'tb', 'bbtb'));
     }
 
     /**

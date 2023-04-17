@@ -41,6 +41,19 @@
                 <td>{{ $data->zs_tbu }}</td>
                 <td>{{ $data->bb_tb }}</td>
                 <td>{{ $data->zs_bbtb }}</td>
+                <td>
+                    <ul>
+                        @if(Str::contains($data->bb_u, 'kurang', true))
+                            <li class="text-danger">Konsul ahli gizi</li>
+                        @endif
+                        @if(Str::contains($data->tb_u, 'pendek', true))
+                            <li class="text-danger">Konsul dokter spesialis anak</li>
+                        @endif
+                        @if(Str::contains($data->bb_tb, 'kurang', true))
+                            <li class="text-danger">Pemberian makanan tambahan (PMT)</li>
+                        @endif
+                    </ul>
+                </td>
             </tr>
             @endforeach
         </x-adminlte-datatable>

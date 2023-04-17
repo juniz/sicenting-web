@@ -389,6 +389,12 @@ return [
             'icon'        => 'far fa-fw fa-users',
             'can'         => 'view user',
         ],
+        [
+            'text'        => 'Profile',
+            'url'         => 'profile',
+            'icon'        => 'far fa-fw fa-user',
+            'can'         => '',
+        ],
         // ['header' => 'labels'],
         // [
         //     'text'       => 'important',
