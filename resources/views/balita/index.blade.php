@@ -7,6 +7,7 @@
 @stop
 
 @section('content')
+    @include('flash-message')
     <x-adminlte-card title="Data balita">
         @can('add balita')
             <x-slot name="toolsSlot">

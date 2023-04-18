@@ -18,3 +18,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('kabupaten/{id}', App\Http\Controllers\Api\KabupatenController::class);
+Route::get('kecamatan/{id}', App\Http\Controllers\Api\KecamatanController::class);
+Route::get('kelurahan/{id}', App\Http\Controllers\Api\KelurahanController::class);
+

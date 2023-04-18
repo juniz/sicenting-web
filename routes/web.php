@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/balita/tambah', [App\Http\Controllers\BalitaController::class, 'tambah']);
     Route::delete('/balita/{id}', [App\Http\Controllers\BalitaController::class, 'hapus']);
     Route::get('/balita/{id}', [App\Http\Controllers\BalitaController::class, 'detail']);
+    Route::post('/balita', [App\Http\Controllers\BalitaController::class, 'store']);
 
     Route::get('/users', [App\Http\Controllers\UsersController::class, 'index']);
     Route::get('/users/tambah', [App\Http\Controllers\UsersController::class, 'tambah']);
