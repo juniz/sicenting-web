@@ -3,7 +3,7 @@
 @section('title', 'Laporan Pengukuran Balita Kabupaten Nganjuk')
 
 @section('content_header')
-    <h1>Laporan Pengukuran Balita Kabupaten Nganjuk</h1>
+    <h1>Laporan Pengukuran Balita</h1>
 @stop
 
 @section('content')
