@@ -9,13 +9,34 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <x-adminlte-card title="Grafik Stunting per Kecamatan">
+        <x-adminlte-card title="Grafik Stunting">
             <div class="chart">
                 <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
             </div>
         </x-adminlte-card>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-12">
+        <x-adminlte-card title="Grafik Status Gizi">
+            <div class="chart">
+                <canvas id="barGiziChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+            </div>
+        </x-adminlte-card>
+    </div>
+    <div class="col-md-12">
+        <x-adminlte-card title="Grafik Status Berat Badan">
+            <div class="chart">
+                <canvas id="barBadanChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+            </div>
+        </x-adminlte-card>
+    </div>
+    {{-- <div class="col-md-12">
+        <x-adminlte-card title="Grafik Konsul">
+            <div class="chart">
+                <canvas id="barKonsulChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+            </div>
+        </x-adminlte-card>
+    </div> --}}
+    {{-- <div class="col-md-6">
         <x-adminlte-card title="Grafik Stunting">
             <div class="chart">
                 <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
@@ -28,7 +49,7 @@
                 <canvas id="pieChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
             </div>
         </x-adminlte-card>
-    </div>
+    </div> --}}
 </div>
 {{-- <x-adminlte-card title="Map" >
     <div class="containerMap">
@@ -40,36 +61,193 @@
 @push('js')
 <script>
     $(function(){
-        var label = "{{$kecamatan}}";
-        var pendek = "{{$jmlPendekKec}}";
+
+        var label = "{{$kabupaten}}";
+        var normal = "{{$jmlNormalKec}}";
         var sangatPendek = "{{$jmlSangatPendekKec}}";
         var kecamatan = label.replace(/&quot;/g, '"');
-        var jmlPendekKec = pendek.replace(/&quot;/g, '"');
+        var jmlNormalKec = normal.replace(/&quot;/g, '"');
         var jmlSangatPendekKec = sangatPendek.replace(/&quot;/g, '"');
         var areaChartData = {
             labels  : JSON.parse(kecamatan),
             datasets: [
                 {
-                    label               : 'Pendek',
-                    backgroundColor     : 'rgba(60,141,188,0.9)',
-                    borderColor         : 'rgba(60,141,188,0.8)',
-                    pointRadius          : false,
-                    pointColor          : '#3b8bba',
-                    pointStrokeColor    : 'rgba(60,141,188,1)',
-                    pointHighlightFill  : '#fff',
-                    pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data                : JSON.parse(jmlPendekKec)
-                },
-                {
-                    label               : 'Sangat Pendek',
-                    backgroundColor     : 'rgba(210, 214, 222, 1)',
-                    borderColor         : 'rgba(210, 214, 222, 1)',
+                    label               : 'Tinggi Pendek',
+                    backgroundColor     : 'rgb(242, 38, 19)',
+                    borderColor         : 'rgb(242, 38, 19)',
                     pointRadius         : false,
-                    pointColor          : 'rgba(210, 214, 222, 1)',
+                    pointColor          : 'rgb(242, 38, 19)',
                     pointStrokeColor    : '#c1c7d1',
                     pointHighlightFill  : '#fff',
-                    pointHighlightStroke: 'rgba(220,220,220,1)',
+                    pointHighlightStroke: 'rgb(242, 38, 19)',
                     data                : JSON.parse(jmlSangatPendekKec)
+                },
+                {
+                    label               : 'Tinggi Normal',
+                    backgroundColor     : 'rgb(46, 204, 113)',
+                    borderColor         : 'rgb(46, 204, 113)',
+                    pointRadius          : false,
+                    pointColor          : '#3b8bba',
+                    pointStrokeColor    : 'rgb(46, 204, 113)',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgb(46, 204, 113)',
+                    data                : JSON.parse(jmlNormalKec)
+                },
+            ],
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    enabled: true,
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                onClick: graphClickEvent
+            }
+        }
+
+        var labelGiziKabupaten = "{{$jmlGiziKabupaten}}";
+        var jmlGiziNormal = "{{$jmlGiziNormal}}";
+        var jmlGiziBuruk = "{{$jmlGiziBuruk}}";
+        var jmlObesitas = "{{$jmlObesitas}}";
+        var giziKabupaten = labelGiziKabupaten.replace(/&quot;/g, '"');
+        var jmlNormalKab = jmlGiziNormal.replace(/&quot;/g, '"');
+        var jmlBurukKab = jmlGiziBuruk.replace(/&quot;/g, '"');
+        var jmlObesitas = jmlObesitas.replace(/&quot;/g, '"');
+        var areaChartGiziData = {
+            labels  : JSON.parse(giziKabupaten),
+            datasets: [
+                {
+                    label               : 'Obesitas',
+                    backgroundColor     : 'rgb(52, 45, 113)',
+                    borderColor         : 'rgb(52, 45, 113)',
+                    pointRadius         : false,
+                    pointColor          : 'rgb(52, 45, 113)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgb(52, 45, 113)',
+                    data                : JSON.parse(jmlBurukKab)
+                },
+                {
+                    label               : 'Gizi Buruk',
+                    backgroundColor     : 'rgb(242, 38, 19)',
+                    borderColor         : 'rgb(242, 38, 19)',
+                    pointRadius         : false,
+                    pointColor          : 'rgb(242, 38, 19)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgb(242, 38, 19)',
+                    data                : JSON.parse(jmlBurukKab)
+                },
+                {
+                    label               : 'Gizi Normal',
+                    backgroundColor     : 'rgb(46, 204, 113)',
+                    borderColor         : 'rgb(46, 204, 113)',
+                    pointRadius          : false,
+                    pointColor          : '#3b8bba',
+                    pointStrokeColor    : 'rgb(46, 204, 113)',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgb(46, 204, 113)',
+                    data                : JSON.parse(jmlNormalKab)
+                },
+            ],
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    enabled: true,
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                onClick: graphClickEvent
+            }
+        }
+
+        var labelBadanKabupaten = "{{$badanKabupaten}}";
+        var jmlBadanNormal = "{{$jmlBadanNormal}}";
+        var jmlBadanKurang = "{{$jmlBadanKurang}}";
+        var badanKabupaten = labelBadanKabupaten.replace(/&quot;/g, '"');
+        var jmlBadanNormal = jmlBadanNormal.replace(/&quot;/g, '"');
+        var jmlBadanKurang = jmlBadanKurang.replace(/&quot;/g, '"');
+        var areaChartBadanData = {
+            labels  : JSON.parse(badanKabupaten),
+            datasets: [
+                {
+                    label               : 'Berat Badan Kurang',
+                    backgroundColor     : 'rgb(242, 38, 19)',
+                    borderColor         : 'rgb(242, 38, 19)',
+                    pointRadius         : false,
+                    pointColor          : 'rgb(242, 38, 19)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgb(242, 38, 19)',
+                    data                : JSON.parse(jmlBadanKurang)
+                },
+                {
+                    label               : 'Berat Badan Normal',
+                    backgroundColor     : 'rgb(46, 204, 113)',
+                    borderColor         : 'rgb(46, 204, 113)',
+                    pointRadius          : false,
+                    pointColor          : '#3b8bba',
+                    pointStrokeColor    : 'rgb(46, 204, 113)',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgb(46, 204, 113)',
+                    data                : JSON.parse(jmlBadanNormal)
+                },
+            ],
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    enabled: true,
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                onClick: graphClickEvent
+            }
+        }
+
+        var labelKonsulKabupaten = "{{$konsulKabupaten}}";
+        var jmlKonsul = "{{$jmlKonsul}}";
+        var konsulKabupate = labelKonsulKabupaten.replace(/&quot;/g, '"');
+        var jmlKonsul = jmlKonsul.replace(/&quot;/g, '"');
+        var areaChartKonsulData = {
+            labels  : JSON.parse(konsulKabupate),
+            datasets: [
+                {
+                    label               : 'Jumlah Konsultasi',
+                    backgroundColor     : 'rgb(242, 38, 19)',
+                    borderColor         : 'rgb(242, 38, 19)',
+                    pointRadius         : false,
+                    pointColor          : 'rgb(242, 38, 19)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgb(242, 38, 19)',
+                    data                : JSON.parse(jmlKonsul)
                 },
             ],
             options: {
@@ -126,12 +304,78 @@
         }
 
         //-------------
-        //- BAR CHART -
+        //- BAR CHART STUNTING-
         //-------------
         var barChartCanvas = $('#barChart').get(0).getContext('2d')
         var barChartData = $.extend(true, {}, areaChartData)
         var temp0 = areaChartData.datasets[0]
         var temp1 = areaChartData.datasets[1]
+        barChartData.datasets[0] = temp1
+        barChartData.datasets[1] = temp0
+
+        var barChartOptions = {
+        responsive              : true,
+        maintainAspectRatio     : false,
+        datasetFill             : false
+        }
+
+        new Chart(barChartCanvas, {
+        type: 'bar',
+        data: barChartData,
+        options: barChartOptions
+        })
+
+        // -------------
+        // - BAR CHART GIZI-
+        // -------------
+        var barChartCanvas = $('#barGiziChart').get(0).getContext('2d')
+        var barChartData = $.extend(true, {}, areaChartGiziData)
+        var temp0 = areaChartGiziData.datasets[0]
+        var temp1 = areaChartGiziData.datasets[1]
+        barChartData.datasets[0] = temp1
+        barChartData.datasets[1] = temp0
+
+        var barChartOptions = {
+        responsive              : true,
+        maintainAspectRatio     : false,
+        datasetFill             : false
+        }
+
+        new Chart(barChartCanvas, {
+        type: 'bar',
+        data: barChartData,
+        options: barChartOptions
+        })
+
+        // -------------
+        // - BAR CHART BADAN-
+        // -------------
+        var barChartCanvas = $('#barBadanChart').get(0).getContext('2d')
+        var barChartData = $.extend(true, {}, areaChartBadanData)
+        var temp0 = areaChartBadanData.datasets[0]
+        var temp1 = areaChartBadanData.datasets[1]
+        barChartData.datasets[0] = temp1
+        barChartData.datasets[1] = temp0
+
+        var barChartOptions = {
+        responsive              : true,
+        maintainAspectRatio     : false,
+        datasetFill             : false
+        }
+
+        new Chart(barChartCanvas, {
+        type: 'bar',
+        data: barChartData,
+        options: barChartOptions
+        })
+
+        // -------------
+        // - BAR CHART KONSUL-
+        // -------------
+        var barChartCanvas = $('#barKonsulChart').get(0).getContext('2d')
+        var barChartData = $.extend(true, {}, areaChartKonsulData)
+        var temp0 = areaChartKonsulData.datasets[0]
+        var temp1 = areaChartKonsulData.datasets[1]
         barChartData.datasets[0] = temp1
         barChartData.datasets[1] = temp0
 

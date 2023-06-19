@@ -108,3 +108,17 @@
         </p>
     @endif --}}
 @stop
+
+@push('css')
+    <style>
+        /* .social-auth-links{
+            display: none;
+        } */
+        .login-page {
+            background-image: url("{{ url('assets/img/background.jpg') }}") !important;
+            background-size: cover !important;
+            /* background-repeat: no-repeat !important; */
+            /* background-position: center !important; */
+        }
+    </style>
+@endpush

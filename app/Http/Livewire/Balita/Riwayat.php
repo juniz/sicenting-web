@@ -12,11 +12,12 @@ use App\Models\BBTBLaki;
 use App\Models\BBTBPerempuan;
 use App\Traits\SwalResponse;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class Riwayat extends Component
 {
     use SwalResponse;
-    public $balita, $pemeriksaan, $usiaList, $usia, $tb, $tbuMedian, $tbuPlus2Sd, $tbuPlus3Sd, $tbuMin2Sd, $tbuMin3Sd, $tbu, $bbu, $bbtb, $bbuMedian, $bbuPlus2Sd, $bbuPlus3Sd, $bbuMin2Sd, $bbuMin3Sd, $bbtbMedian, $bbtbPlus2Sd, $bbtbPlus3Sd, $bbtbMin2Sd, $bbtbMin3Sd, $bbPemeriksaan, $tbPemeriksaan = [], $hasil = [];
+    public $balita, $pemeriksaan, $usiaList, $usia, $tb, $tbuMedian, $tbuPlus2Sd, $tbuPlus3Sd, $tbuMin2Sd, $tbuMin3Sd, $tbu, $bbu, $bbtb, $bbuMedian, $bbuPlus2Sd, $bbuPlus3Sd, $bbuMin2Sd, $bbuMin3Sd, $bbtbMedian, $bbtbPlus2Sd, $bbtbPlus3Sd, $bbtbMin2Sd, $bbtbMin3Sd, $bbPemeriksaan, $tbPemeriksaan = [], $hasil = [], $berat, $riwayat, $idPemeriksaan;
 
     protected $listeners = ['refresh' => 'refresh', 'hapusPemeriksaan' => 'hapusPemeriksaan'];
     public function render()
@@ -50,48 +51,62 @@ class Riwayat extends Component
         }
     }
 
-    public function hasilPemeriksaan($id)
+    public function simpanAssesment()
     {
-        $hasilBBU = '-';
-        $hasilBBTB = '-';
-        $hasilTBU = '-';
         try{
-
-            $data = Pemeriksaan::find($id);
-            // dd($data);
-            if(Str::contains($data->bb_u, 'kurang', true)){
-                $hasilBBU = 'Konsul ahli gizi';
-            }
-            if(Str::contains($data->tb_u, 'pendek', true)){
-                $hasilTBU = 'Konsul dokter spesialis anak';
-            }
-            if(Str::contains($data->bb_tb, 'kurang', true) || Str::contains($data->bb_tb, 'buruk', true)){
-                $hasilBBTB = 'Pemberian PMT';
-            }
-            
-
-            $this->hasil =  [
-                'hasil_bbu' =>  $hasilBBU,
-                'hasil_bbtb' =>  $hasilBBTB,
-                'hasil_tbu' =>  $hasilTBU,
-                'bbu'   =>  $data->bb_u,
-                'bbtb'  =>  $data->bb_tb,
-                'tbu'   =>  $data->tb_u,
-            ];
-
-            $this->dispatchBrowserEvent('modal:saran', [
-                'hasil_bbu' =>  $hasilBBU,
-                'hasil_bbtb' =>  $hasilBBTB,
-                'hasil_tbu' =>  $hasilTBU,
-                'bbu'   =>  $data->bb_u,
-                'bbtb'  =>  $data->bb_tb,
-                'tbu'   =>  $data->tb_u,
+            DB::table('assesment')->insert([
+                'id' => Str::uuid(),
+                'pemeriksaan_id' => $this->idPemeriksaan,
+                'berat' => $this->berat,
+                'riwayat' => $this->riwayat,
             ]);
+            $this->dispatchBrowserEvent('modal:saran:close');
+            $this->dispatchBrowserEvent('swal:toast', $this->toastResponse('Data berhasil disimpan'));
+            // $this->refresh();
 
         }catch(\Exception $e){
-                
-                $this->dispatchBrowserEvent('swal:toast', $this->toastResponse($e->getMessage() ?? 'Gagal mendapatkan data', 'error'));
+            $this->dispatchBrowserEvent('modal:saran:close');
+            $this->dispatchBrowserEvent('swal:toast', $this->toastResponse($e->getMessage() ?? 'Data gagal disimpan', 'error'));
         }
+    }
+
+    public function hasilPemeriksaan($id)
+    {
+        $this->idPemeriksaan = $id;
+        $this->dispatchBrowserEvent('modal:saran');
+        // $hasilBBU = '-';
+        // $hasilBBTB = '-';
+        // $hasilTBU = '-';
+        // try{
+        //     $this->idPemeriksaan = $id;
+        //     // $data = Pemeriksaan::find($id);
+        //     // // dd($data);
+        //     // if(Str::contains($data->bb_u, 'kurang', true)){
+        //     //     $hasilBBU = 'Konsul ahli gizi';
+        //     // }
+        //     // if(Str::contains($data->tb_u, 'pendek', true)){
+        //     //     $hasilTBU = 'Konsul dokter spesialis anak';
+        //     // }
+        //     // if(Str::contains($data->bb_tb, 'kurang', true) || Str::contains($data->bb_tb, 'buruk', true)){
+        //     //     $hasilBBTB = 'Pemberian PMT';
+        //     // }
+            
+
+        //     // $this->hasil =  [
+        //     //     'hasil_bbu' =>  $hasilBBU,
+        //     //     'hasil_bbtb' =>  $hasilBBTB,
+        //     //     'hasil_tbu' =>  $hasilTBU,
+        //     //     'bbu'   =>  $data->bb_u,
+        //     //     'bbtb'  =>  $data->bb_tb,
+        //     //     'tbu'   =>  $data->tb_u,
+        //     // ];
+
+        //     $this->dispatchBrowserEvent('modal:saran');
+
+        // }catch(\Exception $e){
+                
+        //         $this->dispatchBrowserEvent('swal:toast', $this->toastResponse($e->getMessage() ?? 'Gagal mendapatkan data', 'error'));
+        // }
     }
 
     public function refresh()

@@ -6,10 +6,14 @@ use Livewire\Component;
 use App\Models\Balita;
 use App\Models\Pemeriksaan;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
+use App\Traits\SwalResponse;
 
 class Detail extends Component
 {
-    public $balita, $umur, $hasil;
+    use SwalResponse;
+    public $balita, $umur, $hasil, $spAnak, $gizi, $catatanKonsul;
     public function render()
     {
         return view('livewire.balita.detail');
@@ -20,6 +24,43 @@ class Detail extends Component
         $this->balita = $balita;
         $this->hitungUmur();
         $this->hasil = $this->getHasilTerakhir();
+        $this->spAnak = DB::table('spesialis')->where('jns', 'Spesialis')->get(); 
+        $this->gizi = DB::table('spesialis')->where('jns', 'Gizi')->get();
+    }
+
+    public function hydrate()
+    {
+        $this->spAnak = DB::table('spesialis')->where('jns', 'Spesialis')->get(); 
+        $this->gizi = DB::table('spesialis')->where('jns', 'Gizi')->get();
+    }
+
+    public function kirimCatatanKonsul()
+    {
+        try{
+            DB::beginTransaction();
+            $this->validate([
+                'catatanKonsul' => 'required'
+            ]);
+            DB::table('konsul')->insert([
+                'balita_id' => $this->balita->id,
+                'catatan' => $this->catatanKonsul
+            ]);
+            DB::commit();
+            $this->reset('catatanKonsul');
+            $this->dispatchBrowserEvent('swal:toast', $this->toastResponse('Catatan konsul berhasil disimpan'));
+            // $this->alert('success', 'Catatan konsultasi berhasil dikirim');
+        }catch(\Exception $e){
+            DB::rollback();
+            $this->dispatchBrowserEvent('swal:toast', $this->toastResponse($e->getMessage() ?? 'Catatan konsul gagal disimpan', 'error'));
+        }
+    }
+
+    public function sendWAMessage()
+    {
+        $response = Http::get('https://api.whatsapp.com/send', [
+            'phone' => '628994750136',
+            'text' => 'Halo, saya ingin konsultasi tentang balita saya'
+        ]);
     }
 
     public function hitungUmur()
@@ -53,7 +94,7 @@ class Detail extends Component
 
     public function hasilBBTB($bbtb)
     {
-        if(Str::contains($bbtb, 'buruk', true)){
+        if(Str::contains($bbtb, 'buruk', true) || Str::contains($bbtb, 'kurang', true)){
             return 'Pemberian makanan tambahan (PMT)';
         }
         return 'Normal';

@@ -79,3 +79,14 @@
     @stack('js')
     @yield('js')
 @stop
+
+@push('css')
+    <style>
+        .login-page {
+            background-image: url("{{ url('assets/img/background.jpg') }}") !important;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+        }
+    </style>
+@endpush
