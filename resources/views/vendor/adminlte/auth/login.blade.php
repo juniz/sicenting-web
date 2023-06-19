@@ -131,8 +131,26 @@
             }
 
             .login-box {
-                margin-bottom: 200px !important;
+                margin-bottom: 320px !important;
             }
+
+            .logo-app {
+                width: 130px !important;
+                height: 130px !important;
+                object-fit: contain !important;
+                justify-content: center !important;
+            }
+        }
+
+        .logo-app{
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            justify-content: center;
+        }
+
+        .login-box {
+                margin-bottom: 150px !important;
         }
 
     </style>

@@ -17,7 +17,10 @@
 
 @section('body')
     <div class="{{ $auth_type ?? 'login' }}-box">
-
+        <div class="d-flex flex-row justify-content-center">
+            <img class="logo-app mt-0" src="{{ url('assets/icons/logo.png') }}" alt="logo">
+        </div>
+        
         {{-- Logo --}}
         <div class="{{ $auth_type ?? 'login' }}-logo">
             <a href="{{ $dashboard_url }}">
@@ -36,8 +39,8 @@
                             height="{{ config('adminlte.auth_logo.img.height') }}"
                          @endif>
                 @else
-                    <img src="{{ asset(config('adminlte.logo_img')) }}"
-                         alt="{{ config('adminlte.logo_img_alt') }}" height="50">
+                    {{-- <img src="{{ asset(config('adminlte.logo_img')) }}"
+                         alt="{{ config('adminlte.logo_img_alt') }}" height="50"> --}}
                 @endif
 
                 {{-- Logo Label --}}
@@ -80,13 +83,3 @@
     @yield('js')
 @stop
 
-@push('css')
-    <style>
-        .login-page {
-            background-image: url("{{ url('assets/img/background.jpg') }}") !important;
-            background-size: cover !important;
-            background-repeat: no-repeat !important;
-            background-position: center !important;
-        }
-    </style>
-@endpush
