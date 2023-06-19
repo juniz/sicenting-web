@@ -115,10 +115,25 @@
             display: none;
         } */
         .login-page {
-            background-image: url("{{ url('assets/img/background.jpg') }}") !important;
+            background-image: url("{{ url('assets/img/background.png') }}") !important;
             background-size: cover !important;
-            /* background-repeat: no-repeat !important; */
-            /* background-position: center !important; */
+            background-attachment: fixed !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
         }
+        @media only screen and (max-width: 850px) {
+            .login-page {
+                background-image: url("{{ url('assets/img/mobile.png') }}") !important;
+                background-size: cover !important;
+                /* background-attachment: fixed !important; */
+                background-repeat: no-repeat !important;
+                background-position: center !important;
+            }
+
+            .login-box {
+                margin-bottom: 200px !important;
+            }
+        }
+
     </style>
 @endpush
