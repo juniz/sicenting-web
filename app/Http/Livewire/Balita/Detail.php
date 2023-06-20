@@ -13,7 +13,7 @@ use App\Traits\SwalResponse;
 class Detail extends Component
 {
     use SwalResponse;
-    public $balita, $umur, $hasil, $spAnak, $gizi, $catatanKonsul;
+    public $balita, $umur, $hasil, $spAnak, $gizi, $catatanKonsul, $rsJajaran;
     public function render()
     {
         return view('livewire.balita.detail');
@@ -24,14 +24,16 @@ class Detail extends Component
         $this->balita = $balita;
         $this->hitungUmur();
         $this->hasil = $this->getHasilTerakhir();
-        $this->spAnak = DB::table('spesialis')->where('jns', 'Spesialis')->get(); 
+        // $this->spAnak = DB::table('spesialis')->where('jns', 'Spesialis')->get(); 
         $this->gizi = DB::table('spesialis')->where('jns', 'Gizi')->get();
+        $this->rsJajaran = DB::table('unit')->get();
     }
 
     public function hydrate()
     {
-        $this->spAnak = DB::table('spesialis')->where('jns', 'Spesialis')->get(); 
+        // $this->spAnak = DB::table('spesialis')->where('jns', 'Spesialis')->get(); 
         $this->gizi = DB::table('spesialis')->where('jns', 'Gizi')->get();
+        $this->rsJajaran = DB::table('unit')->get();
     }
 
     public function kirimCatatanKonsul()

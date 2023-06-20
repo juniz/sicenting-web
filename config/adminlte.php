@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b class="h4">'.env('APP_NAME', 'SI-CENTING BHAYANGKARA').'</b>',
+    'logo' => '<b class="h4 app-name">'.env('APP_NAME', 'SI-CENTING BHAYANGKARA').'</b>',
     'logo_img' => 'assets/icons/icon.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,

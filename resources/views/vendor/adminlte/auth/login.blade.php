@@ -28,7 +28,7 @@
         {{-- Email field --}}
         <div class="input-group mb-3">
             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                   value="{{ old('email') }}" placeholder="{{ __('email') }}" autofocus>
+                   value="{{ old('email') }}" placeholder="{{ __('Email') }}" autofocus>
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -114,16 +114,21 @@
         /* .social-auth-links{
             display: none;
         } */
+
+        .login-box {
+                margin-bottom: 10vh !important;
+        }
+
         .login-page {
-            background-image: url("{{ url('assets/img/background.png') }}") !important;
+            background-image: url("{{ url('assets/img/background.jpg') }}") !important;
             background-size: cover !important;
-            background-attachment: fixed !important;
+                /* background-attachment: fixed !important; */
             background-repeat: no-repeat !important;
             background-position: center !important;
         }
         @media only screen and (max-width: 850px) {
             .login-page {
-                background-image: url("{{ url('assets/img/mobile.png') }}") !important;
+                background-image: url("{{ url('assets/img/mobile.jpg') }}") !important;
                 background-size: cover !important;
                 /* background-attachment: fixed !important; */
                 background-repeat: no-repeat !important;
@@ -131,26 +136,29 @@
             }
 
             .login-box {
-                margin-bottom: 320px !important;
+                margin-bottom: 45vh !important;
+                padding-bottom: 5%;
+            }
+
+            .app-name {
+                font-size: 1.5rem !important;
+                padding-top: 10px !important;
             }
 
             .logo-app {
-                width: 130px !important;
-                height: 130px !important;
+                width: 20vw !important;
+                height: 15vh !important;
                 object-fit: contain !important;
                 justify-content: center !important;
             }
         }
 
         .logo-app{
-            width: 150px;
-            height: 150px;
+            width: 30vw;
+            height: 30vh;
             object-fit: contain;
             justify-content: center;
-        }
-
-        .login-box {
-                margin-bottom: 150px !important;
+            /* visibility: hidden; */
         }
 
     </style>

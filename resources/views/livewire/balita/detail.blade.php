@@ -89,7 +89,7 @@
                                         : {{ $this->hasilTBU($hasil->tb_u) }}
                                         @if(str_contains($hasil->tb_u, 'pendek') || str_contains($hasil->tb_u, 'Pendek'))
                                         <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#konsulModal">
-                                            Lanjut Konsul Dokter Spesialis Anak
+                                            Lanjut Konsul Tim Stunting
                                         </button>
                                         @endif
                                     </td>
@@ -134,24 +134,25 @@
 
     <!-- Modal -->
     <div class="modal fade" id="konsulModal" tabindex="-1" role="dialog" aria-labelledby="konsulModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="saranModalLabel">Konsul Dokter Spesialis Anak</h5>
+                    <h5 class="modal-title" id="saranModalLabel">Rumah Sakit Bhayangkara</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <ul>
-                        @foreach($spAnak as $sp)
+                        @foreach($rsJajaran as $sp)
                             <li>
+
                                 {{ $sp->nama }}
                                 <a 
                                     type="button" 
                                     href="https://api.whatsapp.com/send?phone={{ $sp->telp }}&text=Halo%20dok%2C%20saya%20ingin%20konsultasi%20tentang%20pertumbuhan%20anak%0ANama%20:%20{{ $balita->nama }}%0AUmur%20:%20{{ $umur }}%0ABerat%20Badan%20:%20{{ $hasil->berat }}%0ATinggi%20Badan%20:%20{{ $hasil->tinggi}}%0ADengan%20hasil:%0ATinggi%20badan%20berdasarkan%20umur%20{{ $hasil->tb_u }}%0A%0ATerima%20kasih%20dok%0A%0A" 
                                     target="_blank" 
-                                    class="btn btn-success btn-sm">
+                                    class="btn btn-success btn-sm m-2">
                                     Kirim Pesan
                                 </a>
                             </li>
