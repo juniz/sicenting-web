@@ -129,7 +129,7 @@
         @media only screen and (max-width: 850px) {
             .login-page {
                 background-image: url("{{ url('assets/img/mobile.jpg') }}") !important;
-                background-size: contain !important;
+                background-size: cover !important;
                 background-attachment: fixed !important;
                 background-repeat: no-repeat !important;
                 /* background-position: center !important; */
