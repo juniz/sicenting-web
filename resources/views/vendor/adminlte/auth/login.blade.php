@@ -129,16 +129,15 @@
         @media only screen and (max-width: 850px) {
             .login-page {
                 background-image: url("{{ url('assets/img/mobile.jpg') }}") !important;
-                background-size: cover !important;
-                /* background-attachment: fixed !important; */
+                background-size: contain !important;
+                background-attachment: fixed !important;
                 background-repeat: no-repeat !important;
-                background-position: center !important;
+                /* background-position: center !important; */
 
             }
 
             .login-box {
-                margin-bottom: 45vh !important;
-                padding-bottom: 5%;
+                margin-bottom: 35vh !important;
             }
 
             .app-name {
