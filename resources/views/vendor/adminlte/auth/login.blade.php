@@ -133,6 +133,7 @@
                 /* background-attachment: fixed !important; */
                 background-repeat: no-repeat !important;
                 background-position: center !important;
+                
             }
 
             .login-box {
