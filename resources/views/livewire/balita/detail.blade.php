@@ -150,7 +150,7 @@
                                 {{ $sp->nama }}
                                 <a 
                                     type="button" 
-                                    href="https://api.whatsapp.com/send?phone={{ $sp->telp }}&text=Halo%20dok%2C%20saya%20ingin%20konsultasi%20tentang%20pertumbuhan%20anak%0ANama%20:%20{{ $balita->nama }}%0AUmur%20:%20{{ $umur }}%0ABerat%20Badan%20:%20{{ $hasil->berat }}%0ATinggi%20Badan%20:%20{{ $hasil->tinggi}}%0ADengan%20hasil:%0ATinggi%20badan%20berdasarkan%20umur%20{{ $hasil->tb_u }}%0A%0ATerima%20kasih%20dok%0A%0A" 
+                                    href="https://api.whatsapp.com/send?phone={{ $sp->telp ?? '' }}&text=Halo%20dok%2C%20saya%20ingin%20konsultasi%20tentang%20pertumbuhan%20anak%0ANama%20:%20{{ $balita->nama ?? '' }}%0AUmur%20:%20{{ $umur ?? '' }}%0ABerat%20Badan%20:%20{{ $hasil->berat ?? '' }}%0ATinggi%20Badan%20:%20{{ $hasil->tinggi ?? '' }}%0ADengan%20hasil:%0ATinggi%20badan%20berdasarkan%20umur%20{{ $hasil->tb_u ?? '' }}%0A%0ATerima%20kasih%20dok%0A%0A" 
                                     target="_blank" 
                                     class="btn btn-success btn-sm m-2">
                                     Kirim Pesan
@@ -183,7 +183,7 @@
                                 {{ $g->nama }}
                                 <a 
                                     type="button" 
-                                    href="https://api.whatsapp.com/send?phone={{ $g->telp }}&text=Halo%20saya%20ingin%20konsultasi%20tentang%20pertumbuhan%20anak%0ANama%20:%20{{ $balita->nama }}%0AUmur%20:%20{{ $umur }}%0ABerat%20Badan%20:%20{{ $hasil->berat }}%0ATinggi%20Badan%20:%20{{ $hasil->tinggi}}%0ADengan%20hasil:%0ATinggi%20badan%20berdasarkan%20umur%20{{ $hasil->tb_u }}%0A%0ATerima%20kasih%0A%0A" 
+                                    href="https://api.whatsapp.com/send?phone={{ $g->telp ?? '' }}&text=Halo%20saya%20ingin%20konsultasi%20tentang%20pertumbuhan%20anak%0ANama%20:%20{{ $balita->nama ?? '' }}%0AUmur%20:%20{{ $umur ?? '' }}%0ABerat%20Badan%20:%20{{ $hasil->berat ?? '' }}%0ATinggi%20Badan%20:%20{{ $hasil->tinggi ?? '' }}%0ADengan%20hasil:%0ATinggi%20badan%20berdasarkan%20umur%20{{ $hasil->tb_u ?? '' }}%0A%0ATerima%20kasih%0A%0A" 
                                     target="_blank" 
                                     class="btn btn-success btn-sm">
                                     Kirim Pesan
