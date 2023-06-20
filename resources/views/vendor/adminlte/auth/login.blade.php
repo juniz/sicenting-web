@@ -133,7 +133,7 @@
                 /* background-attachment: fixed !important; */
                 background-repeat: no-repeat !important;
                 background-position: center !important;
-                
+
             }
 
             .login-box {
@@ -151,6 +151,7 @@
                 height: 15vh !important;
                 object-fit: contain !important;
                 justify-content: center !important;
+                visibility: hidden !important;
             }
         }
 
