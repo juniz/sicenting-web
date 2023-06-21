@@ -116,8 +116,8 @@
         } */
 
         .login-box {
-                margin-bottom: 10vh !important;
-                padding-left: 1rem !important;
+                margin-bottom: 25vh !important;
+                padding-left: 25px !important;
         }
 
         .login-page {
@@ -156,8 +156,8 @@
         }
 
         .logo-app{
-            width: 30vw;
-            height: 30vh;
+            width: 25vw;
+            height: 25vh;
             object-fit: contain;
             justify-content: center;
             /* visibility: hidden; */
