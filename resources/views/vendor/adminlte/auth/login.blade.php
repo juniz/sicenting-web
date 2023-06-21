@@ -138,7 +138,7 @@
             }
 
             .login-box {
-                margin-bottom: 35vh !important;
+                margin-bottom: 30vh !important;
             }
 
             .app-name {
