@@ -118,6 +118,7 @@
         .login-box {
                 margin-bottom: 25vh !important;
                 padding-left: 25px !important;
+                /* height: 25% !important; */
         }
 
         .login-page {
@@ -127,13 +128,13 @@
             background-repeat: no-repeat !important;
             background-position: center !important;
         }
-        @media only screen and (max-width: 680px) {
+        @media only screen and (max-width: 1024px) {
             .login-page {
                 background-image: url("{{ url('assets/img/mobile.jpg') }}") !important;
                 background-size: cover !important;
                 background-attachment: fixed !important;
                 background-repeat: no-repeat !important;
-                /* background-position: center !important; */
+                background-position: center !important;
 
             }
 
