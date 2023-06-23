@@ -10,7 +10,7 @@
     @include('flash-message')
     <div class="row">
         <div class="col-md-4">
-            <x-adminlte-profile-widget name="{{ $user->name }}" desc="{{ $user->unit->nama }}" theme="lightblue"
+            <x-adminlte-profile-widget name="{{ $user->name ?? '' }}" desc="{{ $user->unit->nama ?? '' }}" theme="lightblue"
             img="https://picsum.photos/id/1/100" layout-type="classic">
             <x-adminlte-profile-row-item icon="fas fa-fw fa-user-friends" title="Berat badan kurang" text="{{$bb}}"
                 url="#" badge="teal"/>

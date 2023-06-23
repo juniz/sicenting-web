@@ -86,7 +86,7 @@
 
 @section('auth_footer')
     <div class="social-auth-links text-center mt-2 mb-3">
-        <a href="/auth/google"  class="btn btn-block btn-danger">
+        <a  class="btn btn-block btn-danger">
             <i class="fab fa-google-plus mr-2"></i> Login dengan Google
         </a>
     </div>
