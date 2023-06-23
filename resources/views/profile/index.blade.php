@@ -30,7 +30,7 @@
                         <x-adminlte-input name="email" label="Email" placeholder="Email" fgroup-class="col-md-12" value="{{ $user->email }}" disabled/>
                     </div>
                     <div class="col-md-6">
-                        <x-adminlte-input name="unit" label="Unit" placeholder="Unit" fgroup-class="col-md-12" value="{{ $user->unit->nama }}" disabled/>
+                        <x-adminlte-input name="unit" label="Unit" placeholder="Unit" fgroup-class="col-md-12" value="{{ $user->unit->nama ?? '' }}" disabled/>
                     </div>
                     <div class="col-md-6">
                         <x-adminlte-input name="role" label="Role" placeholder="Role" fgroup-class="col-md-12" value="{{ $user->roles->first()->name }}" disabled/>
