@@ -17,11 +17,13 @@ class BalitaController extends Controller
 
     public function index()
     {
-        $balita = Balita::orderBy('updated_at', 'DESC')->get();
+        $balita = Balita::where('user_id', auth()->user()->id)->orderBy('updated_at', 'DESC')->get();
+        $provinsi = Province::all();
         $config = ['ordering'   =>  false];
-        return view('balita.index',[
+        return view('balita.index', [
             'balita' => $balita,
-            'config' => $config
+            'config' => $config,
+            'provinsi' => $provinsi
         ]);
     }
 
@@ -45,7 +47,7 @@ class BalitaController extends Controller
             'rt' => 'required',
             'rw' => 'required',
             'alamat' => 'required',
-        ],[
+        ], [
             'nama.required' => 'Nama balita tidak boleh kosong',
             'tglLahir.required' => 'Tanggal lahir tidak boleh kosong',
             'jnsKelamin.required' => 'Jenis kelamin tidak boleh kosong',
@@ -59,7 +61,7 @@ class BalitaController extends Controller
             'alamat.required' => 'Alamat tidak boleh kosong',
         ]);
 
-        try{
+        try {
 
             $balita = new Balita;
             $balita->user_id = auth()->user()->id;
@@ -75,31 +77,28 @@ class BalitaController extends Controller
             $balita->rt = $request->rt;
             $balita->rw = $request->rw;
             $balita->save();
-    
-            return redirect()->to('/balita')->with('success', 'Data berhasil ditambahakan');
 
-        }catch(\Exception $e){
+            return redirect()->to('/balita')->with('success', 'Data berhasil ditambahakan');
+        } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage() ?? 'Terjadi kesalahan');
         }
-
     }
 
     public function hapus($id)
     {
-        try{
+        try {
 
             $balita = Balita::find($id);
             $balita->delete();
             return redirect()->to('/balita')->with('success', 'Data berhasil dihapus');
-
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage() ?? 'Terjadi kesalahan');
         }
     }
 
     public function detail($id)
     {
-        return view('balita.detail',[
+        return view('balita.detail', [
             'id' => $id,
             'balita' => Balita::find($id)
         ]);

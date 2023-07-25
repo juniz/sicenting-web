@@ -14,20 +14,21 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-        $heads = ['No', 'Nama', 'JK', 'Tgl Lahir', 'Usia', 'Tgl Pengukuran', 'Berat', 'Tinggi', 'Lila', 'BB/U', 'ZS BB/U','TB/U', 'ZS TB/U', 'BB/TB', 'ZS BB/TB', 'Saran'];
-        if(!empty($request->tanggal)){
+        $heads = ['No', 'Nama', 'JK', 'Tgl Lahir', 'Usia', 'Tgl Pengukuran', 'Berat', 'Tinggi', 'Lila', 'BB/U', 'ZS BB/U', 'TB/U', 'ZS TB/U', 'BB/TB', 'ZS BB/TB', 'Saran'];
+        if (!empty($request->tanggal)) {
             $tanggal = explode("-", $request->tanggal);
             $start = date('Y-m-d', strtotime($tanggal[0]));
             $end = date('Y-m-d', strtotime($tanggal[1]));
-        }else{
+        } else {
             $start = date('Y-m-d');
             $end = date('Y-m-d');
         }
         $datas = DB::table('pemeriksaan')
-                    ->join('balita', 'pemeriksaan.balita_id', '=', 'balita.id')
-                    ->whereBetween('pemeriksaan.tgl_pengukuran', [$start, $end])
-                    ->select('balita.nama', 'balita.jns_kelamin', 'balita.tgl_lahir', 'pemeriksaan.usia', 'pemeriksaan.created_at', 'pemeriksaan.berat', 'pemeriksaan.tinggi', 'pemeriksaan.lila', 'pemeriksaan.bb_u', 'pemeriksaan.zs_bbu','pemeriksaan.tb_u', 'zs_tbu', 'pemeriksaan.bb_tb', 'zs_bbtb')
-                    ->get();
+            ->join('balita', 'pemeriksaan.balita_id', '=', 'balita.id')
+            ->whereBetween('pemeriksaan.tgl_pengukuran', [$start, $end])
+            ->where('balita.user_id', '=', auth()->user()->id)
+            ->select('balita.nama', 'balita.jns_kelamin', 'balita.tgl_lahir', 'pemeriksaan.usia', 'pemeriksaan.created_at', 'pemeriksaan.berat', 'pemeriksaan.tinggi', 'pemeriksaan.lila', 'pemeriksaan.bb_u', 'pemeriksaan.zs_bbu', 'pemeriksaan.tb_u', 'zs_tbu', 'pemeriksaan.bb_tb', 'zs_bbtb')
+            ->get();
         return view('report.index', compact('heads', 'datas'));
     }
 
