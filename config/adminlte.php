@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b class="h4 app-name">'.env('APP_NAME', 'SI-CENTING BHAYANGKARA').'</b>',
+    'logo' => '<b class="h4 app-name">' . env('APP_NAME', 'SI-CENTING BHAYANGKARA') . '</b>',
     'logo_img' => 'assets/icons/icon.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -132,9 +132,9 @@ return [
     'usermenu_enabled' => true,
     'usermenu_header' => false,
     'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => false,
+    'usermenu_image' => true,
     'usermenu_desc' => false,
-    'usermenu_profile_url' => false,
+    'usermenu_profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -316,14 +316,14 @@ return [
             'url'         => 'dashboard',
             'icon'        => 'far fa-fw fa-chart-line',
             'can'         => 'view dashboard',
-            
+
         ],
         [
             'text'        => 'Balita',
             'url'         => 'balita',
             'icon'        => 'far fa-fw fa-baby',
             'can'         => 'view balita',
-            
+
         ],
         [
             'text'        => 'Report',
@@ -467,6 +467,31 @@ return [
                     'location' => 'vendor/datatables/css/dataTables.bootstrap4.min.css',
                 ],
             ],
+        ],
+        'moment' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/moment/moment.min.js',
+                ],
+            ],
+        ],
+        'tempusdominusBootstrap4' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css',
+                ],
+            ]
         ],
         'Select2' => [
             'active' => true,

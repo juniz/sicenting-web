@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'unit_id',
+        'avatar',
     ];
 
     /**
@@ -50,12 +52,17 @@ class User extends Authenticatable
 
     public function adminlte_image()
     {
-        return 'https://picsum.photos/id/1/100';
+        return $this->avatar ?? 'https://picsum.photos/300/300';
     }
 
     public function adminlte_desc()
     {
         return 'That\'s a nice guy';
+    }
+
+    public function adminlte_profile_url()
+    {
+        return 'profile';
     }
 
     public function socialAccounts()

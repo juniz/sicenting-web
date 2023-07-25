@@ -102,6 +102,12 @@
         @endif
     @endif
 
+    <script>
+        window.addEventListener('swal:toast',function(e){
+            Swal.fire(e.detail);
+        });
+    </script>
+
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
 

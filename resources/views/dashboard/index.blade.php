@@ -3,7 +3,31 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Selamat datang,</h1><h2>{{ Auth::user()->name }}</h2>
+<div class="d-flex flex-row justify-content-between">
+    <div>
+        <h1>Dashboard</h1>
+    </div>
+    {{-- <div>
+        <div class="row">
+            <div class="col">
+                <x-adminlte-select2 class="w-100" data-placeholder='Pilih provinsi' name="sel2Basic">
+                    <option />
+                    <option>Option 11111111111</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                </x-adminlte-select2>
+            </div>
+            <div class="col">
+                <x-adminlte-select2 class="w-100" data-placeholder='Pilih provinsi' name="sel2Basi">
+                    <option />
+                    <option>Option 11111111111</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
+                </x-adminlte-select2>
+            </div>
+        </div>
+    </div> --}}
+</div>
 @stop
 
 @section('content')
@@ -11,49 +35,56 @@
     <div class="col-md-12">
         <x-adminlte-card title="Grafik Stunting">
             <div class="chart">
-                <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                <canvas id="barChart"
+                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
             </div>
         </x-adminlte-card>
     </div>
     <div class="col-md-12">
         <x-adminlte-card title="Grafik Status Gizi">
             <div class="chart">
-                <canvas id="barGiziChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                <canvas id="barGiziChart"
+                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
             </div>
         </x-adminlte-card>
     </div>
     <div class="col-md-12">
         <x-adminlte-card title="Grafik Status Berat Badan">
             <div class="chart">
-                <canvas id="barBadanChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                <canvas id="barBadanChart"
+                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
             </div>
         </x-adminlte-card>
     </div>
     {{-- <div class="col-md-12">
         <x-adminlte-card title="Grafik Konsul">
             <div class="chart">
-                <canvas id="barKonsulChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                <canvas id="barKonsulChart"
+                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
             </div>
         </x-adminlte-card>
     </div> --}}
     {{-- <div class="col-md-6">
         <x-adminlte-card title="Grafik Stunting">
             <div class="chart">
-                <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                <canvas id="pieChart"
+                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
             </div>
         </x-adminlte-card>
     </div>
     <div class="col-md-6">
         <x-adminlte-card title="Grafik Gizi Buruk">
             <div class="chart">
-                <canvas id="pieChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                <canvas id="pieChart1"
+                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
             </div>
         </x-adminlte-card>
     </div> --}}
 </div>
-{{-- <x-adminlte-card title="Map" >
+{{-- <x-adminlte-card title="Map">
     <div class="containerMap">
-        <div class="map" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;">Alternative content</div>
+        <div class="map" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;">Alternative
+            content</div>
     </div>
 </x-adminlte-card> --}}
 @stop

@@ -7,6 +7,7 @@ use App\Models\SocialAccount;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
+use Spatie\Permission\Models\Role;
 
 class SocialiteController extends Controller
 {
@@ -54,8 +55,18 @@ class SocialiteController extends Controller
             
             // User berdasarkan email 
             $user = User::where('email', $socialUser->getEmail())->first();
-            if(!$user){
-                return null;
+
+            // Jika Tidak ada user
+            if (!$user) {
+                // Create user baru
+                $user = User::create([
+                    'name'  => $socialUser->getName(),
+                    'email' => $socialUser->getEmail(),
+                    'password' => bcrypt('12345678'),
+                    'avatar' => $socialUser->getAvatar(),
+                ]);
+
+                $user->assignRole('Umum');
             }
 
             // Buat Social Account baru
@@ -64,19 +75,8 @@ class SocialiteController extends Controller
                 'provider_name' => $provider
             ]);
 
+            // return user
             return $user;
-
-            // // Jika Tidak ada user
-            // if (!$user) {
-            //     // Create user baru
-            //     $user = User::create([
-            //         'name'  => $socialUser->getName(),
-            //         'email' => $socialUser->getEmail()
-            //     ]);
-            // }
-
-            // // return user
-            // return $user;
         }
     }
 }
