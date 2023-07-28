@@ -314,21 +314,21 @@ return [
         [
             'text'        => 'Dashboard',
             'url'         => 'dashboard',
-            'icon'        => 'far fa-fw fa-chart-line',
+            'icon'        => 'fas fa-fw fa-chart-line',
             'can'         => 'view dashboard',
 
         ],
         [
             'text'        => 'Balita',
             'url'         => 'balita',
-            'icon'        => 'far fa-fw fa-baby',
+            'icon'        => 'fas fa-fw fa-baby',
             'can'         => 'view balita',
 
         ],
         [
             'text'        => 'Report',
             'url'         => 'report',
-            'icon'        => 'far fa-fw fa-baby',
+            'icon'        => 'fas fa-fw fa-baby',
             'can'         => 'view report',
         ],
         // [
@@ -368,31 +368,31 @@ return [
         [
             'text'        => 'Units',
             'url'         => 'units',
-            'icon'        => 'far fa-fw fa-building',
+            'icon'        => 'fas fa-fw fa-building',
             'can'         => 'view units',
         ],
         [
             'text'        => 'Roles',
             'url'         => 'roles',
-            'icon'        => 'far fa-fw fa-code-branch',
+            'icon'        => 'fas fa-fw fa-code-branch',
             'can'         => 'view role',
         ],
         [
             'text'        => 'Permission',
             'url'         => 'permissions',
-            'icon'        => 'far fa-fw fa-sitemap',
+            'icon'        => 'fas fa-fw fa-sitemap',
             'can'         => 'view permission',
         ],
         [
             'text'        => 'Users',
             'url'         => 'users',
-            'icon'        => 'far fa-fw fa-users',
+            'icon'        => 'fas fa-fw fa-users',
             'can'         => 'view user',
         ],
         [
             'text'        => 'Profile',
             'url'         => 'profile',
-            'icon'        => 'far fa-fw fa-user',
+            'icon'        => 'fas fa-fw fa-user',
             'can'         => '',
         ],
         // ['header' => 'labels'],

@@ -18,7 +18,7 @@ use App\Http\Controllers\Auth\SocialiteController;
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('/dashboard');
-    }else{
+    } else {
         return view('welcome');
     }
 });
@@ -27,11 +27,11 @@ Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider'
 Route::get('/auth/{provider}/callback', [SocialiteController::class, 'handleProvideCallback']);
 
 Route::post('/login', App\Http\Controllers\LoginController::class);
-Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'index']);
-Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
+// Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'index']);
+// Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
 Route::post('/logout', App\Http\Controllers\Auth\LogoutController::class);
 
-Route::middleware('auth')->group(function(){
+Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
 
     Route::get('/standart/tbu-laki', [App\Http\Controllers\Standart\TBULakiController::class, 'index']);
@@ -74,4 +74,3 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index']);
 });
-
