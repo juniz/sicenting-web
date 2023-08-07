@@ -107,8 +107,8 @@ class DashboardController extends Controller
     public function stuntingPerKel($provinsi, $regencies)
     {
         return DB::table('balita')
-            // ->join('regencies', 'balita.kabupaten', '=', 'regencies.id')
-            // ->join('districts', 'balita.kecamatan', '=', 'districts.id')
+            ->join('regencies', 'balita.kabupaten', '=', 'regencies.id')
+            ->join('districts', 'balita.kecamatan', '=', 'districts.id')
             ->join('villages', 'balita.kelurahan', '=', 'villages.id')
             ->join('provinces', 'balita.provinsi', '=', 'provinces.id')
             ->selectRaw("villages.name as kabupaten,
@@ -169,6 +169,8 @@ class DashboardController extends Controller
     public function giziPerKel($provinsi, $regencies)
     {
         return DB::table('balita')
+            ->join('regencies', 'balita.kabupaten', '=', 'regencies.id')
+            ->join('districts', 'balita.kecamatan', '=', 'districts.id')
             ->join('villages', 'balita.kelurahan', '=', 'villages.id')
             ->join('provinces', 'balita.provinsi', '=', 'provinces.id')
             ->selectRaw("villages.name as kabupaten,
@@ -228,6 +230,8 @@ class DashboardController extends Controller
     public function badanPerKel($provinsi, $regencies)
     {
         return DB::table('balita')
+            ->join('regencies', 'balita.kabupaten', '=', 'regencies.id')
+            ->join('districts', 'balita.kecamatan', '=', 'districts.id')
             ->join('villages', 'balita.kelurahan', '=', 'villages.id')
             ->join('provinces', 'balita.provinsi', '=', 'provinces.id')
             ->selectRaw("villages.name as kabupaten,
