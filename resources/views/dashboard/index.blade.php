@@ -56,37 +56,15 @@
             </div>
         </x-adminlte-card>
     </div>
-    {{-- <div class="col-md-12">
-        <x-adminlte-card title="Grafik Konsul">
-            <div class="chart">
-                <canvas id="barKonsulChart"
-                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-            </div>
-        </x-adminlte-card>
-    </div> --}}
-    {{-- <div class="col-md-6">
-        <x-adminlte-card title="Grafik Stunting">
-            <div class="chart">
-                <canvas id="pieChart"
-                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-            </div>
-        </x-adminlte-card>
-    </div>
-    <div class="col-md-6">
-        <x-adminlte-card title="Grafik Gizi Buruk">
-            <div class="chart">
-                <canvas id="pieChart1"
-                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-            </div>
-        </x-adminlte-card>
-    </div> --}}
 </div>
-{{-- <x-adminlte-card title="Map">
-    <div class="containerMap">
-        <div class="map" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;">Alternative
-            content</div>
-    </div>
-</x-adminlte-card> --}}
+<x-adminlte-modal id="modalStunting" title="Data Jumlah Stunting" size="lg" v-centered static-backdrop scrollable>
+    <div id="stunting-body"></div>
+    <x-slot name="footerSlot">
+        <x-adminlte-button class="mr-auto" theme="success" label="Accept" />
+        <x-adminlte-button theme="danger" label="Dismiss" data-dismiss="modal" />
+    </x-slot>
+</x-adminlte-modal>
+
 @stop
 
 @push('js')
@@ -344,16 +322,32 @@
         barChartData.datasets[0] = temp1
         barChartData.datasets[1] = temp0
 
-        var barChartOptions = {
-        responsive              : true,
-        maintainAspectRatio     : false,
-        datasetFill             : false
-        }
-
-        new Chart(barChartCanvas, {
-        type: 'bar',
-        data: barChartData,
-        options: barChartOptions
+        var bar = new Chart(barChartCanvas, {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive              : true,
+                maintainAspectRatio     : false,
+                datasetFill             : false,
+                onClick: function(evt, element) {
+                    var activePoints = bar.getElementAtEvent(evt);
+                    let kabupaten = activePoints[0]._model.label;
+                    let status = activePoints[0]._model.datasetLabel.replace(/ /g, "_");
+                    let kab = kabupaten.replace(/ /g, "_");
+                    let url = "{{url('dashboard')}}"+"?stts=reg&param="+kabupaten;
+                    let stts = "{{$stts}}";
+                    switch(stts){
+                        case "reg":
+                            window.location.href =  "{{url('dashboard')}}"+"?stts=dis&param="+kabupaten;
+                            break;
+                        default:
+                            window.location.href = url;
+                            break;
+                    }
+                    // $('#stunting-body').append('<p>'+kab+status+'</p>')
+                    // $("#modalStunting").modal("show");
+                }
+            }
         })
 
         // -------------

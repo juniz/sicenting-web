@@ -10,10 +10,15 @@ class Unit extends Model
     use HasFactory;
 
     protected $table = 'unit';
-    protected $fillable = ['nama'];
+    protected $fillable = ['nama', 'provinsi_id'];
 
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function provinsi()
+    {
+        return $this->belongsTo(Province::class, 'province_id', 'id');
     }
 }

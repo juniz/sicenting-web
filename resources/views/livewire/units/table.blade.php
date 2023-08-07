@@ -7,6 +7,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
+                            <th>Provinsi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -15,8 +16,10 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $unit->nama }}</td>
+                            <td>{{ $unit->provinsi->name ?? '' }}</td>
                             <td>
-                                <button class="btn btn-primary btn-sm" wire:click="setUpdate('{{$unit->id}}')">Edit</button>
+                                <button class="btn btn-primary btn-sm"
+                                    wire:click="setUpdate('{{$unit->id}}')">Edit</button>
                                 <button wire:click="hapus('{{$unit->id}}')" class="btn btn-danger btn-sm">Hapus</button>
                             </td>
                         </tr>
@@ -29,8 +32,8 @@
 </div>
 
 @push('js')
-    <script>
-        document.addEventListener("DOMContentLoaded", ()=>{
+<script>
+    document.addEventListener("DOMContentLoaded", ()=>{
             Livewire.hook('element.updating', (fromEl, toEl, component) => {
                 if (fromEl.id == 'tableUnits') {
                     $('#tableUnits').DataTable().destroy();
@@ -61,5 +64,5 @@
                     }
                 });
         });
-    </script>
+</script>
 @endpush

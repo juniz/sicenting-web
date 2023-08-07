@@ -63,6 +63,16 @@ class BalitaController extends Controller
 
         try {
 
+            $cek = Balita::where('nama', Str::upper($request->nama))
+                ->where('tgl_lahir', $request->tglLahir)
+                ->where('jns_kelamin', $request->jnsKelamin)
+                ->where('nama_ortu', Str::upper($request->namaOrtu))
+                ->first();
+
+            if ($cek) {
+                return redirect()->back()->with('error', 'Data balita sudah ada');
+            }
+
             $balita = new Balita;
             $balita->user_id = auth()->user()->id;
             $balita->nama = Str::upper($request->nama);

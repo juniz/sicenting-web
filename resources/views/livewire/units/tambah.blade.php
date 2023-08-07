@@ -8,8 +8,22 @@
                 <div class="form-group row">
                     <label class="col-sm-6 col-form-label">Nama Unit</label>
                     <div class="col-sm-6">
-                        <input wire:model.defer='nama' type="text" class="form-control @error('nama') is-invalid @enderror" >
+                        <input wire:model.defer='nama' type="text"
+                            class="form-control @error('nama') is-invalid @enderror">
                         @error('nama') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label">Provinsi</label>
+                    <div class="col-sm-6">
+                        <select wire:model.defer='provinsi_id' type="text"
+                            class="form-control @error('provinsi_id') is-invalid @enderror">
+                            <option value="">Silahkan Pilih Provinsi</option>
+                            @foreach($provinsi as $prov)
+                            <option value="{{$prov->id}}">{{$prov->name}}</option>
+                            @endforeach
+                        </select>
+                        @error('provinsi_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">
