@@ -5,7 +5,7 @@
 @section('content_header')
 <div class="d-flex flex-row justify-content-between">
     <div>
-        <h1>Dashboard</h1>
+        <h1>Dashboard {{ empty($stts) ? 'KABUPATEN' : $stts == 'reg' ? 'KECAMATAN' : 'KELURAHAN' }}</h1>
     </div>
     {{-- <div>
         <div class="row">
