@@ -5,28 +5,9 @@
 @section('content_header')
 <div class="d-flex flex-row justify-content-between">
     <div>
-        <h1>Dashboard {{ empty($stts) ? 'KABUPATEN' : $stts == 'reg' ? 'KECAMATAN' : 'KELURAHAN' }}</h1>
+        <h1>Dashboard @if($stts == 'reg') Per Kecamatan @elseif($stts == 'dis') Per Kelurahan @else Per Kabupaten @endif
+        </h1>
     </div>
-    {{-- <div>
-        <div class="row">
-            <div class="col">
-                <x-adminlte-select2 class="w-100" data-placeholder='Pilih provinsi' name="sel2Basic">
-                    <option />
-                    <option>Option 11111111111</option>
-                    <option>Option 2</option>
-                    <option>Option 3</option>
-                </x-adminlte-select2>
-            </div>
-            <div class="col">
-                <x-adminlte-select2 class="w-100" data-placeholder='Pilih provinsi' name="sel2Basi">
-                    <option />
-                    <option>Option 11111111111</option>
-                    <option>Option 2</option>
-                    <option>Option 3</option>
-                </x-adminlte-select2>
-            </div>
-        </div>
-    </div> --}}
 </div>
 @stop
 
@@ -337,6 +318,9 @@
                     let url = "{{url('dashboard')}}"+"?stts=reg&param="+kabupaten;
                     let stts = "{{$stts}}";
                     switch(stts){
+                        case "dis":
+                            window.location.href = "{{url('dashboard')}}";
+                            break;
                         case "reg":
                             window.location.href =  "{{url('dashboard')}}"+"?stts=dis&param="+kabupaten;
                             break;
@@ -344,8 +328,6 @@
                             window.location.href = url;
                             break;
                     }
-                    // $('#stunting-body').append('<p>'+kab+status+'</p>')
-                    // $("#modalStunting").modal("show");
                 }
             }
         })
@@ -360,16 +342,39 @@
         barChartData.datasets[0] = temp1
         barChartData.datasets[1] = temp0
 
-        var barChartOptions = {
-        responsive              : true,
-        maintainAspectRatio     : false,
-        datasetFill             : false
-        }
+        // var barChartOptions = {
+        // responsive              : true,
+        // maintainAspectRatio     : false,
+        // datasetFill             : false
+        // }
 
         new Chart(barChartCanvas, {
-        type: 'bar',
-        data: barChartData,
-        options: barChartOptions
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive              : true,
+                maintainAspectRatio     : false,
+                datasetFill             : false,
+                onClick: function(evt, element) {
+                    var activePoints = bar.getElementAtEvent(evt);
+                    let kabupaten = activePoints[0]._model.label;
+                    let status = activePoints[0]._model.datasetLabel.replace(/ /g, "_");
+                    let kab = kabupaten.replace(/ /g, "_");
+                    let url = "{{url('dashboard')}}"+"?stts=reg&param="+kabupaten;
+                    let stts = "{{$stts}}";
+                    switch(stts){
+                        case "dis":
+                            window.location.href = "{{url('dashboard')}}";
+                            break;
+                        case "reg":
+                            window.location.href =  "{{url('dashboard')}}"+"?stts=dis&param="+kabupaten;
+                            break;
+                        default:
+                            window.location.href = url;
+                            break;
+                    }
+                }
+            }
         })
 
         // -------------
@@ -389,9 +394,32 @@
         }
 
         new Chart(barChartCanvas, {
-        type: 'bar',
-        data: barChartData,
-        options: barChartOptions
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive              : true,
+                maintainAspectRatio     : false,
+                datasetFill             : false,
+                onClick: function(evt, element) {
+                    var activePoints = bar.getElementAtEvent(evt);
+                    let kabupaten = activePoints[0]._model.label;
+                    let status = activePoints[0]._model.datasetLabel.replace(/ /g, "_");
+                    let kab = kabupaten.replace(/ /g, "_");
+                    let url = "{{url('dashboard')}}"+"?stts=reg&param="+kabupaten;
+                    let stts = "{{$stts}}";
+                    switch(stts){
+                        case "dis":
+                            window.location.href = "{{url('dashboard')}}";
+                            break;
+                        case "reg":
+                            window.location.href =  "{{url('dashboard')}}"+"?stts=dis&param="+kabupaten;
+                            break;
+                        default:
+                            window.location.href = url;
+                            break;
+                    }
+                }
+            }
         })
 
         // -------------
