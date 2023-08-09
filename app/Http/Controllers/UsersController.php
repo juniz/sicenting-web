@@ -44,6 +44,7 @@ class UsersController extends Controller
             $user->email = $request->email;
             $user->unit_id = $request->unit;
             $user->password = bcrypt($request->password) ?? $user->password;
+            $user->jenis = $request->jenis;
             $user->save();
             $user->roles()->detach();
             foreach ($request->role as $role) {

@@ -43,6 +43,11 @@
                 <option value="{{ $role->id }}">{{ $role->name }}</option>
                 @endforeach
             </x-adminlte-select2>
+            <x-adminlte-select2 name="jenis" label="Pilih Jenis" data-placeholder="Pilih Jenis .....">
+                </option>
+                <option value="POLRI" {{ $user->jenis == 'POLRI' ? 'selected' : '' }}>POLRI</option>
+                <option value="NON POLRI" {{ $user->jenis == 'NON POLRI' ? 'selected' : '' }}>NON POLRI</option>
+            </x-adminlte-select2>
             <x-adminlte-button class="btn-flat" type="submit" label="Simpan" theme="success" icon="fas fa-lg fa-save" />
         </form>
     </div>
