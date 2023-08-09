@@ -31,6 +31,8 @@ Route::post('/login', App\Http\Controllers\LoginController::class);
 // Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
 Route::post('/logout', App\Http\Controllers\Auth\LogoutController::class);
 
+Route::get('/reload-captcha', [\App\Http\Controllers\Auth\RegisterController::class, 'reloadCaptcha']);
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
     Route::get('/dashboard-perkembangan', [App\Http\Controllers\DashboardPerkembangan::class, 'index']);
@@ -57,6 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/users/{id}', [App\Http\Controllers\UsersController::class, 'detail']);
     Route::post('/users/edit/{id}', [App\Http\Controllers\UsersController::class, 'edit']);
     Route::post('/users', [App\Http\Controllers\UsersController::class, 'simpan']);
+    Route::get('/users-password/{id}', [App\Http\Controllers\UsersController::class, 'password']);
+    Route::post('/users-password/{id}', [App\Http\Controllers\UsersController::class, 'ubahPassword']);
 
     Route::get('/units', [App\Http\Controllers\UnitsController::class, 'index']);
 

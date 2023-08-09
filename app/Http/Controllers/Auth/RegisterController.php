@@ -31,4 +31,9 @@ class RegisterController extends Controller
 
         return redirect()->to('/');
     }
+
+    public function reloadCaptcha()
+    {
+        return response()->json(['captcha' => captcha_img()]);
+    }
 }

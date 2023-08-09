@@ -29,9 +29,15 @@ class UsersController extends Controller
         return view('users.edit', compact('user', 'roles', 'units'));
     }
 
+    public function password($id)
+    {
+        $user = User::find($id);
+        return view('users.edit-password', compact('user'));
+    }
+
     public function edit(Request $request, $id)
     {
-        try{
+        try {
 
             $user = User::find($id);
             $user->name = $request->name;
@@ -40,12 +46,11 @@ class UsersController extends Controller
             $user->password = bcrypt($request->password) ?? $user->password;
             $user->save();
             $user->roles()->detach();
-            foreach($request->role as $role){
+            foreach ($request->role as $role) {
                 $user->assignRole($role);
             }
             return redirect('/users')->with(['success' => 'Data berhasil diubah']);
-
-        }catch(\Exception $ex){
+        } catch (\Exception $ex) {
 
             return redirect()->back()->with(['error' => $ex->getMessage()]);
         }
@@ -65,33 +70,58 @@ class UsersController extends Controller
             'email' => 'required|email',
             'password' => 'required|confirmed|min:6',
             'role' => 'required',
-            'unit'  =>  'required'
-        ],[
+            'unit'  =>  'required',
+            'jenis' => 'required'
+        ], [
             'name.required' => 'Nama harus diisi',
             'email.required' => 'Email harus diisi',
             'password.required' => 'Password harus diisi',
             'role.required' => 'Role harus diisi',
-            'unit.required' => 'Unit harus diisi'
+            'unit.required' => 'Unit harus diisi',
+            'jenis.required' => 'Jenis User harus diisi',
         ]);
 
-        try{
+        try {
 
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'unit_id' => $request->unit,
                 'password' => bcrypt($request->password),
+                'jenis' => $request->jenis
             ]);
 
-            foreach($request->role as $role){
+            foreach ($request->role as $role) {
                 $user->assignRole($role);
             }
 
             return redirect('/users')->with(['success' => 'Data berhasil ditambahkan']);
-
-        }catch(\Exception $ex){
+        } catch (\Exception $ex) {
 
             return redirect()->back()->with(['error' => $ex->getMessage()]);
+        }
+    }
+
+    public function ubahPassword(Request $request, $id)
+    {
+        $this->validate($request, [
+            'password' => 'required|confirmed|min:6',
+        ], [
+            'password.required' => 'Password harus diisi',
+            'password.confirmed' => 'Password tidak cocok',
+            'password.min' => 'Password minimal 6 karakter'
+        ]);
+
+        try {
+
+            $user = User::find($id);
+            $user->password = bcrypt($request->password);
+            $user->save();
+
+            return redirect('/users')->with(['success' => 'Password berhasil diubah']);
+        } catch (\Exception $ex) {
+
+            return redirect()->back()->with(['error' => $ex->getMessage() ?? 'Data gagal diubah']);
         }
     }
 }

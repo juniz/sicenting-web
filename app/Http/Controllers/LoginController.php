@@ -18,17 +18,19 @@ class LoginController extends Controller
         $this->validate($request, [
             'email' => 'required|string',
             'password' => 'required|string',
-        ],[
+            'captcha' => 'required|captcha'
+        ], [
             'email.required' => 'Email tidak boleh kosong',
             'password.required' => 'Password tidak boleh kosong',
+            'captcha.required' => 'Captcha tidak boleh kosong',
+            'captcha.captcha' => 'Captcha tidak cocok'
         ]);
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             // dd('sukses');
             return redirect('/dashboard');
-        }else{
+        } else {
             return back()->with('error', 'Email atau password salah');
         }
-        
     }
 
     public function username()
@@ -38,6 +40,5 @@ class LoginController extends Controller
 
     protected function validateLogin(Request $request)
     {
-        
     }
 }
