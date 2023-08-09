@@ -152,7 +152,7 @@ return [
     'layout_boxed' => null,
     'layout_fixed_sidebar' => null,
     'layout_fixed_navbar' => null,
-    'layout_fixed_footer' => null,
+    'layout_fixed_footer' => true,
     'layout_dark_mode' => null,
 
     /*
@@ -313,10 +313,18 @@ return [
         // ],
         [
             'text'        => 'Dashboard',
-            'url'         => 'dashboard',
             'icon'        => 'fas fa-fw fa-chart-line',
             'can'         => 'view dashboard',
-
+            'submenu' => [
+                [
+                    'text' => 'Grafik Per Daerah',
+                    'url'  => 'dashboard',
+                ],
+                [
+                    'text' => 'Grafik Perkembangan',
+                    'url'  => 'dashboard-perkembangan',
+                ],
+            ]
         ],
         [
             'text'        => 'Balita',

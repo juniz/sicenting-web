@@ -33,7 +33,11 @@ Route::post('/logout', App\Http\Controllers\Auth\LogoutController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
-
+    Route::get('/dashboard-perkembangan', [App\Http\Controllers\DashboardPerkembangan::class, 'index']);
+    Route::get('/dashboard-balita-user', [App\Http\Controllers\DashboardController::class, 'getJmkBalitaPerUser']);
+    Route::get('/dashboard-user', [App\Http\Controllers\DashboardPerkembangan::class, 'getUserJns']);
+    Route::get('/dashboard-perkembangan-stunting', [App\Http\Controllers\DashboardPerkembangan::class, 'grafikPerkembangan']);
+    Route::get('/dashboard-jenis-user', [App\Http\Controllers\DashboardPerkembangan::class, 'getJenisUser']);
     Route::get('/standart/tbu-laki', [App\Http\Controllers\Standart\TBULakiController::class, 'index']);
     Route::get('/standart/tbu-perempuan', [App\Http\Controllers\Standart\TBULakiController::class, 'index']);
     Route::get('/standart/bbu-laki', [App\Http\Controllers\Standart\BBULakiController::class, 'index']);

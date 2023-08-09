@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Balita;
+use App\Models\Village;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -57,6 +59,8 @@ class DashboardController extends Controller
             'jmlGiziLebih' => $jmlGiziLebih->jml,
             'jmlGiziKurang' => $jmlGiziKurang->jml,
             'jmlGiziBaik' => $jmlGiziBaik->jml,
+            'jmlBalita' => $this->getJmlBalita(),
+            'jmlBalitaStunting' => $this->getJmlBalitaStunting(),
         ]);
     }
 
@@ -299,5 +303,47 @@ class DashboardController extends Controller
             ->where('bb_tb', 'Gizi baik')
             ->orderByDesc('created_at')
             ->first();
+    }
+
+    public function getJmkBalitaPerUser(Request $request)
+    {
+        $kel = $request->query('param');
+        $provinsi = auth()->user()->unit->provinsi;
+        $data = DB::table('users')
+            ->join('balita', 'balita.user_id', '=', 'users.id')
+            ->join('provinces', 'balita.provinsi', '=', 'provinces.id')
+            ->join('villages', 'balita.kelurahan', '=', 'villages.id')
+            ->selectRaw("users.name, COUNT(balita.id) as jmlBalita")
+            ->where('balita.provinsi', $provinsi->id)
+            ->where('villages.name', 'like', '%' . $kel . '%')
+            ->groupBy('users.name')
+            ->orderBy('jmlBalita', 'desc')
+            ->get();
+        $response = [
+            'labels' => $data->pluck('name'),
+            'datasets' => [
+                [
+                    'label' => 'Jumlah Balita',
+                    'backgroundColor' => '#4e73df',
+                    'borderColor' => '#4e73df',
+                    'data' => $data->pluck('jmlBalita'),
+                ],
+            ],
+        ];
+        return response()->json($response);
+    }
+
+    public function getJmlBalita()
+    {
+        return Balita::where('provinsi', auth()->user()->unit->provinsi->id)->count();
+    }
+
+    public function getJmlBalitaStunting()
+    {
+        return DB::table('balita')
+            ->join('pemeriksaan', 'balita.id', '=', 'pemeriksaan.balita_id')
+            ->whereRaw("(LOWER(tb_u) like '%tinggi%' OR LOWER(tb_u) like '%normal%')")
+            ->where('provinsi', auth()->user()->unit->provinsi->id)
+            ->count();
     }
 }

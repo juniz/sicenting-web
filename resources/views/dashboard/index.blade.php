@@ -13,6 +13,15 @@
 
 @section('content')
 <div class="row">
+    <div class="col-md-6">
+        <x-adminlte-info-box theme='secondary' title="Jumlah Balita" text="{{$jmlBalita}}" icon="fas fa-lg fa-users" />
+    </div>
+    <div class="col-md-6">
+        <x-adminlte-info-box theme='danger' title="Jumlah Stunting" text="{{$jmlBalitaStunting}}"
+            icon="fas fa-lg fa-baby" />
+    </div>
+</div>
+<div class="row">
     <div class="col-md-12">
         <x-adminlte-card title="Grafik Stunting">
             <div class="chart">
@@ -38,12 +47,15 @@
         </x-adminlte-card>
     </div>
 </div>
-<x-adminlte-modal id="modalStunting" title="Data Jumlah Stunting" size="lg" v-centered static-backdrop scrollable>
-    <div id="stunting-body"></div>
-    <x-slot name="footerSlot">
+<x-adminlte-modal id="modalStunting" title="Data Jumlah Balita Per User" size="lg" v-centered static-backdrop
+    scrollable>
+    <div class="chart">
+        <canvas id="barUserChart" style="min-height: 250px; height: 250px; max-height: 100%; max-width: 100%;"></canvas>
+    </div>
+    {{-- <x-slot name="footerSlot">
         <x-adminlte-button class="mr-auto" theme="success" label="Accept" />
         <x-adminlte-button theme="danger" label="Dismiss" data-dismiss="modal" />
-    </x-slot>
+    </x-slot> --}}
 </x-adminlte-modal>
 
 @stop
@@ -319,7 +331,34 @@
                     let stts = "{{$stts}}";
                     switch(stts){
                         case "dis":
-                            window.location.href = "{{url('dashboard')}}";
+                            // window.location.href = "{{url('dashboard')}}";
+                            var ctxHorizontal = document.getElementById('barUserChart').getContext('2d');
+                            $.ajax({
+                                url: "{{url('dashboard-balita-user')}}",
+                                type: "GET",
+                                data: {
+                                    param: kabupaten
+                                },
+                                success: function(response){
+                                    var myChart = new Chart(ctxHorizontal, {
+                                            type: 'horizontalBar',
+                                            data: {
+                                                labels: response.labels,
+                                                datasets: response.datasets
+                                            },
+                                            options: {
+                                                indexAxis: 'y',
+                                                responsive: true,
+                                                scales: {
+                                                    xAxes: [{
+                                                        barThickness : 5
+                                                    }]
+                                                }
+                                            }
+                                    });
+                                    $('#modalStunting').modal('show');
+                                }
+                            })
                             break;
                         case "reg":
                             window.location.href =  "{{url('dashboard')}}"+"?stts=dis&param="+kabupaten;
@@ -364,7 +403,33 @@
                     let stts = "{{$stts}}";
                     switch(stts){
                         case "dis":
-                            window.location.href = "{{url('dashboard')}}";
+                        var ctxHorizontal = document.getElementById('barUserChart').getContext('2d');
+                            $.ajax({
+                                url: "{{url('dashboard-balita-user')}}",
+                                type: "GET",
+                                data: {
+                                    param: kabupaten
+                                },
+                                success: function(response){
+                                    var myChart = new Chart(ctxHorizontal, {
+                                            type: 'horizontalBar',
+                                            data: {
+                                                labels: response.labels,
+                                                datasets: response.datasets
+                                            },
+                                            options: {
+                                                indexAxis: 'y',
+                                                responsive: true,
+                                                scales: {
+                                                    xAxes: [{
+                                                        barThickness : 5
+                                                    }]
+                                                }
+                                            }
+                                    });
+                                    $('#modalStunting').modal('show');
+                                }
+                            })
                             break;
                         case "reg":
                             window.location.href =  "{{url('dashboard')}}"+"?stts=dis&param="+kabupaten;
@@ -409,7 +474,33 @@
                     let stts = "{{$stts}}";
                     switch(stts){
                         case "dis":
-                            window.location.href = "{{url('dashboard')}}";
+                        var ctxHorizontal = document.getElementById('barUserChart').getContext('2d');
+                            $.ajax({
+                                url: "{{url('dashboard-balita-user')}}",
+                                type: "GET",
+                                data: {
+                                    param: kabupaten
+                                },
+                                success: function(response){
+                                    var myChart = new Chart(ctxHorizontal, {
+                                            type: 'horizontalBar',
+                                            data: {
+                                                labels: response.labels,
+                                                datasets: response.datasets
+                                            },
+                                            options: {
+                                                indexAxis: 'y',
+                                                responsive: true,
+                                                scales: {
+                                                    xAxes: [{
+                                                        barThickness : 5
+                                                    }]
+                                                }
+                                            }
+                                    });
+                                    $('#modalStunting').modal('show');
+                                }
+                            })
                             break;
                         case "reg":
                             window.location.href =  "{{url('dashboard')}}"+"?stts=dis&param="+kabupaten;
@@ -481,40 +572,40 @@
         })
 
         $(".containerMap").mapael({
-        map : {
-            name : "world_countries"
-        },
-        legend : {
-            area : {
-                title : "Population by country",
-                slices : [
-                {
-                    max : 10000000,
-                    attrs : {
-                    fill : "#a4e100"
+            map : {
+                name : "world_countries"
+            },
+            legend : {
+                area : {
+                    title : "Population by country",
+                    slices : [
+                    {
+                        max : 10000000,
+                        attrs : {
+                        fill : "#a4e100"
+                        },
+                        label : "Less than 10M"
                     },
-                    label : "Less than 10M"
-                },
-                {
-                    min : 10000000,
-                    max : 50000000,
-                    attrs : {
-                    fill : "#ffdd00"
+                    {
+                        min : 10000000,
+                        max : 50000000,
+                        attrs : {
+                        fill : "#ffdd00"
+                        },
+                        label : "Between 10M and 50M"
                     },
-                    label : "Between 10M and 50M"
-                },
-                {
-                    min : 50000000,
-                    attrs : {
-                    fill : "#ff3333"
-                    },
-                    label : "More than 50M"
+                    {
+                        min : 50000000,
+                        attrs : {
+                        fill : "#ff3333"
+                        },
+                        label : "More than 50M"
+                    }
+                    ]
                 }
-                ]
-            }
-        },
+            },
         
-    });
+        });
     })
 </script>
 @endpush
