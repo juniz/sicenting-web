@@ -17,7 +17,13 @@ class UsersController extends Controller
 
     public function index()
     {
-        $users = User::all();
+        if (auth()->user()->hasRole('super-admin')) {
+            $users = User::all();
+        } else if (auth()->user()->hasRole('admin')) {
+            $users = User::where('unit_id', auth()->user()->unit_id)->get();
+        } else {
+            $users = User::where('id', auth()->user()->id)->get();
+        }
         return view('users.index', compact('users'));
     }
 
@@ -97,6 +103,20 @@ class UsersController extends Controller
             }
 
             return redirect('/users')->with(['success' => 'Data berhasil ditambahkan']);
+        } catch (\Exception $ex) {
+
+            return redirect()->back()->with(['error' => $ex->getMessage()]);
+        }
+    }
+
+    public function hapus($id)
+    {
+        try {
+
+            $user = User::find($id);
+            $user->delete();
+
+            return redirect('/users')->with(['success' => 'Data berhasil dihapus']);
         } catch (\Exception $ex) {
 
             return redirect()->back()->with(['error' => $ex->getMessage()]);

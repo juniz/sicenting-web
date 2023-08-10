@@ -43,6 +43,7 @@
                         </td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Button group">
+                                @can('edit user')
                                 <a name="edit" id="edit" class="btn btn-success" href="{{ url('/users', $user->id) }}"
                                     role="button">
                                     <i class="fas fa-edit"></i>
@@ -51,7 +52,16 @@
                                     href="{{ url('/users-password', $user->id) }}" role="button">
                                     <i class="fas fa-key"></i>
                                 </a>
-                                <x-adminlte-button theme="danger" icon="fas fa-trash" />
+                                @endcan
+                                @can('delete user')
+                                <form action="{{url('users/'.$user->id)}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"><i
+                                            class="fas fa-trash"></i></button>
+                                </form>
+                                @endcan
                             </div>
                         </td>
                     </tr>
@@ -66,10 +76,12 @@
 @push('js')
 <script>
     $(document).ready(function() {
-            $('#tableUsers').DataTable({
-                "responsive": true,
-                "autoWidth": false,
-            });
-        } );
+        $('#tableUsers').DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+
+
+    });
 </script>
 @endpush
