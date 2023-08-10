@@ -17,7 +17,7 @@ class BalitaController extends Controller
 
     public function index()
     {
-        if (auth()->user()->hasRole('super admin') || auth()->user()->hasRole('admin')) {
+        if (auth()->user()->hasRole('super-admin') || auth()->user()->hasRole('admin')) {
             $balita = Balita::orderBy('updated_at', 'DESC')->get();
         } else {
             $balita = Balita::where('user_id', auth()->user()->id)->orderBy('updated_at', 'DESC')->get();
@@ -40,6 +40,7 @@ class BalitaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'nik' => 'required|unique:balita|min:16|numeric',
             'nama' => 'required',
             'tglLahir' => 'required',
             'jnsKelamin' => 'required',
@@ -52,6 +53,10 @@ class BalitaController extends Controller
             'rw' => 'required',
             'alamat' => 'required',
         ], [
+            'nik.required' => 'KK tidak boleh kosong',
+            'nik.unique' => 'KK sudah terdaftar',
+            'nik.min' => 'KK minimal 16 digit',
+            'nik.numeric' => 'KK harus berupa angka',
             'nama.required' => 'Nama balita tidak boleh kosong',
             'tglLahir.required' => 'Tanggal lahir tidak boleh kosong',
             'jnsKelamin.required' => 'Jenis kelamin tidak boleh kosong',
@@ -67,18 +72,9 @@ class BalitaController extends Controller
 
         try {
 
-            $cek = Balita::where('nama', Str::upper($request->nama))
-                ->where('tgl_lahir', $request->tglLahir)
-                ->where('jns_kelamin', $request->jnsKelamin)
-                ->where('nama_ortu', Str::upper($request->namaOrtu))
-                ->first();
-
-            if ($cek) {
-                return redirect()->back()->with('error', 'Data balita sudah ada');
-            }
-
             $balita = new Balita;
             $balita->user_id = auth()->user()->id;
+            $balita->nik = $request->nik;
             $balita->nama = Str::upper($request->nama);
             $balita->tgl_lahir = $request->tglLahir;
             $balita->jns_kelamin = $request->jnsKelamin;
@@ -106,7 +102,7 @@ class BalitaController extends Controller
             $balita->delete();
             return redirect()->to('/balita')->with('success', 'Data berhasil dihapus');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage() ?? 'Terjadi kesalahan');
+            return redirect()->back()->with('error', 'Terjadi kesalahan');
         }
     }
 

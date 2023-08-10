@@ -16,7 +16,8 @@ class Balita extends Model
      * @var array<int, string>
      */
 
-     protected $fillable = [
+    protected $fillable = [
+        'nik',
         'nama',
         'jns_kelamin',
         'tgl_lahir',

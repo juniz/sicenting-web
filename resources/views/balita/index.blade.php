@@ -19,11 +19,12 @@
     @endcan
 
     @php
-    $heads = ['Nama', 'Jns Kelamin', 'Tgl Lahir', 'Nama Orang Tua', 'Alamat', 'Aksi'];
+    $heads = ['No. KK', 'Nama', 'Jns Kelamin', 'Tgl Lahir', 'Nama Orang Tua', 'Alamat', 'Aksi'];
     @endphp
     <x-adminlte-datatable id="table1" :heads="$heads" :config="$config" head-theme="dark" striped hoverable bordered>
         @foreach ($balita as $item)
         <tr>
+            <td>{{ $item->nik ?? '-' }}</td>
             <td>{{ $item->nama }}</td>
             <td>{{ $item->jns_kelamin == 'L' ? 'Laki-Laki' : 'Perempuan' }}</td>
             <td>{{ $item->tgl_lahir }}</td>
