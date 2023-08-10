@@ -10,12 +10,6 @@
 @include('flash-message')
 <div class="card">
     <div class="card-body">
-        @if ($message = Session::get('error'))
-        <div class="alert alert-danger alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>{{ $message }}</strong>
-        </div>
-        @endif
         <form action="{{ url('/users/edit', $user->id) }}" method="POST">
             @csrf
             <x-adminlte-input name="name" label="Nama" value="{{ $user->name }}" />

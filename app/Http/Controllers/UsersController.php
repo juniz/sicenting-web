@@ -44,8 +44,10 @@ class UsersController extends Controller
     public function edit(Request $request, $id)
     {
         try {
-
             $user = User::find($id);
+            if ($user->hasRole('super-admin')) {
+                return redirect()->back()->with(['error' => 'Tidak dapat mengubah akun super admin']);
+            }
             $user->name = $request->name;
             $user->email = $request->email;
             $user->unit_id = $request->unit;
@@ -112,8 +114,13 @@ class UsersController extends Controller
     public function hapus($id)
     {
         try {
-
             $user = User::find($id);
+            if ($id == auth()->user()->id) {
+                return redirect()->back()->with(['error' => 'Tidak dapat menghapus akun sendiri']);
+            }
+            if ($user->hasRole('super-admin')) {
+                return redirect()->back()->with(['error' => 'Tidak dapat menghapus akun super admin']);
+            }
             $user->delete();
 
             return redirect('/users')->with(['success' => 'Data berhasil dihapus']);
@@ -134,8 +141,10 @@ class UsersController extends Controller
         ]);
 
         try {
-
             $user = User::find($id);
+            if ($user->hasRole('super-admin')) {
+                return redirect()->back()->with(['error' => 'Tidak dapat mengubah password akun super admin']);
+            }
             $user->password = bcrypt($request->password);
             $user->save();
 
