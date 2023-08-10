@@ -17,7 +17,11 @@ class BalitaController extends Controller
 
     public function index()
     {
-        $balita = Balita::where('user_id', auth()->user()->id)->orderBy('updated_at', 'DESC')->get();
+        if (auth()->user()->hasRole('super admin') || auth()->user()->hasRole('admin')) {
+            $balita = Balita::orderBy('updated_at', 'DESC')->get();
+        } else {
+            $balita = Balita::where('user_id', auth()->user()->id)->orderBy('updated_at', 'DESC')->get();
+        }
         $provinsi = Province::all();
         $config = ['ordering'   =>  false];
         return view('balita.index', [
