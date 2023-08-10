@@ -18,7 +18,7 @@
 @section('body')
     <div class="{{ $auth_type ?? 'login' }}-box">
         <div class="d-flex flex-row justify-content-center">
-            <img class="logo-app mt-0" src="{{ url('assets/icons/logo.png') }}" alt="logo">
+            <img class="logo-app mt-0" src="{{ url('assets/icons/icon.png') }}" alt="logo">
         </div>
         
         {{-- Logo --}}

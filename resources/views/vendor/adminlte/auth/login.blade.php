@@ -159,28 +159,30 @@
         }
 
         .login-box {
-            margin-bottom: 30vh !important;
+            margin-bottom: 40vh !important;
         }
 
         .app-name {
             font-size: 1.5rem !important;
-            padding-top: 10px !important;
+            /* padding-top: 10px !important; */
         }
 
         .logo-app {
-            width: 20vw !important;
+            width: 15vw !important;
             height: 15vh !important;
             object-fit: contain !important;
             justify-content: center !important;
+            padding-top: 10vh !important;
             /* visibility: hidden !important; */
         }
     }
 
     .logo-app {
-        width: 25vw;
-        height: 25vh;
+        width: 10vw;
+        height: 10vh;
         object-fit: contain;
         justify-content: center;
+        padding-top: 10px;
         /* visibility: hidden; */
     }
 </style>
