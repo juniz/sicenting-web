@@ -103,7 +103,7 @@ class DashboardController extends Controller
                 SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND (LOWER(tb_u) like '%tinggi%' OR LOWER(tb_u) like '%normal%') ORDER BY updated_at DESC LIMIT 1),0)) as jmlNormal,
                 SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND tb_u like '%pendek%' ORDER BY updated_at DESC LIMIT 1),0)) as jmlSangatPendek")
             ->where('provinces.id', $provinsi->id)
-            ->where('regencies.name', 'like', '%' . $regencies . '%')
+            ->where('regencies.name',  $regencies)
             ->groupBy('balita.kecamatan')
             ->get();
     }
