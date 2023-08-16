@@ -119,7 +119,7 @@ class DashboardController extends Controller
                 SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND (LOWER(tb_u) like '%tinggi%' OR LOWER(tb_u) like '%normal%') ORDER BY updated_at DESC LIMIT 1),0)) as jmlNormal,
                 SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND tb_u like '%pendek%' ORDER BY updated_at DESC LIMIT 1),0)) as jmlSangatPendek")
             ->where('provinces.id', $provinsi->id)
-            ->where('villages.name', 'like', '%' . $regencies . '%')
+            ->where('villages.name', $regencies)
             ->groupBy('balita.kelurahan')
             ->get();
     }
@@ -165,7 +165,7 @@ class DashboardController extends Controller
                     SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND bb_tb like '%buruk%' ORDER BY updated_at DESC LIMIT 1),0)) as jmlGiziBuruk,
                     SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND bb_tb like '%Obesitas%' ORDER BY updated_at DESC LIMIT 1),0)) as jmlObesitas")
             ->where('provinces.id', $provinsi->id)
-            ->where('regencies.name', 'like', '%' . $regencies . '%')
+            ->where('regencies.name', $regencies)
             ->groupBy('balita.kecamatan')
             ->get();
     }
@@ -182,7 +182,7 @@ class DashboardController extends Controller
                     SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND bb_tb like '%buruk%' ORDER BY updated_at DESC LIMIT 1),0)) as jmlGiziBuruk,
                     SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND bb_tb like '%Obesitas%' ORDER BY updated_at DESC LIMIT 1),0)) as jmlObesitas")
             ->where('provinces.id', $provinsi->id)
-            ->where('villages.name', 'like', '%' . $regencies . '%')
+            ->where('villages.name', $regencies)
             ->groupBy('balita.kelurahan')
             ->get();
     }
@@ -226,7 +226,7 @@ class DashboardController extends Controller
                     SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND ( bb_u like '%normal%' OR bb_tb like '%baik%' ) ORDER BY updated_at DESC LIMIT 1),0)) as jmlBadanNormal,
                     SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND bb_tb like '%kurang%' ORDER BY updated_at DESC LIMIT 1),0)) as jmlBadanKurang")
             ->where('provinces.id', $provinsi->id)
-            ->where('regencies.name', 'like', '%' . $regencies . '%')
+            ->where('regencies.name', $regencies)
             ->groupBy('balita.kecamatan')
             ->get();
     }
@@ -242,7 +242,7 @@ class DashboardController extends Controller
                     SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND ( bb_u like '%normal%' OR bb_tb like '%baik%' ) ORDER BY updated_at DESC LIMIT 1),0)) as jmlBadanNormal,
                     SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND bb_tb like '%kurang%' ORDER BY updated_at DESC LIMIT 1),0)) as jmlBadanKurang")
             ->where('provinces.id', $provinsi->id)
-            ->where('villages.name', 'like', '%' . $regencies . '%')
+            ->where('villages.name', $regencies)
             ->groupBy('balita.kelurahan')
             ->get();
     }
