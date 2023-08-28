@@ -34,7 +34,7 @@ class BalitaController extends Controller
         }
         $provinsi = Province::all();
         $config = ['ordering'   =>  false];
-        return view('balita.index1', [
+        return view('balita.index', [
             'balita' => $balita,
             'config' => $config,
             'provinsi' => $provinsi
