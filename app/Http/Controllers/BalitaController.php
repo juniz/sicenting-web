@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use App\Models\Balita;
 use App\Models\Province;
+use App\Imports\BalitaImport;
+use Excel;
+use Illuminate\Support\Facades\DB;
 
 class BalitaController extends Controller
 {
@@ -18,17 +21,38 @@ class BalitaController extends Controller
     public function index()
     {
         if (auth()->user()->hasRole('super-admin') || auth()->user()->hasRole('admin')) {
-            $balita = Balita::orderBy('updated_at', 'DESC')->get();
+            // $balita = Balita::orderBy('updated_at', 'DESC')->get();
+            $balita = DB::table('balita')
+                ->join('users', 'balita.user_id', '=', 'users.id')
+                ->join('unit', 'users.unit_id', '=', 'unit.id')
+                ->where('unit.id', auth()->user()->unit->id)
+                ->select('balita.*')
+                ->orderBy('balita.updated_at', 'DESC')
+                ->get();
         } else {
             $balita = Balita::where('user_id', auth()->user()->id)->orderBy('updated_at', 'DESC')->get();
         }
         $provinsi = Province::all();
         $config = ['ordering'   =>  false];
-        return view('balita.index', [
+        return view('balita.index1', [
             'balita' => $balita,
             'config' => $config,
             'provinsi' => $provinsi
         ]);
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xls,xlsx'
+        ], [
+            'file.required' => 'File tidak boleh kosong',
+            'file.mimes' => 'File harus berupa excel'
+        ]);
+
+        $data = Excel::import(new BalitaImport, $request->file('file')->store('files'));
+
+        return redirect()->to('/balita')->with('success', 'Data berhasil diimport');
     }
 
     public function tambah()

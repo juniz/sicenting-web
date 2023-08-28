@@ -38,4 +38,9 @@ class Balita extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getLastPemeriksaan()
+    {
+        return $this->hasOne(Pemeriksaan::class)->latestOfMany();
+    }
 }

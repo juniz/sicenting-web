@@ -16,7 +16,7 @@ class Pemeriksaan extends Model
      * @var array<int, string>
      */
 
-     protected $fillable = [
+    protected $fillable = [
         'balita_id',
         'tgl_pengukuran',
         'berat',
@@ -29,12 +29,12 @@ class Pemeriksaan extends Model
         'zs_bbu',
         'zs_tbu',
         'zs_bbtb',
-     ];
+    ];
 
-     public function balita()
-     {
-         return $this->belongsTo(Balita::class);
-     }
+    public function balita()
+    {
+        return $this->belongsTo(Balita::class);
+    }
 
-     protected $table = 'pemeriksaan';
+    protected $table = 'pemeriksaan';
 }

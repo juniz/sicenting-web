@@ -103,12 +103,12 @@
     <livewire:scripts />
     @endif
     @endif
-
     <script>
         window.addEventListener('swal:toast',function(e){
             Swal.fire(e.detail);
         });
     </script>
+    <x-livewire-alert::scripts />
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')

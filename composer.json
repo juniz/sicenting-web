@@ -7,12 +7,14 @@
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
+        "jantinnerezo/livewire-alert": "^2.2",
         "jeroennoten/laravel-adminlte": "^3.8",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/socialite": "^5.6",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.12",
+        "maatwebsite/excel": "^3.1",
         "mews/captcha": "^3.3",
         "silviolleite/laravelpwa": "^2.0",
         "spatie/laravel-permission": "^5.10"

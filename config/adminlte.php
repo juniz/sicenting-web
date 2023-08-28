@@ -380,6 +380,12 @@ return [
             'can'         => 'view units',
         ],
         [
+            'text'        => 'Kanal Stunting',
+            'url'         => 'team',
+            'icon'        => 'fas fa-fw fa-users',
+            'can'         => 'view team',
+        ],
+        [
             'text'        => 'Roles',
             'url'         => 'roles',
             'icon'        => 'fas fa-fw fa-code-branch',

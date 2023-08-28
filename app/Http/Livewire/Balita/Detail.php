@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 use App\Traits\SwalResponse;
+use App\Models\Team;
 
 class Detail extends Component
 {
@@ -25,20 +26,20 @@ class Detail extends Component
         $this->hitungUmur();
         $this->hasil = $this->getHasilTerakhir();
         // $this->spAnak = DB::table('spesialis')->where('jns', 'Spesialis')->get(); 
-        $this->gizi = DB::table('spesialis')->where('jns', 'Gizi')->get();
-        $this->rsJajaran = DB::table('unit')->get();
+        $this->gizi = Team::where('jenis', 'Ahli Gizi')->where('unit_id', auth()->user()->unit->id)->get();
+        $this->rsJajaran = Team::where('jenis', 'Dokter Spesialis')->where('unit_id', auth()->user()->unit->id)->get();
     }
 
     public function hydrate()
     {
         // $this->spAnak = DB::table('spesialis')->where('jns', 'Spesialis')->get(); 
-        $this->gizi = DB::table('spesialis')->where('jns', 'Gizi')->get();
-        $this->rsJajaran = DB::table('unit')->get();
+        $this->gizi = Team::where('jenis', 'Ahli Gizi')->where('unit_id', auth()->user()->unit->id)->get();
+        $this->rsJajaran = Team::where('jenis', 'Dokter Spesialis')->where('unit_id', auth()->user()->unit->id)->get();
     }
 
     public function kirimCatatanKonsul()
     {
-        try{
+        try {
             DB::beginTransaction();
             $this->validate([
                 'catatanKonsul' => 'required'
@@ -51,7 +52,7 @@ class Detail extends Component
             $this->reset('catatanKonsul');
             $this->dispatchBrowserEvent('swal:toast', $this->toastResponse('Catatan konsul berhasil disimpan'));
             // $this->alert('success', 'Catatan konsultasi berhasil dikirim');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             $this->dispatchBrowserEvent('swal:toast', $this->toastResponse($e->getMessage() ?? 'Catatan konsul gagal disimpan', 'error'));
         }
@@ -80,7 +81,7 @@ class Detail extends Component
 
     public function hasilBBU($bbu)
     {
-        if(Str::contains($bbu, 'kurang', true)){
+        if (Str::contains($bbu, 'kurang', true)) {
             return 'Konsul ahli gizi';
         }
         return 'Normal';
@@ -88,7 +89,7 @@ class Detail extends Component
 
     public function hasilTBU($tbu)
     {
-        if(Str::contains($tbu, 'pendek', true)){
+        if (Str::contains($tbu, 'pendek', true)) {
             return 'Konsul dokter spesialis anak';
         }
         return 'Normal';
@@ -96,7 +97,7 @@ class Detail extends Component
 
     public function hasilBBTB($bbtb)
     {
-        if(Str::contains($bbtb, 'buruk', true) || Str::contains($bbtb, 'kurang', true)){
+        if (Str::contains($bbtb, 'buruk', true) || Str::contains($bbtb, 'kurang', true)) {
             return 'Pemberian makanan tambahan (PMT)';
         }
         return 'Normal';

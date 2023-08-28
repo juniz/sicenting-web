@@ -81,4 +81,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/report', [App\Http\Controllers\ReportController::class, 'index'])->name('report');
 
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index']);
+
+    Route::get('/team', [App\Http\Controllers\TeamController::class, 'index']);
+
+    Route::post('/import-balita', [App\Http\Controllers\BalitaController::class, 'import']);
 });
