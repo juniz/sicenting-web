@@ -28,7 +28,7 @@ class DashboardPerkembangan extends Controller
     {
         return DB::table('balita')
             ->join('pemeriksaan', 'balita.id', '=', 'pemeriksaan.balita_id')
-            ->whereRaw("(LOWER(tb_u) like '%tinggi%' OR LOWER(tb_u) like '%normal%')")
+            ->whereRaw("(LOWER(tb_u) like '%pendek%' OR LOWER(tb_u) like '%kurang%')")
             ->where('provinsi', auth()->user()->unit->provinsi->id)
             ->count();
     }
@@ -41,7 +41,7 @@ class DashboardPerkembangan extends Controller
             ->selectRaw('MONTHNAME(tgl_pengukuran) as bulan, COUNT(*) as jml')
             ->whereYear('tgl_pengukuran', $tahun)
             ->where('balita.provinsi', auth()->user()->unit->provinsi->id)
-            ->whereRaw("(LOWER(tb_u) like '%tinggi%' OR LOWER(tb_u) like '%pendek%')")
+            ->whereRaw("(LOWER(tb_u) like '%kurang%' OR LOWER(tb_u) like '%pendek%')")
             ->groupByRaw('MONTHNAME(tgl_pengukuran)')
             ->orderByRaw('MONTH(tgl_pengukuran)')
             ->get();

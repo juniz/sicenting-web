@@ -342,8 +342,8 @@ class DashboardController extends Controller
     {
         return DB::table('balita')
             ->join('pemeriksaan', 'balita.id', '=', 'pemeriksaan.balita_id')
-            ->whereRaw("(LOWER(tb_u) like '%tinggi%' OR LOWER(tb_u) like '%normal%')")
             ->where('provinsi', auth()->user()->unit->provinsi->id)
+            ->whereRaw("(LOWER(tb_u) like '%pendek%' OR LOWER(tb_u) like '%kurang%')")
             ->count();
     }
 }

@@ -54,9 +54,10 @@
                                 <button class="btn btn-outline-secondary dropdown-toggle" type="button"
                                     data-toggle="dropdown" aria-expanded="false">Menu</button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" wire:click='confirmDelete("{{$balita->id}}")'>Hapus</a>
+                                    <a class="dropdown-item" href="{{ url('/balita', $balita->id) }}">Pengukuran</a>
                                     <a class="dropdown-item"
                                         wire:click='modalUpdateBalita("{{$balita->id}}")'>Update</a>
+                                    <a class="dropdown-item" wire:click='confirmDelete("{{$balita->id}}")'>Hapus</a>
                                 </div>
                             </td>
                         </tr>

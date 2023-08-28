@@ -12,13 +12,13 @@
     @can('add balita')
     <x-slot name="toolsSlot">
         <div class="d-flex flex-row" style="gap: 10px">
-            {{-- <form method="POST" enctype="multipart/form-data" action="{{ url('/import-balita') }}">
+            <form method="POST" enctype="multipart/form-data" action="{{ url('/import-balita') }}">
                 @csrf
                 <div class="d-flex flex-row">
                     <input type="file" class="form-control-file" id="file" name="file">
                     <button type="submit" class="btn btn-sm btn-primary">Import</button>
                 </div>
-            </form> --}}
+            </form>
             <a name="tambah" id="tambah" class="btn btn-sm btn-dark" href="{{ url('/balita/tambah') }}"
                 role="button">Tambah</a>
         </div>
