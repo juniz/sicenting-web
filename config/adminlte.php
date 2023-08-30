@@ -374,6 +374,12 @@ return [
         //     ],
         // ],
         [
+            'text'        => 'Kegiatan',
+            'url'         => 'giat',
+            'icon'        => 'fas fa-fw fa-clipboard',
+            // 'can'         => 'view kegiatan',
+        ],
+        [
             'text'        => 'Units',
             'url'         => 'units',
             'icon'        => 'fas fa-fw fa-building',
@@ -569,6 +575,21 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'EkkoLightbox' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/ekko-lightbox/ekko-lightbox.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/ekko-lightbox/ekko-lightbox.min.css',
                 ],
             ],
         ],

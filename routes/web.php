@@ -85,4 +85,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/team', [App\Http\Controllers\TeamController::class, 'index']);
 
     Route::post('/import-balita', [App\Http\Controllers\BalitaController::class, 'import']);
+
+    Route::get('/giat', [App\Http\Controllers\KegiatanController::class, 'index']);
+    Route::get('/giat/cetak', [App\Http\Controllers\KegiatanController::class, 'cetak']);
 });
