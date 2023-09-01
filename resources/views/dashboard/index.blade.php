@@ -17,7 +17,7 @@
         <x-adminlte-info-box theme='secondary' title="Jumlah Balita" text="{{$jmlBalita}}" icon="fas fa-lg fa-users" />
     </div>
     <div class="col-md-4">
-        <x-adminlte-info-box theme='success' title="Jumlah Balita Tidak Stunting"
+        <x-adminlte-info-box theme='success' title="Jumlah Indikasi Rawan Stunting"
             text="{{$jmlBalita - $jmlBalitaStunting}}" icon="fas fa-lg fa-users" />
     </div>
     <div class="col-md-4">
