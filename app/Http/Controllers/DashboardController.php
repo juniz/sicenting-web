@@ -60,6 +60,7 @@ class DashboardController extends Controller
             'jmlGiziKurang' => $jmlGiziKurang->jml,
             'jmlGiziBaik' => $jmlGiziBaik->jml,
             'jmlBalita' => $this->getJmlBalita(),
+            'jmlBalitaIndikasiStunting' => $this->getJmlBalitaIndikasiStunting(),
             'jmlBalitaStunting' => $this->getJmlBalitaStunting(),
         ]);
     }
@@ -338,12 +339,23 @@ class DashboardController extends Controller
         return Balita::where('provinsi', auth()->user()->unit->provinsi->id)->count();
     }
 
+    public function getJmlBalitaIndikasiStunting()
+    {
+        return DB::table('balita')
+            ->join('pemeriksaan', 'balita.id', '=', 'pemeriksaan.balita_id')
+            ->where('provinsi', auth()->user()->unit->provinsi->id)
+            ->whereRaw("(LOWER(tb_u) like '%pendek%' OR LOWER(tb_u) like '%kurang%')")
+            ->count();
+    }
+
     public function getJmlBalitaStunting()
     {
         return DB::table('balita')
             ->join('pemeriksaan', 'balita.id', '=', 'pemeriksaan.balita_id')
             ->where('provinsi', auth()->user()->unit->provinsi->id)
             ->whereRaw("(LOWER(tb_u) like '%pendek%' OR LOWER(tb_u) like '%kurang%')")
+            ->whereRaw("LOWER(bb_u) like '%kurang%'")
+            ->whereRaw("(LOWER(bb_tb) like '%kurang%' OR LOWER(bb_tb) like '%buruk%' OR LOWER(bb_tb) like '%obesitas%')")
             ->count();
     }
 }

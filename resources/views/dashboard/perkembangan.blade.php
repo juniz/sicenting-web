@@ -12,14 +12,19 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <x-adminlte-info-box theme='secondary' title="Jumlah Balita" text="{{$jmlBalita}}" icon="fas fa-lg fa-users" />
     </div>
-    <div class="col-md-4">
-        <x-adminlte-info-box theme='success' title="Jumlah Indikasi Rawan Stunting"
-            text="{{$jmlBalita - $jmlBalitaStunting}}" icon="fas fa-lg fa-users" />
+    <div class="col-md-3">
+        <x-adminlte-info-box theme='success' title="Jumlah Balita Normal"
+            text="{{$jmlBalita - ($jmlBalitaStunting + $jmlBalitaIndikasiStunting)}}"
+            icon="fas fa-lg fa-baby-carriage" />
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
+        <x-adminlte-info-box theme='warning' title="Jumlah Indikasi Rawan Stunting"
+            text="{{$jmlBalitaIndikasiStunting}}" icon="fas fa-lg fa-exclamation-triangle" />
+    </div>
+    <div class="col-md-3">
         <a href="{{ url('balita-stunting') }}">
             <x-adminlte-info-box theme='danger' title="Jumlah Stunting" text="{{$jmlBalitaStunting}}"
                 icon="fas fa-lg fa-baby" />
