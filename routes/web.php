@@ -88,4 +88,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/giat', [App\Http\Controllers\KegiatanController::class, 'index']);
     Route::get('/giat/cetak', [App\Http\Controllers\KegiatanController::class, 'cetak']);
+
+    Route::get('/balita-stunting', function () {
+        return view('dashboard.stunting');
+    });
 });

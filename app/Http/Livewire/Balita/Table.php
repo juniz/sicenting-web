@@ -22,8 +22,27 @@ class Table extends Component
 
     public function render()
     {
+        $search = $this->search;
+        if (auth()->user()->hasRole('super-admin') || auth()->user()->hasRole('admin')) {
+            $data = Balita::where('provinsi', auth()->user()->unit->province_id)
+                ->where(function ($query) use ($search) {
+                    $query->where('balita.nama', 'like', '%' . $search . '%')
+                        ->orWhere('balita.nik', 'like', '%' . $search . '%');
+                })
+                ->orderBy('updated_at', 'desc')
+                ->paginate(10);
+        } else {
+            $data = Balita::where('user_id', auth()->user()->id)
+                ->where(function ($query) use ($search) {
+                    $query->where('balita.nama', 'like', '%' . $search . '%')
+                        ->orWhere('balita.nik', 'like', '%' . $search . '%');
+                })
+                ->orderBy('updated_at', 'desc')
+                ->paginate(10);
+        }
+
         return view('livewire.balita.table', [
-            'balitas' => Balita::where('nama', 'like', '%' . $this->search . '%')->orWhere('nik', 'like', '%' . $this->search . '%')->orderBy('updated_at', 'desc')->paginate(10)
+            'balitas' => $data
         ]);
     }
 

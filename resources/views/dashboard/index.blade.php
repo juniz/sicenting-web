@@ -17,8 +17,10 @@
         <x-adminlte-info-box theme='secondary' title="Jumlah Balita" text="{{$jmlBalita}}" icon="fas fa-lg fa-users" />
     </div>
     <div class="col-md-6">
-        <x-adminlte-info-box theme='danger' title="Jumlah Stunting" text="{{$jmlBalitaStunting}}"
-            icon="fas fa-lg fa-baby" />
+        <a href="{{ url('balita-stunting') }}">
+            <x-adminlte-info-box theme='danger' title="Jumlah Stunting" text="{{$jmlBalitaStunting}}"
+                icon="fas fa-lg fa-baby" />
+        </a>
     </div>
 </div>
 <div class="row">
