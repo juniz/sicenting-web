@@ -13,19 +13,23 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <x-adminlte-info-box theme='secondary' title="Jumlah Balita" text="{{$jmlBalita}}" icon="fas fa-lg fa-users" />
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
+        <x-adminlte-info-box theme='success' title="Jumlah Balita Tidak Stunting"
+            text="{{$jmlBalita - $jmlBalitaStunting}}" icon="fas fa-lg fa-users" />
+    </div>
+    <div class="col-md-4">
         <a href="{{ url('balita-stunting') }}">
-            <x-adminlte-info-box theme='danger' title="Jumlah Stunting" text="{{$jmlBalitaStunting}}"
+            <x-adminlte-info-box theme='danger' title="Jumlah Rawan Stunting" text="{{$jmlBalitaStunting}}"
                 icon="fas fa-lg fa-baby" />
         </a>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        <x-adminlte-card title="Grafik Stunting">
+        <x-adminlte-card title="Grafik Indikasi Rawan Stunting">
             <div class="chart">
                 <canvas id="barChart"
                     style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
