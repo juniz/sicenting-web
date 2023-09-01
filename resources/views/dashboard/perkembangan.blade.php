@@ -17,8 +17,7 @@
     </div>
     <div class="col-md-3">
         <x-adminlte-info-box theme='success' title="Jumlah Balita Normal"
-            text="{{$jmlBalita - ($jmlBalitaStunting + $jmlBalitaIndikasiStunting)}}"
-            icon="fas fa-lg fa-baby-carriage" />
+            text="{{$jmlBalita - $jmlBalitaIndikasiStunting}}" icon="fas fa-lg fa-baby-carriage" />
     </div>
     <div class="col-md-3">
         <x-adminlte-info-box theme='warning' title="Jumlah Indikasi Rawan Stunting"
