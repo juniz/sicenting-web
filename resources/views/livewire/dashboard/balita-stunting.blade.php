@@ -16,6 +16,7 @@
                             <td>Jns Kelamin</td>
                             <td>Tgl Lahir</td>
                             <td>Nama Ortu</td>
+                            <td>Alamat</td>
                             <td>TB/U</td>
                             <td>BB/U</td>
                             <td>TB/BB</td>
@@ -29,6 +30,7 @@
                             <td>{{$balita->jns_kelamin == 'L' ? 'Laki-Laki' : 'Perempuan'}}</td>
                             <td>{{$balita->tgl_lahir}}</td>
                             <td>{{$balita->nama_ortu}}</td>
+                            <td>{{$balita->alamat}}</td>
                             <td class="@if(Str::contains(strtolower($balita->tb_u), 'pendek')) text-danger @endif">
                                 {{$balita->tb_u}}
                             </td>
