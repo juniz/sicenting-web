@@ -1,7 +1,8 @@
 <div>
     <div class="card">
         <div class="card-body">
-            <div class="d-flex flex-row justify-content-end mb-3">
+            <div class="d-flex flex-row justify-content-between mb-3">
+                <h6 class="my-auto text-bold">Jumlah Total Balita : {{ $balitas->total() }}</h6>
                 <div class="col-md-2">
                     <input id="search" wire:model.debounce.500ms='search' class="form-control" type="text" name="search"
                         placeholder="Cari balita .....">
@@ -11,6 +12,7 @@
                 <table class="table table-striped">
                     <thead class="thead-dark">
                         <tr>
+                            <td>No</td>
                             <td>No. KK</td>
                             <td>Nama</td>
                             <td>Jns Kelamin</td>
@@ -25,6 +27,7 @@
                     <tbody>
                         @forelse($balitas as $balita)
                         <tr>
+                            <td>{{ ($balitas->currentpage()-1) * $balitas->perpage() + $loop->index + 1 }}</td>
                             <td>{{$balita->nik}}</td>
                             <td>{{$balita->nama}}</td>
                             <td>{{$balita->jns_kelamin == 'L' ? 'Laki-Laki' : 'Perempuan'}}</td>
@@ -38,7 +41,7 @@
                                 {{$balita->bb_u}}
                             </td>
                             <td
-                                class="@if(Str::contains(strtolower($balita->bb_tb), ['kurang', 'lebih', 'obesitas'])) text-danger @endif">
+                                class="@if(Str::contains(strtolower($balita->bb_tb), ['kurang', 'lebih', 'obesitas', 'buruk'])) text-danger @endif">
                                 {{$balita->bb_tb}}
                             </td>
                         </tr>
