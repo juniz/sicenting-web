@@ -33,6 +33,7 @@ class BalitaStunting extends Component
                 })
                 ->whereRaw("LOWER(bb_u) like '%kurang%'")
                 ->whereRaw("(LOWER(bb_tb) like '%kurang%' OR LOWER(bb_tb) like '%buruk%' OR LOWER(bb_tb) like '%obesitas%')")
+                ->where('balita.provinsi', auth()->user()->unit->province_id)
                 ->where(function ($query) use ($search) {
                     $query->where('balita.nama', 'like', '%' . $search . '%')
                         ->orWhere('balita.nik', 'like', '%' . $search . '%');
