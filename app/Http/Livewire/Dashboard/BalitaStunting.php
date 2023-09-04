@@ -27,13 +27,9 @@ class BalitaStunting extends Component
                 ->join('pemeriksaan', 'balita.id', '=', 'pemeriksaan.balita_id')
                 ->where('balita.provinsi', auth()->user()->unit->province_id)
                 ->whereRaw('pemeriksaan.created_at = (SELECT MAX(created_at) FROM pemeriksaan WHERE balita_id = balita.id)')
-                ->where(function ($query) use ($search) {
-                    $query->where('pemeriksaan.tb_u', 'like', '%pendek%')
-                        ->orWhere('pemeriksaan.tb_u', 'like', '%kurang%');
-                })
+                ->whereRaw("(LOWER(tb_u) like '%pendek%' OR LOWER(tb_u) like '%kurang%')")
                 ->whereRaw("LOWER(bb_u) like '%kurang%'")
                 ->whereRaw("(LOWER(bb_tb) like '%kurang%' OR LOWER(bb_tb) like '%buruk%' OR LOWER(bb_tb) like '%obesitas%')")
-                ->where('balita.provinsi', auth()->user()->unit->province_id)
                 ->where(function ($query) use ($search) {
                     $query->where('balita.nama', 'like', '%' . $search . '%')
                         ->orWhere('balita.nik', 'like', '%' . $search . '%');
