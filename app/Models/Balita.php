@@ -43,4 +43,9 @@ class Balita extends Model
     {
         return $this->hasOne(Pemeriksaan::class)->latestOfMany();
     }
+
+    public function konsul()
+    {
+        return $this->hasOne(Konsul::class)->latestOfMany();
+    }
 }

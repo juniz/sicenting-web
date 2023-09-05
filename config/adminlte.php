@@ -328,9 +328,18 @@ return [
         ],
         [
             'text'        => 'Balita',
-            'url'         => 'balita',
             'icon'        => 'fas fa-fw fa-baby',
             'can'         => 'view balita',
+            'submenu' => [
+                [
+                    'text' => 'Data Balita',
+                    'url'  => 'balita',
+                ],
+                [
+                    'text' => 'Konsul Balita',
+                    'url'  => 'balita-konsul',
+                ],
+            ]
 
         ],
         [

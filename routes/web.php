@@ -92,4 +92,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/balita-stunting', function () {
         return view('dashboard.stunting');
     });
+
+    Route::get('/balita-konsul', function () {
+        return view('balita.konsul');
+    });
 });
