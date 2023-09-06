@@ -22,7 +22,7 @@
     </div>
     <div class="col-md-3">
         <x-adminlte-info-box theme='warning' title="Jumlah Indikasi Rawan Stunting"
-            text="{{$jmlBalitaIndikasiStunting}}" icon="fas fa-lg fa-exclamation-triangle" />
+            text="{{$jmlBalitaIndikasiStunting - $jmlBalitaStunting}}" icon="fas fa-lg fa-exclamation-triangle" />
     </div>
     <div class="col-md-3">
         <a href="{{ url('balita-stunting') }}">
