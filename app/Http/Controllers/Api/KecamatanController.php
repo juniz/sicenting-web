@@ -14,9 +14,11 @@ class KecamatanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke($id)
+    public function __invoke(Request  $request)
     {
-        $kecamatan = District::where('regency_id', $id)->get();
+        $q = $request->q;
+        $kabupaten = $request->kabupaten;
+        $kecamatan = District::where('regency_id', $kabupaten)->where('name', 'like', '%' . $q . '%')->get();
         return response()->json($kecamatan);
     }
 }

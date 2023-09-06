@@ -13,12 +13,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::post('tbulaki', App\Http\Controllers\Api\TBULakiController::class);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('kabupaten/{id}', App\Http\Controllers\Api\KabupatenController::class);
-Route::get('kecamatan/{id}', App\Http\Controllers\Api\KecamatanController::class);
-Route::get('kelurahan/{id}', App\Http\Controllers\Api\KelurahanController::class);
-
+Route::get('kabupaten', App\Http\Controllers\Api\KabupatenController::class);
+Route::get('kecamatan', App\Http\Controllers\Api\KecamatanController::class);
+Route::get('kelurahan', App\Http\Controllers\Api\KelurahanController::class);
+Route::get('provinsi', App\Http\Controllers\Api\ProvinsiController::class);

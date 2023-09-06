@@ -11,6 +11,7 @@ class Create extends Component
 {
     use LivewireAlert;
     public $provinsi, $valProvinsi, $nama, $nik, $jns_kelamin, $tgl_lahir, $nama_ortu, $kabupaten, $kecamatan, $kelurahan, $rt, $rw, $alamat;
+    protected $listeners = ['resetAll'];
     public function render()
     {
         return view('livewire.balita.create');
@@ -19,6 +20,11 @@ class Create extends Component
     public function mount($provinsi)
     {
         $this->provinsi = $provinsi;
+    }
+
+    public function resetAll()
+    {
+        $this->reset(['nama', 'nik', 'jns_kelamin', 'tgl_lahir', 'nama_ortu', 'kabupaten', 'kecamatan', 'kelurahan', 'rt', 'rw', 'alamat']);
     }
 
     public function simpan()
@@ -57,6 +63,7 @@ class Create extends Component
 
         try {
             $balita = new \App\Models\Balita;
+            $balita->user_id = auth()->user()->id;
             $balita->nama = Str::upper($this->nama);
             $balita->nik = $this->nik;
             $balita->jns_kelamin = $this->jns_kelamin;

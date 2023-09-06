@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Regency;
+use App\Models\Province;
 use Illuminate\Http\Request;
 
-class KabupatenController extends Controller
+class ProvinsiController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -17,8 +17,7 @@ class KabupatenController extends Controller
     public function __invoke(Request $request)
     {
         $q = $request->q;
-        $provinsi = $request->provinsi;
-        $kabupaten = Regency::where('province_id', $provinsi)->where('name', 'like', '%' . $q . '%')->get();
+        $kabupaten = Province::where('name', 'LIKE', '%' . $q . '%')->get();
         return response()->json($kabupaten);
     }
 }

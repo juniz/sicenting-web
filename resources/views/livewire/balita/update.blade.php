@@ -1,6 +1,6 @@
 <div>
-    <div wire:ignore.self id="update-balita" class="modal fade" tabindex="-1" role="dialog"
-        aria-labelledby="my-modal-title" aria-hidden="true">
+    <div wire:ignore.self id="update-balita" class="modal fade" role="dialog" aria-labelledby="my-modal-title"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -40,33 +40,6 @@
                             <label for="namaOrtu">Nama Ortu</label>
                             <input wire:model.defer='nama_ortu' id="namaOrtu" class="form-control" type="text" name="">
                         </div>
-                        <div wire:ignore class="form-group">
-                            <label for="provinsi">Provinsi</label>
-                            <select id="provinsi-update" class="form-control" name="provinsi">
-                                <option value="">Silahkan Pilih Provinsi</option>
-                                @foreach($provinsi as $p)
-                                <option value="{{$p->id}}">{{$p->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div wire:ignore class="form-group">
-                            <label for="kabupaten">Kabupaten</label>
-                            <select id="kabupaten-update" class="form-control" name="kabupaten">
-                                <option value="">Silahkan pilih kabupaten</option>
-                            </select>
-                        </div>
-                        <div wire:ignore class="form-group">
-                            <label for="kecamatan">Kecamatan</label>
-                            <select id="kecamatan-update" class="form-control" name="kecamatan">
-                                <option value="">Silahkan pilih kecamatan</option>
-                            </select>
-                        </div>
-                        <div wire:ignore class="form-group">
-                            <label for="kelurahan">Kelurahan</label>
-                            <select id="kelurahan-update" class="form-control" name="kelurahan">
-                                <option value="">Silahkan pilih kelurahan</option>
-                            </select>
-                        </div>
                         <div class="form-group">
                             <label for="rt">RT</label>
                             <input wire:model.defer='rt' id="rt" class="form-control" type="text" name="">
@@ -101,90 +74,5 @@
     window.addEventListener('closeModalUpdateBalita', event => {
         $('#update-balita').modal('hide');
     });
-
-    $('#provinsi-update').select2({
-            placeholder: 'Silahkan Pilih Provinsi',
-            theme: 'bootstrap4',
-            allowClear: true,
-            width: '100%',
-            dropdownParent: $("#update-balita")
-        });
-
-        $('#kabupaten-update').select2({
-            placeholder: 'Silahkan Pilih Kabupaten / Kota',
-            theme: 'bootstrap4',
-            allowClear: true,
-            width: '100%',
-            dropdownParent: $("#update-balita")
-        });
-
-        $('#kecamatan-update').select2({
-            placeholder: 'Silahkan Pilih Kecamatan',
-            theme: 'bootstrap4',
-            allowClear: true,
-            width: '100%',
-            dropdownParent: $("#update-balita")
-        });
-
-        $('#kelurahan-update').select2({
-            placeholder: 'Silahkan Pilih Kelurahan',
-            theme: 'bootstrap4',
-            allowClear: true,
-            width: '100%',
-            dropdownParent: $("#update-balita")
-        });
-
-        $('#provinsi-update').on('change', function(){
-            var id = $(this).val();
-            @this.set('valProvinsi', id);
-            $.ajax({
-                url: '/api/kabupaten/'+id,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data){
-                    $('#kabupaten-update').empty();
-                    $.each(data, function(key, value){
-                        $('#kabupaten-update').append('<option value="'+value.id+'">'+value.name+'</option>');
-                    });
-                }
-            });
-        });
-
-        $('#kabupaten-update').on('change', function(){
-            var id = $(this).val();
-            @this.set('kabupaten', id);
-            $.ajax({
-                url: '/api/kecamatan/'+id,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data){
-                    $('#kecamatan-update').empty();
-                    $.each(data, function(key, value){
-                        $('#kecamatan-update').append('<option value="'+value.id+'">'+value.name+'</option>');
-                    });
-                }
-            });
-        });
-
-        $('#kecamatan-update').on('change', function(){
-            var id = $(this).val();
-            @this.set('kecamatan', id);
-            $.ajax({
-                url: '/api/kelurahan/'+id,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data){
-                    $('#kelurahan-update').empty();
-                    $.each(data, function(key, value){
-                        $('#kelurahan-update').append('<option value="'+value.id+'">'+value.name+'</option>');
-                    });
-                }
-            });
-        });
-
-        $('#kelurahan-update').on('change', function(){
-            var id = $(this).val();
-            @this.set('kelurahan', id);
-        });
 </script>
 @endpush

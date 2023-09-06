@@ -14,9 +14,11 @@ class KelurahanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke($id)
+    public function __invoke(Request $request)
     {
-        $kelurahan = Village::where('district_id', $id)->get();
+        $q = $request->q;
+        $kecamatan = $request->kecamatan;
+        $kelurahan = Village::where('district_id', $kecamatan)->where('name', 'like', '%' . $q . '%')->get();
         return response()->json($kelurahan);
     }
 }

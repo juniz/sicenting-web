@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-body">
             <div class="d-flex flex-row-reverse mb-3">
-                <div class=""><a class="btn btn-md btn-secondary" href="{{url('/balita/tambah')}}">Tambah</a>
+                <div class=""><button class="btn btn-md btn-secondary" wire:click="modalTambahBalita">Tambah</button>
                 </div>
                 <div class="col-md-2">
                     <input id="search" wire:model.debounce.500ms='search' class="form-control" type="text" name="search"
