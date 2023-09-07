@@ -52,9 +52,9 @@ class Update extends Component
             'alamat' => 'required',
         ], [
             'nama.required' => 'Nama tidak boleh kosong',
-            'nik.required' => 'NIK tidak boleh kosong',
-            'nik.min' => 'NIK harus 16 digit',
-            'nik.max' => 'NIK harus 16 digit',
+            'nik.required' => 'No.KK tidak boleh kosong',
+            'nik.min' => 'No.KK harus 16 digit',
+            'nik.max' => 'No.KK harus 16 digit',
             'nik.regex' => 'NIK harus berupa angka',
             'jns_kelamin.required' => 'Jenis Kelamin tidak boleh kosong',
             'tgl_lahir.required' => 'Tanggal Lahir tidak boleh kosong',

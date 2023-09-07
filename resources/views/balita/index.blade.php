@@ -11,6 +11,7 @@
 <livewire:balita.table />
 <livewire:balita.create :provinsi="$provinsi" />
 <livewire:balita.update :provinsi="$provinsi" />
+<livewire:balita.pemeriksaan />
 @stop
 
 @push('js')
