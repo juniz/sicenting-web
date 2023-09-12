@@ -32,7 +32,7 @@ class Table extends Component
                 ->orderBy('updated_at', 'desc')
                 ->paginate(10);
         } else {
-            $data = Balita::where('user_id', auth()->user()->id)
+            $data = Balita::where('provinsi', auth()->user()->unit->province_id)
                 ->where(function ($query) use ($search) {
                     $query->where('balita.nama', 'like', '%' . $search . '%')
                         ->orWhere('balita.nik', 'like', '%' . $search . '%');
@@ -76,19 +76,32 @@ class Table extends Component
     {
         try {
             $balita = Balita::find($this->idBalita);
-            $balita->delete();
-            $this->emit('refreshTable');
-            $this->reset('idBalita');
-            $this->alert('success', 'Data berhasil dihapus', [
-                'position' =>  'center',
-                'timer' =>  3000,
-                'toast' =>  false,
-                'text' =>  '',
-                'confirmButtonText' =>  'Ok',
-                'cancelButtonText' =>  'Cancel',
-                'showCancelButton' =>  false,
-                'showConfirmButton' =>  false,
-            ]);
+            if ($balita->user_id == auth()->user()->id) {
+                $balita->delete();
+                $this->emit('refreshTable');
+                $this->reset('idBalita');
+                $this->alert('success', 'Data berhasil dihapus', [
+                    'position' =>  'center',
+                    'timer' =>  3000,
+                    'toast' =>  false,
+                    'text' =>  '',
+                    'confirmButtonText' =>  'Ok',
+                    'cancelButtonText' =>  'Cancel',
+                    'showCancelButton' =>  false,
+                    'showConfirmButton' =>  false,
+                ]);
+            } else {
+                $this->alert('info', 'Data gagal dihapus', [
+                    'position' =>  'center',
+                    'timer' =>  3000,
+                    'toast' =>  false,
+                    'text' =>  'Harus dihapus dengan user yang input data awal',
+                    'confirmButtonText' =>  'Ok',
+                    'cancelButtonText' =>  'Cancel',
+                    'showCancelButton' =>  false,
+                    'showConfirmButton' =>  false,
+                ]);
+            }
         } catch (\Exception $e) {
             $this->alert('error', 'Data gagal dihapus', [
                 'position' =>  'center',
