@@ -33,7 +33,7 @@
 
         <div class="input-group-append">
             <div class="input-group-text">
-                <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                <span class="fas fa-user"></span>
             </div>
         </div>
 
@@ -46,12 +46,13 @@
 
     {{-- Password field --}}
     <div class="input-group mb-3">
-        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+        <input id="password" type="password" name="password" type="password"
+            class="form-control @error('password') is-invalid @enderror"
             placeholder="{{ __('adminlte::adminlte.password') }}">
 
         <div class="input-group-append">
             <div class="input-group-text">
-                <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                <span id="password-button" class="fas fa-lock"></span>
             </div>
         </div>
 
@@ -198,6 +199,19 @@
                 $(".captcha span").html(data.captcha);
             }
         });
+    });
+
+    $('#password-button').click(function () {
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+            $('#password-button').removeClass('fa-lock');
+            $('#password-button').addClass('fa-lock-open');
+            x.type = "text";
+        } else {
+            $('#password-button').removeClass('fa-lock-open');
+            $('#password-button').addClass('fa-lock');
+            x.type = "password";
+        }
     });
 </script>
 @endpush

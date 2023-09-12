@@ -11,7 +11,7 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $provinsi = auth()->user()->unit->provinsi;
+        $provinsi = auth()->user()->unit->provinsi ?? null;
         $regencies = str_replace('_', ' ', $request->query('param'));
         $stts = $request->query('stts');
         $stuntingPerKec = $this->stunting($provinsi, $regencies, $stts);
