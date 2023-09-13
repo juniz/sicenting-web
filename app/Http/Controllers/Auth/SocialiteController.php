@@ -27,7 +27,7 @@ class SocialiteController extends Controller
         // find or create user and send params user get from socialite and provider
         $authUser = $this->findOrCreateUser($user, $provider);
 
-        if(empty($authUser)){
+        if (empty($authUser)) {
             return redirect()->back()->with('error', 'Email belum terdaftar');
         }
 
@@ -52,21 +52,23 @@ class SocialiteController extends Controller
 
             // Jika belum ada
         } else {
-            
+
             // User berdasarkan email 
             $user = User::where('email', $socialUser->getEmail())->first();
 
             // Jika Tidak ada user
             if (!$user) {
                 // Create user baru
-                $user = User::create([
-                    'name'  => $socialUser->getName(),
-                    'email' => $socialUser->getEmail(),
-                    'password' => bcrypt('12345678'),
-                    'avatar' => $socialUser->getAvatar(),
-                ]);
+                // $user = User::create([
+                //     'name'  => $socialUser->getName(),
+                //     'email' => $socialUser->getEmail(),
+                //     'password' => bcrypt('12345678'),
+                //     'avatar' => $socialUser->getAvatar(),
+                // ]);
 
-                $user->assignRole('Umum');
+                // $user->assignRole('Umum');
+
+                return redirect()->back()->with('error', 'Email belum terdaftar');
             }
 
             // Buat Social Account baru
