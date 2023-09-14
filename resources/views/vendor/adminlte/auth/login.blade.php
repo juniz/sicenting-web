@@ -63,7 +63,7 @@
         @enderror
     </div>
 
-    <div class="form-group mb-3">
+    {{-- <div class="form-group mb-3">
         <div class="captcha">
             <span>{!! captcha_img() !!}</span>
             <button type="button" class="btn btn-danger" class="reload" id="reload">
@@ -79,7 +79,7 @@
             <strong>{{ $message }}</strong>
         </span>
         @enderror
-    </div>
+    </div> --}}
 
     {{-- Login field --}}
     <div class="row">
