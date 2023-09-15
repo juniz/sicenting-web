@@ -24,9 +24,9 @@ class Table extends Component
     public function render()
     {
         if (auth()->user()->hasRole('super-admin') || auth()->user()->hasRole('admin')) {
-            $data = Kegiatan::where('nama_kegiatan', 'like', '%' . $this->search . '%')->paginate(10);
+            $data = Kegiatan::where('nama_kegiatan', 'like', '%' . $this->search . '%')->orderBy('created_at', 'desc')->paginate(10);
         } else {
-            $data = Kegiatan::where('nama_kegiatan', 'like', '%' . $this->search . '%')->where('user_id', auth()->user()->id)->paginate(10);
+            $data = Kegiatan::where('nama_kegiatan', 'like', '%' . $this->search . '%')->where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(10);
         }
         return view('livewire.kegiatan.table', [
             'kegiatans' => $data
