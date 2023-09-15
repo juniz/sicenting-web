@@ -40,6 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard-user', [App\Http\Controllers\DashboardPerkembangan::class, 'getUserJns']);
     Route::get('/dashboard-perkembangan-stunting', [App\Http\Controllers\DashboardPerkembangan::class, 'grafikPerkembangan']);
     Route::get('/dashboard-jenis-user', [App\Http\Controllers\DashboardPerkembangan::class, 'getJenisUser']);
+    Route::get('/dashboard-stunting-kab', [App\Http\Controllers\DashboardController::class, 'stuntingPerKab']);
+    Route::get('/dashboard-gizi-kab', [App\Http\Controllers\DashboardController::class, 'giziPerKab']);
+    Route::get('/dashboard-badan-kab', [App\Http\Controllers\DashboardController::class, 'badanPerKab']);
+
     Route::get('/standart/tbu-laki', [App\Http\Controllers\Standart\TBULakiController::class, 'index']);
     Route::get('/standart/tbu-perempuan', [App\Http\Controllers\Standart\TBULakiController::class, 'index']);
     Route::get('/standart/bbu-laki', [App\Http\Controllers\Standart\BBULakiController::class, 'index']);

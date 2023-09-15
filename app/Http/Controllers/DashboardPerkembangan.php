@@ -54,6 +54,8 @@ class DashboardPerkembangan extends Controller
             ->whereYear('tgl_pengukuran', $tahun)
             ->where('balita.provinsi', auth()->user()->unit->provinsi->id)
             ->whereRaw("(LOWER(tb_u) like '%kurang%' OR LOWER(tb_u) like '%pendek%')")
+            ->whereRaw("LOWER(bb_u) like '%kurang%'")
+            ->whereRaw("(LOWER(bb_tb) like '%kurang%' OR LOWER(bb_tb) like '%buruk%' OR LOWER(bb_tb) like '%obesitas%')")
             ->groupByRaw('MONTHNAME(tgl_pengukuran)')
             ->orderByRaw('MONTH(tgl_pengukuran)')
             ->get();

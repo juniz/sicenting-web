@@ -12,28 +12,6 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $provinsi = auth()->user()->unit->provinsi ?? null;
-        $regencies = str_replace('_', ' ', $request->query('param'));
-        $stts = $request->query('stts');
-        $stuntingPerKec = $this->stunting($provinsi, $regencies, $stts);
-        $giziPerKab = $this->gizi($provinsi, $regencies, $stts);
-        $badanPerKab = $this->badan($provinsi, $regencies, $stts);
-        $konsulPerKab = $this->konsulPerKab();
-
-        $kabupaten = $stuntingPerKec->pluck('kabupaten');
-        $jmlNormalKec = $stuntingPerKec->pluck('jmlNormal');
-        $jmlSangatPendekKec = $stuntingPerKec->pluck('jmlSangatPendek');
-
-        $jmlGiziKabupaten = $giziPerKab->pluck('kabupaten');
-        $jmlGiziNormal = $giziPerKab->pluck('jmlGiziNormal');
-        $jmlGiziBuruk = $giziPerKab->pluck('jmlGiziBuruk');
-        $jmlObesitas = $giziPerKab->pluck('jmlObesitas');
-
-        $badanKabupaten = $badanPerKab->pluck('kabupaten');
-        $jmlBadanNormal = $badanPerKab->pluck('jmlBadanNormal');
-        $jmlBadanKurang = $badanPerKab->pluck('jmlBadanKurang');
-
-        $konsulKabupaten = $konsulPerKab->pluck('kabupaten');
-        $jmlKonsul = $konsulPerKab->pluck('jmlKonsul');
 
         $jmlPendek = $this->jmlPendek();
         $jmlSangatPendek = $this->jmlSangatPendek();
@@ -41,19 +19,6 @@ class DashboardController extends Controller
         $jmlGiziKurang = $this->jmlGiziKurang();
         $jmlGiziBaik = $this->jmlGiziBaik();
         return view('dashboard.index', [
-            'stts' => $stts,
-            'kabupaten' => $kabupaten,
-            'jmlNormalKec' => $jmlNormalKec,
-            'jmlSangatPendekKec' => $jmlSangatPendekKec,
-            'jmlGiziKabupaten' => $jmlGiziKabupaten,
-            'jmlGiziNormal' => $jmlGiziNormal,
-            'jmlGiziBuruk' => $jmlGiziBuruk,
-            'jmlObesitas' => $jmlObesitas,
-            'badanKabupaten' => $badanKabupaten,
-            'jmlBadanNormal' => $jmlBadanNormal,
-            'jmlBadanKurang' => $jmlBadanKurang,
-            'konsulKabupaten' => $konsulKabupaten,
-            'jmlKonsul' => $jmlKonsul,
             'jmlPendek' => $jmlPendek->jml,
             'jmlSangatPendek' => $jmlSangatPendek->jml,
             'jmlGiziLebih' => $jmlGiziLebih->jml,
@@ -81,9 +46,10 @@ class DashboardController extends Controller
         // return !empty($regencies) ? $this->stuntingPerKec($provinsi, $regencies) : $this->stuntingPerKab($provinsi);
     }
 
-    public function stuntingPerKab($provinsi)
+    public function stuntingPerKab()
     {
-        return DB::table('balita')
+        $provinsi = auth()->user()->unit->provinsi;
+        $data = DB::table('balita')
             ->join('regencies', 'balita.kabupaten', '=', 'regencies.id')
             ->join('provinces', 'regencies.province_id', '=', 'provinces.id')
             ->selectRaw("regencies.name as kabupaten,
@@ -92,6 +58,36 @@ class DashboardController extends Controller
             ->where('provinces.id', $provinsi->id)
             ->groupBy('balita.kabupaten')
             ->get();
+
+        $response = [
+            'labels' => $data->pluck('kabupaten'),
+            'datasets' => [
+                [
+                    'label'               => 'Tinggi Pendek',
+                    'backgroundColor'     => 'rgb(242, 38, 19)',
+                    'borderColor'         => 'rgb(242, 38, 19)',
+                    'pointRadius'         => false,
+                    'pointColor'          => 'rgb(242, 38, 19)',
+                    'pointStrokeColor'    => '#c1c7d1',
+                    'pointHighlightFill'  => '#fff',
+                    'pointHighlightStroke' => 'rgb(242, 38, 19)',
+                    'data'                => $data->pluck('jmlSangatPendek')
+                ],
+                [
+                    'label'               => 'Tinggi Normal',
+                    'backgroundColor'     => 'rgb(46, 204, 113)',
+                    'borderColor'         => 'rgb(46, 204, 113)',
+                    'pointRadius'          => false,
+                    'pointColor'          => '#3b8bba',
+                    'pointStrokeColor'    => 'rgb(46, 204, 113)',
+                    'pointHighlightFill'  => '#fff',
+                    'pointHighlightStroke' => 'rgb(46, 204, 113)',
+                    'data'                => $data->pluck('jmlNormal')
+                ]
+            ]
+        ];
+
+        return response()->json($response);
     }
 
     public function stuntingPerKec($provinsi, $regencies)
@@ -141,9 +137,10 @@ class DashboardController extends Controller
         // return !empty($regencies) ? $this->giziPerKec($provinsi, $regencies) : $this->giziPerKab($provinsi);
     }
 
-    public function giziPerKab($provinsi)
+    public function giziPerKab()
     {
-        return DB::table('balita')
+        $provinsi = auth()->user()->unit->provinsi;
+        $data = DB::table('balita')
             ->join('regencies', 'balita.kabupaten', '=', 'regencies.id')
             ->join('provinces', 'regencies.province_id', '=', 'provinces.id')
             ->selectRaw("regencies.name as kabupaten,
@@ -153,6 +150,47 @@ class DashboardController extends Controller
             ->where('provinces.id', $provinsi->id)
             ->groupBy('balita.kabupaten')
             ->get();
+
+        $response = [
+            'labels' => $data->pluck('kabupaten'),
+            'datasets' => [
+                [
+                    'label'               => 'Obesitas',
+                    'backgroundColor'     => 'rgb(52, 45, 113)',
+                    'borderColor'         => 'rgb(52, 45, 113)',
+                    'pointRadius'         => false,
+                    'pointColor'          => 'rgb(52, 45, 113)',
+                    'pointStrokeColor'    => '#c1c7d1',
+                    'pointHighlightFill'  => '#fff',
+                    'pointHighlightStroke' => 'rgb(52, 45, 113)',
+                    'data'                => $data->pluck('jmlObesitas')
+                ],
+                [
+                    'label'               => 'Gizi Buruk',
+                    'backgroundColor'     => 'rgb(242, 38, 19)',
+                    'borderColor'         => 'rgb(242, 38, 19)',
+                    'pointRadius'         => false,
+                    'pointColor'          => 'rgb(242, 38, 19)',
+                    'pointStrokeColor'    => '#c1c7d1',
+                    'pointHighlightFill'  => '#fff',
+                    'pointHighlightStroke' => 'rgb(242, 38, 19)',
+                    'data'                => $data->pluck('jmlGiziBuruk')
+                ],
+                [
+                    'label'               => 'Gizi Normal',
+                    'backgroundColor'     => 'rgb(46, 204, 113)',
+                    'borderColor'         => 'rgb(46, 204, 113)',
+                    'pointRadius'          => false,
+                    'pointColor'          => '#3b8bba',
+                    'pointStrokeColor'    => 'rgb(46, 204, 113)',
+                    'pointHighlightFill'  => '#fff',
+                    'pointHighlightStroke' => 'rgb(46, 204, 113)',
+                    'data'                => $data->pluck('jmlGiziNormal')
+                ],
+            ]
+        ];
+
+        return response()->json($response);
     }
 
     public function giziPerKec($provinsi, $regencies)
@@ -204,9 +242,10 @@ class DashboardController extends Controller
         // return !empty($regencies) ? $this->badanPerKec($provinsi, $regencies) : $this->badanPerKab($provinsi);
     }
 
-    public function badanPerKab($provinsi)
+    public function badanPerKab()
     {
-        return DB::table('balita')
+        $provinsi = auth()->user()->unit->provinsi;
+        $data = DB::table('balita')
             ->join('regencies', 'balita.kabupaten', '=', 'regencies.id')
             ->join('provinces', 'regencies.province_id', '=', 'provinces.id')
             ->selectRaw("regencies.name as kabupaten,
@@ -215,6 +254,36 @@ class DashboardController extends Controller
             ->where('provinces.id', $provinsi->id)
             ->groupBy('balita.kabupaten')
             ->get();
+
+        $response = [
+            'labels' => $data->pluck('kabupaten'),
+            'datasets' => [
+                [
+                    'label'               => 'Berat Badan Kurang',
+                    'backgroundColor'     => 'rgb(242, 38, 19)',
+                    'borderColor'         => 'rgb(242, 38, 19)',
+                    'pointRadius'         => false,
+                    'pointColor'          => 'rgb(242, 38, 19)',
+                    'pointStrokeColor'    => '#c1c7d1',
+                    'pointHighlightFill'  => '#fff',
+                    'pointHighlightStroke' => 'rgb(242, 38, 19)',
+                    'data'                => $data->pluck('jmlBadanKurang')
+                ],
+                [
+                    'label'               => 'Berat Badan Normal',
+                    'backgroundColor'     => 'rgb(46, 204, 113)',
+                    'borderColor'         => 'rgb(46, 204, 113)',
+                    'pointRadius'          => false,
+                    'pointColor'          => '#3b8bba',
+                    'pointStrokeColor'    => 'rgb(46, 204, 113)',
+                    'pointHighlightFill'  => '#fff',
+                    'pointHighlightStroke' => 'rgb(46, 204, 113)',
+                    'data'                => $data->pluck('jmlBadanNormal')
+                ],
+            ]
+        ];
+
+        return response()->json($response);
     }
 
     public function badanPerKec($provinsi, $regencies)
