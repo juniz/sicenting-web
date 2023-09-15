@@ -13,6 +13,7 @@ class Table extends Component
     use LivewireAlert, WithPagination;
     public $search, $kegiatan_id;
     protected $queryString = ['search'];
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['refreshTable' => '$refresh', 'delete'];
 
     public function updatingSearch()
@@ -22,8 +23,13 @@ class Table extends Component
 
     public function render()
     {
+        if (auth()->user()->hasRole('super-admin') || auth()->user()->hasRole('admin')) {
+            $data = Kegiatan::where('nama_kegiatan', 'like', '%' . $this->search . '%')->paginate(10);
+        } else {
+            $data = Kegiatan::where('nama_kegiatan', 'like', '%' . $this->search . '%')->where('user_id', auth()->user()->id)->paginate(10);
+        }
         return view('livewire.kegiatan.table', [
-            'kegiatans' => Kegiatan::where('nama_kegiatan', 'like', '%' . $this->search . '%')->where('user_id', auth()->user()->id)->paginate(10)
+            'kegiatans' => $data
         ]);
     }
 
