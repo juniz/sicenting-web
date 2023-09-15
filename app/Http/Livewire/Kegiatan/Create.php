@@ -31,6 +31,7 @@ class Create extends Component
         try {
             $fileName = auth()->user()->name . '-' . time() . '.' . $this->photo->extension();
             $this->photo->storeAs('public/kegiatan', $fileName);
+            chmod(storage_path('app/public/kegiatan/' . $fileName), 0777);
             \App\Models\Kegiatan::create([
                 'user_id' => auth()->user()->id,
                 'nama_kegiatan' => $this->nama_kegiatan,
