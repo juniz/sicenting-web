@@ -29,6 +29,7 @@ class DashboardPerkembangan extends Controller
     {
         return DB::table('balita')
             ->join('pemeriksaan', 'balita.id', '=', 'pemeriksaan.balita_id')
+            ->whereRaw('pemeriksaan.created_at = (SELECT MAX(created_at) FROM pemeriksaan WHERE balita_id = balita.id)')
             ->where('provinsi', auth()->user()->unit->provinsi->id)
             ->whereRaw("(LOWER(tb_u) like '%pendek%' OR LOWER(tb_u) like '%kurang%')")
             ->count();
@@ -38,6 +39,7 @@ class DashboardPerkembangan extends Controller
     {
         return DB::table('balita')
             ->join('pemeriksaan', 'balita.id', '=', 'pemeriksaan.balita_id')
+            ->whereRaw('pemeriksaan.created_at = (SELECT MAX(created_at) FROM pemeriksaan WHERE balita_id = balita.id)')
             ->where('provinsi', auth()->user()->unit->provinsi->id)
             ->whereRaw("(LOWER(tb_u) like '%pendek%' OR LOWER(tb_u) like '%kurang%')")
             ->whereRaw("LOWER(bb_u) like '%kurang%'")
