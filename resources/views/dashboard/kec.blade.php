@@ -100,6 +100,8 @@
         $.ajax({
             url: "{{url('dashboard-stunting-kec')}}"+"/"+param,
             type: "GET",
+            cache: true,
+            async: false,
             success: function (data) {
                 $('#overlay-stunting').hide();
                 let chart = new Chart(barChart, {
@@ -138,6 +140,8 @@
         $.ajax({
             url: "{{url('dashboard-gizi-kec')}}"+"/"+param,
             type: "GET",
+            cache: true,
+            async: false,
             success: function (data) {
                 $('#overlay-gizi').hide();
                 let chart = new Chart(giziChart, {
@@ -176,6 +180,8 @@
         $.ajax({
             url: "{{url('dashboard-badan-kec')}}"+"/"+param,
             type: "GET",
+            cache: true,
+            async: false,
             success: function (data) {
                 $('#overlay-badan').hide();
                 let chart = new Chart(badanChart, {
