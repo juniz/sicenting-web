@@ -35,6 +35,17 @@ Route::get('/reload-captcha', [\App\Http\Controllers\Auth\RegisterController::cl
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
+    Route::get('/dashboard/kec/{id}', [App\Http\Controllers\DashboardKecController::class, 'index']);
+    Route::get('/dashboard/kel/{id}', [App\Http\Controllers\DashboardKelController::class, 'index']);
+
+    Route::get('/dashboard-stunting-kec/{id}', [App\Http\Controllers\DashboardKecController::class, 'stuntingPerKab']);
+    Route::get('/dashboard-gizi-kec/{id}', [App\Http\Controllers\DashboardKecController::class, 'giziPerKab']);
+    Route::get('/dashboard-badan-kec/{id}', [App\Http\Controllers\DashboardKecController::class, 'badanPerKab']);
+
+    Route::get('/dashboard-stunting-kel/{id}', [App\Http\Controllers\DashboardKelController::class, 'stuntingPerKab']);
+    Route::get('/dashboard-gizi-kel/{id}', [App\Http\Controllers\DashboardKelController::class, 'giziPerKab']);
+    Route::get('/dashboard-badan-kel/{id}', [App\Http\Controllers\DashboardKelController::class, 'badanPerKab']);
+
     Route::get('/dashboard-perkembangan', [App\Http\Controllers\DashboardPerkembangan::class, 'index']);
     Route::get('/dashboard-balita-user', [App\Http\Controllers\DashboardController::class, 'getJmkBalitaPerUser']);
     Route::get('/dashboard-user', [App\Http\Controllers\DashboardPerkembangan::class, 'getUserJns']);

@@ -5,7 +5,7 @@
 @section('content_header')
 <div class="d-flex flex-row justify-content-between">
     <div>
-        <h1>Dashboard Stunting</h1>
+        <h1>{{$kabupaten}}</h1>
     </div>
 </div>
 @stop
@@ -95,9 +95,10 @@
         let badanChart = document.getElementById('barBadanChart').getContext('2d');
         let barChart = document.getElementById('barChart').getContext('2d');
         let giziChart = document.getElementById('barGiziChart').getContext('2d');
+        let param = "{{$param}}"
 
         $.ajax({
-            url: "{{url('dashboard-stunting-kab')}}",
+            url: "{{url('dashboard-stunting-kec')}}"+"/"+param,
             type: "GET",
             success: function (data) {
                 $('#overlay-stunting').hide();
@@ -127,7 +128,7 @@
                         onClick: function(evt, element) {
                             let activePoints = chart.getElementAtEvent(evt);
                             let param = chart.data.param[activePoints[0]._index];
-                            window.location.href = "{{url('/dashboard/kec')}}"+"/"+param;
+                            window.location.href = "{{url('/dashboard/kel')}}"+"/"+param;
                         }
                     }
                 });
@@ -135,7 +136,7 @@
         })
 
         $.ajax({
-            url: "{{url('dashboard-gizi-kab')}}",
+            url: "{{url('dashboard-gizi-kec')}}"+"/"+param,
             type: "GET",
             success: function (data) {
                 $('#overlay-gizi').hide();
@@ -165,7 +166,7 @@
                         onClick: function(evt, element) {
                             let activePoints = chart.getElementAtEvent(evt);
                             let param = chart.data.param[activePoints[0]._index];
-                            window.location.href = "{{url('/dashboard/kec')}}"+"/"+param;
+                            window.location.href = "{{url('/dashboard/kel')}}"+"/"+param;
                         }
                     }
                 });
@@ -173,7 +174,7 @@
         })
 
         $.ajax({
-            url: "{{url('dashboard-badan-kab')}}",
+            url: "{{url('dashboard-badan-kec')}}"+"/"+param,
             type: "GET",
             success: function (data) {
                 $('#overlay-badan').hide();
@@ -203,7 +204,7 @@
                         onClick: function(evt, element) {
                             let activePoints = chart.getElementAtEvent(evt);
                             let param = chart.data.param[activePoints[0]._index];
-                            window.location.href = "{{url('/dashboard/kec')}}"+"/"+param;
+                            window.location.href = "{{url('/dashboard/kel')}}"+"/"+param;
                         }
                     }
                 });

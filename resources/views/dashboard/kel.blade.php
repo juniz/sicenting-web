@@ -5,7 +5,7 @@
 @section('content_header')
 <div class="d-flex flex-row justify-content-between">
     <div>
-        <h1>Dashboard Stunting</h1>
+        <h1>{{$kecamatan}}</h1>
     </div>
 </div>
 @stop
@@ -95,16 +95,16 @@
         let badanChart = document.getElementById('barBadanChart').getContext('2d');
         let barChart = document.getElementById('barChart').getContext('2d');
         let giziChart = document.getElementById('barGiziChart').getContext('2d');
+        let param = "{{$param}}"
 
         $.ajax({
-            url: "{{url('dashboard-stunting-kab')}}",
+            url: "{{url('dashboard-stunting-kel')}}"+"/"+param,
             type: "GET",
             success: function (data) {
                 $('#overlay-stunting').hide();
                 let chart = new Chart(barChart, {
                     type: 'bar',
                     data: {
-                        param: data.param,
                         labels: data.labels,
                         datasets: data.datasets
                     },
@@ -125,9 +125,9 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         onClick: function(evt, element) {
-                            let activePoints = chart.getElementAtEvent(evt);
-                            let param = chart.data.param[activePoints[0]._index];
-                            window.location.href = "{{url('/dashboard/kec')}}"+"/"+param;
+                            // let activePoints = chart.getElementAtEvent(evt);
+                            // let param = chart.data.param[activePoints[0]._index];
+                            // window.location.href = "{{url('/dashboard/kel')}}"+"/"+param;
                         }
                     }
                 });
@@ -135,14 +135,13 @@
         })
 
         $.ajax({
-            url: "{{url('dashboard-gizi-kab')}}",
+            url: "{{url('dashboard-gizi-kel')}}"+"/"+param,
             type: "GET",
             success: function (data) {
                 $('#overlay-gizi').hide();
                 let chart = new Chart(giziChart, {
                     type: 'bar',
                     data: {
-                        param: data.param,
                         labels: data.labels,
                         datasets: data.datasets
                     },
@@ -161,26 +160,20 @@
                             enabled: true,
                         },
                         responsive: true,
-                        maintainAspectRatio: false,
-                        onClick: function(evt, element) {
-                            let activePoints = chart.getElementAtEvent(evt);
-                            let param = chart.data.param[activePoints[0]._index];
-                            window.location.href = "{{url('/dashboard/kec')}}"+"/"+param;
-                        }
+                        maintainAspectRatio: false
                     }
                 });
             }
         })
 
         $.ajax({
-            url: "{{url('dashboard-badan-kab')}}",
+            url: "{{url('dashboard-badan-kel')}}"+"/"+param,
             type: "GET",
             success: function (data) {
                 $('#overlay-badan').hide();
                 let chart = new Chart(badanChart, {
                     type: 'bar',
                     data: {
-                        param: data.param,
                         labels: data.labels,
                         datasets: data.datasets
                     },
@@ -199,12 +192,7 @@
                             enabled: true,
                         },
                         responsive: true,
-                        maintainAspectRatio: false,
-                        onClick: function(evt, element) {
-                            let activePoints = chart.getElementAtEvent(evt);
-                            let param = chart.data.param[activePoints[0]._index];
-                            window.location.href = "{{url('/dashboard/kec')}}"+"/"+param;
-                        }
+                        maintainAspectRatio: false
                     }
                 });
             }

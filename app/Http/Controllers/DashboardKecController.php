@@ -3,32 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Balita;
+use App\Models\District;
+use App\Models\Regency;
 use App\Models\Village;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class DashboardController extends Controller
+class DashboardKecController extends Controller
 {
-    public function index(Request $request)
+    public function index($id)
     {
-        return view('dashboard.index', [
-            'jmlBalita' => $this->getJmlBalita(),
-            'jmlBalitaIndikasiStunting' => $this->getJmlBalitaIndikasiStunting(),
-            'jmlBalitaStunting' => $this->getJmlBalitaStunting(),
+        $param = $id;
+        $kabupaten = Regency::where('id', $id)->first();
+        return view('dashboard.kec', [
+            'param' => $param,
+            'kabupaten' => $kabupaten->name,
+            'jmlBalita' => $this->getJmlBalita($param),
+            'jmlBalitaIndikasiStunting' => $this->getJmlBalitaIndikasiStunting($param),
+            'jmlBalitaStunting' => $this->getJmlBalitaStunting($param),
         ]);
     }
 
-    public function stuntingPerKab()
+    public function stuntingPerKab($kec)
     {
-        $provinsi = auth()->user()->unit->provinsi;
         $data = DB::table('balita')
-            ->join('regencies', 'balita.kabupaten', '=', 'regencies.id')
-            ->join('provinces', 'regencies.province_id', '=', 'provinces.id')
-            ->selectRaw("regencies.name as kabupaten, regencies.id as id,
+            ->join('districts', 'balita.kecamatan', '=', 'districts.id')
+            ->selectRaw("districts.name as kabupaten, districts.id as id,
                 SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND tb_u like '%normal%' ORDER BY updated_at DESC LIMIT 1),0)) as jmlNormal,
                 SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND tb_u like '%pendek%' ORDER BY updated_at DESC LIMIT 1),0)) as jmlSangatPendek")
-            ->where('provinces.id', $provinsi->id)
-            ->groupBy('balita.kabupaten')
+            ->where('balita.kabupaten', $kec)
+            ->groupBy('balita.kecamatan')
             ->get();
 
         $response = [
@@ -63,18 +67,16 @@ class DashboardController extends Controller
         return response()->json($response);
     }
 
-    public function giziPerKab()
+    public function giziPerKab($kec)
     {
-        $provinsi = auth()->user()->unit->provinsi;
         $data = DB::table('balita')
-            ->join('regencies', 'balita.kabupaten', '=', 'regencies.id')
-            ->join('provinces', 'regencies.province_id', '=', 'provinces.id')
-            ->selectRaw("regencies.name as kabupaten, regencies.id as id,
+            ->join('districts', 'balita.kecamatan', '=', 'districts.id')
+            ->selectRaw("districts.name as kabupaten, districts.id as id,
                     SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND ( bb_tb like '%normal%' OR bb_tb like '%baik%' ) ORDER BY updated_at DESC LIMIT 1),0)) as jmlGiziNormal,
                     SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND bb_tb like '%buruk%' ORDER BY updated_at DESC LIMIT 1),0)) as jmlGiziBuruk,
                     SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND bb_tb like '%Obesitas%' ORDER BY updated_at DESC LIMIT 1),0)) as jmlObesitas")
-            ->where('provinces.id', $provinsi->id)
-            ->groupBy('balita.kabupaten')
+            ->where('balita.kabupaten', $kec)
+            ->groupBy('balita.kecamatan')
             ->get();
 
         $response = [
@@ -120,17 +122,15 @@ class DashboardController extends Controller
         return response()->json($response);
     }
 
-    public function badanPerKab()
+    public function badanPerKab($kec)
     {
-        $provinsi = auth()->user()->unit->provinsi;
         $data = DB::table('balita')
-            ->join('regencies', 'balita.kabupaten', '=', 'regencies.id')
-            ->join('provinces', 'regencies.province_id', '=', 'provinces.id')
-            ->selectRaw("regencies.name as kabupaten, regencies.id as id,
+            ->join('districts', 'balita.kecamatan', '=', 'districts.id')
+            ->selectRaw("districts.name as kabupaten, districts.id as id,
                     SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND ( bb_u like '%normal%' OR bb_tb like '%baik%' ) ORDER BY updated_at DESC LIMIT 1),0)) as jmlBadanNormal,
                     SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM pemeriksaan WHERE balita_id = balita.id AND bb_tb like '%kurang%' ORDER BY updated_at DESC LIMIT 1),0)) as jmlBadanKurang")
-            ->where('provinces.id', $provinsi->id)
-            ->groupBy('balita.kabupaten')
+            ->where('balita.kabupaten', $kec)
+            ->groupBy('balita.kecamatan')
             ->get();
 
         $response = [
@@ -165,16 +165,6 @@ class DashboardController extends Controller
         return response()->json($response);
     }
 
-    public function konsulPerKab()
-    {
-        return DB::table('balita')
-            ->join('regencies', 'balita.kabupaten', '=', 'regencies.id')
-            ->selectRaw("regencies.name as kabupaten,
-                    SUM(IFNULL((SELECT DISTINCT COUNT(*) FROM konsul WHERE balita_id = balita.id LIMIT 1),0)) as jmlKonsul")
-            ->groupBy('balita.kabupaten')
-            ->get();
-    }
-
     public function getJmkBalitaPerUser(Request $request)
     {
         $kel = $request->query('param');
@@ -203,27 +193,27 @@ class DashboardController extends Controller
         return response()->json($response);
     }
 
-    public function getJmlBalita()
+    public function getJmlBalita($param)
     {
-        return Balita::where('provinsi', auth()->user()->unit->provinsi->id)->count();
+        return Balita::where('kabupaten', $param)->count();
     }
 
-    public function getJmlBalitaIndikasiStunting()
+    public function getJmlBalitaIndikasiStunting($param)
     {
         return DB::table('balita')
             ->join('pemeriksaan', 'balita.id', '=', 'pemeriksaan.balita_id')
             ->whereRaw('pemeriksaan.created_at = (SELECT MAX(created_at) FROM pemeriksaan WHERE balita_id = balita.id)')
-            ->where('provinsi', auth()->user()->unit->provinsi->id)
+            ->where('kabupaten', $param)
             ->whereRaw("(LOWER(tb_u) like '%pendek%' OR LOWER(tb_u) like '%kurang%')")
             ->count();
     }
 
-    public function getJmlBalitaStunting()
+    public function getJmlBalitaStunting($param)
     {
         return DB::table('balita')
             ->join('pemeriksaan', 'balita.id', '=', 'pemeriksaan.balita_id')
             ->whereRaw('pemeriksaan.created_at = (SELECT MAX(created_at) FROM pemeriksaan WHERE balita_id = balita.id)')
-            ->where('provinsi', auth()->user()->unit->provinsi->id)
+            ->where('kabupaten', $param)
             ->whereRaw("(LOWER(tb_u) like '%pendek%' OR LOWER(tb_u) like '%kurang%')")
             ->whereRaw("LOWER(bb_u) like '%kurang%'")
             ->whereRaw("(LOWER(bb_tb) like '%kurang%' OR LOWER(bb_tb) like '%buruk%' OR LOWER(bb_tb) like '%obesitas%')")
