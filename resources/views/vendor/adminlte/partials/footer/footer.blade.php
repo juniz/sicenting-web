@@ -5,7 +5,7 @@
                 <strong>
                     <script>
                         document.write(new Date().getFullYear())
-                    </script> © IT BIDDOKKES JATIM.
+                    </script> © IT BIDDOKKES.
                 </strong>
             </div>
             <div class="col-sm-6">
